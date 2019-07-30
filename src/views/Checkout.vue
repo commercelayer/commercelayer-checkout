@@ -74,9 +74,13 @@
 </template>
 
 <script>
-  import store from '@/store'
-
   export default {
+    props: {
+      order: {
+        type: Object,
+        required: true
+      }
+    },
     data () {
       return {
         e6: 1

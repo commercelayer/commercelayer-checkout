@@ -15,9 +15,10 @@ export default new Vuex.Store({
   },
   actions: {
     getOrder ({ commit }, orderId) {
-      OrderService.getOrder(orderId)
+      return OrderService.getOrder(orderId)
         .then(response => {
           commit('GET_ORDER', response.data)
+          return response.data
         })
         .catch(error => {
           console.log('Get order error:', error.response)

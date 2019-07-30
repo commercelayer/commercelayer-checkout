@@ -9,7 +9,7 @@
           <router-view></router-view>
         </v-flex>
         <v-flex xs12 md5>
-          <OrderSummary />
+          <OrderSummary :order="order" />
         </v-flex>
       </v-layout>
     </v-container>
@@ -21,6 +21,12 @@ import OrderSummary from '@/components/OrderSummary.vue'
 
 export default {
   name: 'Layout',
+  props: {
+    order: {
+      type: Object,
+      required: true
+    }
+  },
   data () {
     return {
       logoUrl: process.env.VUE_APP_LOGO_URL,

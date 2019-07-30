@@ -6,9 +6,6 @@
 
 <script>
 export default {
-  name: 'App',
-  created () {
-    this.$store.dispatch('getOrder', this.$route.params.order_id)
-  }
+  name: 'App'
 }
 </script>
