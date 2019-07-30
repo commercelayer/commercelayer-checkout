@@ -5,7 +5,11 @@
 </template>
 
 <script>
+import { log } from 'util';
 export default {
-  name: 'App'
+  name: 'App',
+  created () {
+    // console.log("created!")
+  }
 }
 </script>

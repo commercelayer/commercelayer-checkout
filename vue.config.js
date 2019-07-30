@@ -1,5 +1,6 @@
 module.exports = {
   devServer: {
-    disableHostCheck: true
+    disableHostCheck: true,
+    public: 'https://checkout.commercelayer.dev'
   }
 }
