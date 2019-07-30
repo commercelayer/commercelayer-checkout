@@ -9,7 +9,7 @@ import { log } from 'util';
 export default {
   name: 'App',
   created () {
-    // console.log("created!")
+    console.log("created!")
   }
 }
 </script>
