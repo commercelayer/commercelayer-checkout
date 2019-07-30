@@ -5,24 +5,15 @@
       <small>Add a payment method and place the order.</small>
     </v-stepper-step>
     <v-stepper-content :step="step">
-      <v-btn color="primary" @click="placeOrder" :block="$vuetify.breakpoint.xs">Place order</v-btn>
+      <v-btn color="primary" @click="placeOrder" :block="isMobile">Place order</v-btn>
     </v-stepper-content>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
-
+import { checkoutStepMixin } from '@/mixins/checkoutStepMixin'
 export default {
-  props: {
-    step: {
-      type: Number,
-      required: true
-    }
-  },
-  computed: {
-    ...mapState(['currentStep'])
-  },
+  mixins: [checkoutStepMixin],
   methods: {
     placeOrder () {
       this.$store.dispatch('setCurrentStep', 1)
