@@ -5,11 +5,10 @@
 </template>
 
 <script>
-import { log } from 'util';
 export default {
   name: 'App',
   created () {
-    console.log("created!")
+    this.$store.dispatch('getOrder', this.$route.params.order_id)
   }
 }
 </script>

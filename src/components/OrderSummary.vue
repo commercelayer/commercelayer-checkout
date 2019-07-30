@@ -1,6 +1,9 @@
 <template>
   <div class="pa-4">
-    Order Summary
+    <h2>Order Summary</h2>
+
+    {{ $store.state.order }}
+    
   </div>
 </template>
 

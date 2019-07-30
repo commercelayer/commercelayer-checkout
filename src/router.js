@@ -16,7 +16,7 @@ export default new Router({
       component: Layout,
       children: [
         {
-          path: 'checkout',
+          path: '',
           name: 'checkout',
           component: Checkout
         },
