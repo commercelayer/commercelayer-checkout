@@ -29,14 +29,12 @@ const router = new Router({
         {
           path: '',
           name: 'checkout',
-          component: Checkout,
-          props: true
+          component: Checkout
         },
         {
           path: 'thankyou',
           name: 'confirmation',
-          component: Confirmation,
-          props: true
+          component: Confirmation
         }
       ]
     }

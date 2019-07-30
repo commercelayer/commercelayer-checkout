@@ -6,11 +6,15 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    currentStep: 1,
     order: {}
   },
   mutations: {
     GET_ORDER (state, order) {
       state.order = order
+    },
+    SET_CURRENT_STEP (state, step) {
+      state.currentStep = step
     }
   },
   actions: {
@@ -22,7 +26,10 @@ export default new Vuex.Store({
         })
         .catch(error => {
           console.log('Get order error:', error.response)
-        })  
+        })
+    },
+    setCurrentStep ({ commit }, step) {
+      commit('SET_CURRENT_STEP', step)
     }
   }
 })

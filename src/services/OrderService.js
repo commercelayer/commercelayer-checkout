@@ -13,7 +13,7 @@ const apiClient = axios.create({
 const getOrder = (orderId) => {
   return AuthService.getAccessToken()
   .then( _ => {
-    return apiClient.get('/orders/' + orderId + '?include=line_items&fields[orders]=number,skus_count,formatted_subtotal_amount,formatted_discount_amount,formatted_shipping_amount,formatted_total_tax_amount,formatted_total_amount_with_taxes&fields[line_items]=item_type,image_url,name,sku_code,formatted_unit_amount,quantity,formatted_total_amount')
+    return apiClient.get('/orders/' + orderId + '?include=line_items,available_payment_methods')
   })
   .catch(error => {
     console.log('Get order service error:', error.response)
