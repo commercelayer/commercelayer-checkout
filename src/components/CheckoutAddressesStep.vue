@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="step-wrapper step-wrapper-bordered">
     <v-stepper-step :complete="complete" :step="step" :editable="complete" :edit-icon="editIcon">
       Billing & Shipping
       <small>Add your billing and shipping addresses.</small>
@@ -38,8 +38,9 @@
           <v-checkbox label="Ship to this address" input-value="true"></v-checkbox>
         </v-flex>
       </v-layout>
-
-      <v-btn color="primary" @click="nextStep" :block="isMobile">Continue to delivery</v-btn>
+      <v-card-actions>
+        <v-btn color="primary" @click="nextStep" :block="isMobile">Continue to delivery</v-btn>
+      </v-card-actions>
     </v-stepper-content>
   </div>
 </template>
@@ -52,5 +53,4 @@ export default {
 </script>
 
 <style>
-
 </style>

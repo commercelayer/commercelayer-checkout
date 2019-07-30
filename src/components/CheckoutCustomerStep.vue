@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="step-wrapper">
     <v-stepper-step :complete="complete" :step="step" :editable="complete" :edit-icon="editIcon">
       Customer
       <small>filippo.conforti@gmail.com</small>
