@@ -1,9 +1,7 @@
 <template>
   <div class="pa-4">
-    <h2>Order #{{ order.data.attributes.number }}</h2>
-
+    <h2>{{ $t('order') }} #{{ order.data.attributes.number }}</h2>
     {{ order }}
-    
   </div>
 </template>
 

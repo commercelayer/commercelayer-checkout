@@ -1,6 +1,6 @@
 <template>
   <div class="step-wrapper">
-    <v-stepper-step :complete="complete" :editable="complete" :step="step" :edit-icon="editIcon">
+    <v-stepper-step :step="step" :complete="complete" :editable="complete" :edit-icon="editIcon">
       Delivery options
       <small>Review shipments and select a shipping method.</small>
     </v-stepper-step>
