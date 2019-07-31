@@ -1,6 +1,6 @@
 <template>
   <div class="pa-4">
-    <h2>{{ $t('order') }} #{{ order.number }}</h2>
+    <h2>{{ $t('order') | capitalize }} #{{ order.number }} ({{ order.skus_count }} {{ $tc('item', order.skus_count)}})</h2>
     {{ order }}
   </div>
 </template>

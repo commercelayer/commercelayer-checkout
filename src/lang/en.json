@@ -1,3 +1,4 @@
 {
-  "order": "Order"
+  "order": "order",
+  "item": "item | items"
 }

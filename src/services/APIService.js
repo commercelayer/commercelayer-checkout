@@ -17,6 +17,7 @@ const orderAttributes = [
   'number',
   'skus_count',
   'customer_email',
+  'coupon_code',
   'formatted_subtotal_amount',
   'formatted_shipping_amount',
   'formatted_payment_method_amount',
