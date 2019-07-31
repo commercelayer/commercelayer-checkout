@@ -10,15 +10,15 @@ const authClient = axios.create({
 
 const getAccessToken = () => {
   return authClient.post('/oauth/token', {
-    grant_type: "client_credentials",
-    client_id: process.env.VUE_APP_API_CLIENT_ID,
+    grant_type: 'client_credentials',
+    client_id: process.env.VUE_APP_API_CLIENT_ID
   })
-  .then(response => {
-    localStorage.setItem('accessToken', response.data.access_token)
-  })
-  .catch(error => {
-    console.log('Get access token error:', error.response)
-  })  
+    .then(response => {
+      return response.data.access_token
+    })
+    .catch(error => {
+      console.log('Get access token error:', error.response)
+    })
 }
 
 export default {

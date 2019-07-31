@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import OrderService from '@/services/OrderService'
+import APIService from '@/services/APIService'
 
 Vue.use(Vuex)
 
@@ -19,7 +19,7 @@ export default new Vuex.Store({
   },
   actions: {
     getOrder ({ commit }, orderId) {
-      return OrderService.getOrder(orderId)
+      return APIService.getOrder(orderId)
         .then(response => {
           commit('GET_ORDER', response.data)
           return response.data
