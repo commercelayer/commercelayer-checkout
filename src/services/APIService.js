@@ -1,5 +1,67 @@
 import axios from 'axios'
 import AuthService from '@/services/AuthService'
+import normalize from 'json-api-normalize'
+
+const orderIncludes = [
+  'line_items',
+  'billing_address',
+  'shipping_address',
+  'shipments.available_shipping_methods',
+  'shipments.shipping_method',
+  'available_payment_methods',
+  'payment_method',
+  'payment_source'
+]
+
+const orderAttributes = [
+  'number',
+  'skus_count',
+  'customer_email',
+  'formatted_subtotal_amount',
+  'formatted_shipping_amount',
+  'formatted_payment_method_amount',
+  'formatted_discount_amount',
+  'formatted_total_tax_amount',
+  'formatted_total_amount_with_taxes',
+  'line_items.item_type',
+  'line_items.name',
+  'line_items.sku_code',
+  'line_items.image_url',
+  'line_items.formatted_unit_amount',
+  'line_items.quantity',
+  'line_items.formatted_total_amount',
+  'billing_address.first_name',
+  'billing_address.last_name',
+  'billing_address.line_1',
+  'billing_address.line_2',
+  'billing_address.city',
+  'billing_address.zip_code',
+  'billing_address.state_code',
+  'billing_address.country_code',
+  'billing_address.phone',
+  'billing_address.billing_info',
+  'billing_address.notes',
+  'shipping_address.first_name',
+  'shipping_address.last_name',
+  'shipping_address.line_1',
+  'shipping_address.line_2',
+  'shipping_address.city',
+  'shipping_address.zip_code',
+  'shipping_address.state_code',
+  'shipping_address.country_code',
+  'shipping_address.phone',
+  'shipping_address.notes',
+  'available_payment_methods.id',
+  'available_payment_methods.name',
+  'shipments.available_shipping_methods.id',
+  'shipments.available_shipping_methods.name',
+  'shipments.shipping_method.id',
+  'shipments.shipping_method.name',
+  'payment_method.id',
+  'payment_method.name',
+  'payment_source.id',
+  'payment_source.name'
+]
 
 const apiClient = axios.create({
   baseURL: process.env.VUE_APP_API_BASE_URL + '/api',
@@ -20,7 +82,10 @@ apiClient.interceptors.request.use(config => {
 })
 
 const getOrder = (orderId) => {
-  return apiClient.get('/orders/' + orderId + '?include=line_items,available_payment_methods')
+  return apiClient.get('/orders/' + orderId + '?include=' + orderIncludes.join(','))
+    .then(response => {
+      return normalize(response.data).get(orderAttributes)
+    })
 }
 
 export default {

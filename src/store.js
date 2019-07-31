@@ -20,9 +20,9 @@ export default new Vuex.Store({
   actions: {
     getOrder ({ commit }, orderId) {
       return APIService.getOrder(orderId)
-        .then(response => {
-          commit('GET_ORDER', response.data)
-          return response.data
+        .then(order => {
+          commit('GET_ORDER', order)
+          return order
         })
         .catch(error => {
           console.log('Get order error:', error.response)
