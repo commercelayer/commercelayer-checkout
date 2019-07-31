@@ -6,9 +6,7 @@
     </v-stepper-step>
 
     <v-stepper-content :step="step">
-      <form>
-        <v-text-field label="Email"></v-text-field>
-      </form>
+      <OrderCustomer />
       <v-btn color="primary" @click="nextStep" :block="isMobile">Continue to billing</v-btn>
     </v-stepper-content>
   </div>
@@ -16,7 +14,12 @@
 
 <script>
 import { checkoutStepMixin } from '@/mixins/checkoutStepMixin'
+import OrderCustomer from '@/components/OrderCustomer'
+
 export default {
+  components: {
+    OrderCustomer
+  },
   mixins: [checkoutStepMixin]
 }
 </script>

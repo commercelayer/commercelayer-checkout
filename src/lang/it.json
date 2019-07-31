@@ -1,3 +1,4 @@
 {
-  "order": "Ordine"
+  "order": "ordine",
+  "item": "articolo | articoli"
 }

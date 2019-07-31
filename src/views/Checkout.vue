@@ -3,7 +3,7 @@
     <CheckoutCustomerStep :step=1 />
     <CheckoutAddressesStep :step=2 />
     <CheckoutDeliveryStep :step=3 />
-    <CheckoutPaymentStep :step=4 />
+    <CheckoutPaymentStep :step=4 :order="order" />
   </v-stepper>
 </template>
 
@@ -14,6 +14,12 @@ import CheckoutDeliveryStep from '@/components/CheckoutDeliveryStep'
 import CheckoutPaymentStep from '@/components/CheckoutPaymentStep'
 
 export default {
+  props: {
+    order: {
+      type: Object,
+      required: true
+    }
+  },
   components: {
     CheckoutCustomerStep,
     CheckoutAddressesStep,

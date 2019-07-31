@@ -1,13 +1,17 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import { getField, updateField } from 'vuex-map-fields'
 import APIService from '@/services/APIService'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    currentStep: 1,
+    currentStep: 4,
     order: {}
+  },
+  getters: {
+    getField
   },
   mutations: {
     GET_ORDER (state, order) {
@@ -15,7 +19,8 @@ export default new Vuex.Store({
     },
     SET_CURRENT_STEP (state, step) {
       state.currentStep = step
-    }
+    },
+    updateField
   },
   actions: {
     getOrder ({ commit }, orderId) {

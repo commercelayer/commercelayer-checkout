@@ -6,7 +6,7 @@
     <v-container>
       <v-layout wrap>
         <v-flex xs12 md7>
-          <router-view></router-view>
+          <router-view :order="order"></router-view>
         </v-flex>
         <v-flex xs12 md5>
           <OrderSummary :order="order" />

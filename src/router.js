@@ -19,7 +19,7 @@ const router = new Router({
       path: '/:order_id',
       component: Layout,
       props: true,
-      beforeEnter(routeTo, routeFrom, next) {
+      beforeEnter (routeTo, routeFrom, next) {
         store.dispatch('getOrder', routeTo.params.order_id).then(order => {
           routeTo.params.order = order
           next()
