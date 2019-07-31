@@ -8,6 +8,7 @@ import '@/plugins/vuetify'
 import i18n from '@/plugins/i18n'
 
 import 'nprogress/nprogress.css'
+import '@/scss/nprogress.scss'
 
 Vue.use(Vuelidate)
 

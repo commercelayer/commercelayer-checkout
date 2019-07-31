@@ -1,0 +1,12 @@
+#nprogress {
+  .bar {
+    background: $PRIMARY_COLOR;
+  }
+  .peg {
+    box-shadow: 0 0 10px $PRIMARY_COLOR, 0 0 5px $PRIMARY_COLOR;
+  }
+  .spinner-icon {
+    border-top-color: $PRIMARY_COLOR;
+    border-left-color: $PRIMARY_COLOR;
+  }
+}

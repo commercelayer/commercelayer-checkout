@@ -1,5 +1,5 @@
 <template>
-  <v-content>
+  <v-content id="layout">
     <v-container>
       <v-img :src="logoUrl" :width="logoWidth"/>
     </v-container>

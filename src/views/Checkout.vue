@@ -33,12 +33,14 @@ export default {
 }
 </script>
 
-<style>
-.step-wrapper:not(:last-child) > .v-stepper__content {
-  border-left: 1px solid rgba(0, 0, 0, 0.12);
-}
-.step-wrapper button {
-  margin: 1rem 0;
-  min-width: 50%;
+<style lang="scss">
+.step-wrapper {
+  &:not(:last-child) > .v-stepper__content {
+    border-left: 1px solid rgba(0, 0, 0, 0.12);
+  }
+  button {
+    margin: 1rem 0;
+    min-width: 50%;
+  }
 }
 </style>
