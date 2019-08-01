@@ -1,6 +1,6 @@
 <template>
   <div class="step-wrapper">
-    <v-stepper-step :step="step" :complete="complete" :editable="complete" :edit-icon="editIcon">
+    <v-stepper-step :step="step" :complete="complete" :editable="complete" :edit-icon="editIcon" :rules="rules">
       Delivery options
       <small>Review shipments and select a shipping method.</small>
     </v-stepper-step>
@@ -15,15 +15,25 @@
 </template>
 
 <script>
+import _ from 'lodash'
 import { checkoutStepMixin } from '@/mixins/checkoutStepMixin'
 import { mapMultiRowFields } from 'vuex-map-fields'
 import OrderShipment from '@/components/OrderShipment'
+
 export default {
   components: {
     OrderShipment
   },
   mixins: [checkoutStepMixin],
   computed: {
+    rules () {
+      return [() => {
+        _.forEach(this.$store.state.order.shipments, shipment => {
+          if (_.isEmpty(shipment.available_shipping_methods)) return false
+        })
+        return true
+      }]
+    },
     ...mapMultiRowFields([
       'order.shipments'
     ])

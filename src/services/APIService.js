@@ -1,6 +1,7 @@
 import axios from 'axios'
 import AuthService from '@/services/AuthService'
 import normalize from 'json-api-normalize'
+import _ from 'lodash'
 
 const orderIncludes = [
   'line_items',
@@ -71,6 +72,18 @@ const orderAttributes = [
   'payment_source.name'
 ]
 
+const billingAddressDefaults = {
+  first_name: '',
+  last_name: '',
+  line_1: '',
+  line_2: '',
+  city: '',
+  zip_code: '',
+  state_code: '',
+  country_code: '',
+  phone: ''
+}
+
 const apiClient = axios.create({
   baseURL: process.env.VUE_APP_API_BASE_URL + '/api',
   headers: {
@@ -92,7 +105,11 @@ apiClient.interceptors.request.use(config => {
 const getOrder = (orderId) => {
   return apiClient.get('/orders/' + orderId + '?include=' + orderIncludes.join(','))
     .then(response => {
-      return normalize(response.data).get(orderAttributes)
+      var normalizedOrder = normalize(response.data).get(orderAttributes)
+      return _.defaults(normalizedOrder, {
+        billing_address: billingAddressDefaults,
+        shipments: []
+      })
     })
 }
 

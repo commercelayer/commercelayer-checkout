@@ -14,19 +14,19 @@ export default new Vuex.Store({
     getField
   },
   mutations: {
-    GET_ORDER (state, order) {
+    updateOrder (state, order) {
       state.order = order
     },
-    SET_CURRENT_STEP (state, step) {
+    updateCurrentStep (state, step) {
       state.currentStep = step
     },
     updateField
   },
   actions: {
-    getOrder ({ commit }, orderId) {
+    setOrder ({ commit }, orderId) {
       return APIService.getOrder(orderId)
         .then(order => {
-          commit('GET_ORDER', order)
+          commit('updateOrder', order)
           return order
         })
         .catch(error => {
@@ -34,7 +34,7 @@ export default new Vuex.Store({
         })
     },
     setCurrentStep ({ commit }, step) {
-      commit('SET_CURRENT_STEP', step)
+      commit('updateCurrentStep', step)
     }
   }
 })

@@ -47,7 +47,7 @@ export default {
       'order.billing_address.state_code',
       'order.billing_address.country_code',
       'order.billing_address.phone'
-    ])    
+    ])
   }
 }
 </script>

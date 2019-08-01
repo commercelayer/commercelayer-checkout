@@ -1,6 +1,6 @@
 <template>
   <div class="step-wrapper">
-    <v-stepper-step :step="step">
+    <v-stepper-step :step="step" :rules="rules">
       Payment
       <small>Add a payment method and place the order.</small>
     </v-stepper-step>
@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import _ from 'lodash'
 import { checkoutStepMixin } from '@/mixins/checkoutStepMixin'
 import StripePayment from '@/components/payment_methods/StripePayment'
 import BraintreePayment from '@/components/payment_methods/BraintreePayment'
@@ -44,6 +45,13 @@ export default {
     }
   },
   mixins: [checkoutStepMixin],
+  computed: {
+    rules () {
+      return [() => {
+        return !_.isEmpty(this.order.available_payment_methods)
+      }]
+    }
+  },
   methods: {
     placeOrder () {
       this.$store.dispatch('setCurrentStep', 1)
