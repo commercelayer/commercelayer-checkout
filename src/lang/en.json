@@ -1,4 +1,9 @@
 {
   "order": "order",
-  "item": "item | items"
+  "item": "item | items",
+  "subtotal": "subtotal",
+  "discount": "discount",
+  "shipping": "shipping",
+  "taxes": "taxes",
+  "order_total": "order total"
 }

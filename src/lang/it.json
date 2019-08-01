@@ -1,4 +1,9 @@
 {
   "order": "ordine",
-  "item": "articolo | articoli"
+  "item": "articolo | articoli",
+  "subtotal": "subtotale",
+  "discount": "promozioni",
+  "shipping": "spedizione",
+  "taxes": "tasse",
+  "order_total": "totale ordine"
 }

@@ -27,6 +27,7 @@ const orderAttributes = [
   'formatted_total_tax_amount',
   'formatted_total_amount_with_taxes',
   'line_items.item_type',
+  'line_items.id',
   'line_items.name',
   'line_items.sku_code',
   'line_items.image_url',
