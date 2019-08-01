@@ -7,9 +7,7 @@
 
     <v-stepper-content :step="step">
       <OrderBillingAddress />
-      <v-card-actions>
-        <v-btn color="primary" @click="nextStep" :block="isMobile">Continue to delivery</v-btn>
-      </v-card-actions>
+      <v-btn color="primary" @click="nextStep" :block="isMobile">Continue to delivery</v-btn>
     </v-stepper-content>
   </div>
 </template>

@@ -67,6 +67,7 @@ const orderAttributes = [
   'shipments.available_shipping_methods.id',
   'shipments.available_shipping_methods.name',
   'shipments.shipping_method.id',
+  'shipments.shipping_method.name',
   'payment_method.id',
   'payment_source.id',
   'payment_source.name'

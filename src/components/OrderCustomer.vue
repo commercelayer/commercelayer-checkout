@@ -1,6 +1,8 @@
 <template>
   <v-layout row wrap>
-    <v-text-field label="Email" v-model="customer_email"></v-text-field>
+    <v-flex xs12 sm6 pa-2>
+      <v-text-field label="Email" v-model="customer_email"></v-text-field>
+    </v-flex>
   </v-layout>
 </template>
 

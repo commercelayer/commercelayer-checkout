@@ -1,0 +1,21 @@
+$v-border: rgba(0, 0, 0, 0.12);
+
+.step-wrapper {
+  &:not(:last-child) > .v-stepper__content {
+    border-left: 1px solid $v-border;
+  }
+  .v-card__actions {
+    margin: 1rem 0;
+  }
+  button {
+    margin: 0;
+    min-width: 50%;
+  }
+  .v-expansion-panel {
+    border: 1px solid $v-border;
+    margin-bottom: 2rem;
+  }
+  .payment-methods {
+    margin-bottom: 1rem;
+  }
+}

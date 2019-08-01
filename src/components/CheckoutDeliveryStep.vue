@@ -6,10 +6,10 @@
     </v-stepper-step>
 
     <v-stepper-content :step="step">
-      <OrderShipment v-for="shipment in shipments" :shipment="shipment" :key="shipment.id" />
-      <v-card-actions>
-        <v-btn color="primary" @click="nextStep" :block="isMobile">Continue to payment</v-btn>
-      </v-card-actions>
+      <v-expansion-panel>
+        <OrderShipment v-for="shipment in shipments" :shipment="shipment" :key="shipment.id" />
+      </v-expansion-panel>
+      <v-btn color="primary" @click="nextStep" :block="isMobile">Continue to payment</v-btn>
     </v-stepper-content>
   </div>
 </template>

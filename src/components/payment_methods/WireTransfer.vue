@@ -1,12 +1,18 @@
 <template>
-  <div>
-    Wire transfer
-  </div>
+  <v-radio
+    label="Wire Transfer"
+    :value="payment_method.id"
+  ></v-radio>
 </template>
 
 <script>
 export default {
-
+  props: {
+    payment_method: {
+      type: Object,
+      required: true
+    }
+  }
 }
 </script>
 

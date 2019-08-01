@@ -5,16 +5,15 @@
       <small>Add a payment method and place the order.</small>
     </v-stepper-step>
     <v-stepper-content :step="step">
-
-      <component
-        v-for="payment_method in order.available_payment_methods"
-        :is="payment_method.payment_source_type"
-        :key="payment_method.id"
-        />
-
-      <v-card-actions>
-        <v-btn color="primary" @click="placeOrder" :block="isMobile" min-width="50%">Place order</v-btn>
-      </v-card-actions>
+      <v-radio-group v-model="order.payment_method.id" class="payment-methods">
+        <component
+          v-for="payment_method in order.available_payment_methods"
+          :is="payment_method.payment_source_type"
+          :key="payment_method.id"
+          :payment_method="payment_method"
+          />
+      </v-radio-group>
+      <v-btn color="primary" @click="placeOrder" :block="isMobile" min-width="50%">Place order</v-btn>
     </v-stepper-content>
   </div>
 </template>
