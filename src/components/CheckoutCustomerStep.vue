@@ -7,6 +7,8 @@
 
     <v-stepper-content :step="step">
       <OrderCustomer />
+      <OrderBillingAddress />
+      <OrderShippingAddress />
       <v-btn color="primary" @click="nextStep" :block="isMobile">Continue to delivery</v-btn>
     </v-stepper-content>
   </div>
@@ -15,15 +17,18 @@
 <script>
 import { checkoutStepMixin } from '@/mixins/checkoutStepMixin'
 import OrderCustomer from '@/components/OrderCustomer'
+import OrderBillingAddress from '@/components/OrderBillingAddress'
+import OrderShippingAddress from '@/components/OrderShippingAddress'
 
 export default {
   components: {
-    OrderCustomer
+    OrderCustomer,
+    OrderBillingAddress,
+    OrderShippingAddress
   },
   mixins: [checkoutStepMixin]
 }
 </script>
 
 <style>
-
 </style>

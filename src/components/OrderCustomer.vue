@@ -1,34 +1,7 @@
 <template>
   <v-layout row wrap>
-    <v-flex xs12 pa-2>
-      <v-text-field label="Email" v-model="customer_email" hint="Where you want to get notified about your order status" :autofocus="autofocusEmail"></v-text-field>
-    </v-flex>
-    <v-flex xs12 sm6 pa-2>
-      <v-text-field label="First name" v-model="first_name"></v-text-field>
-    </v-flex>
-    <v-flex xs12 sm6 pa-2>
-      <v-text-field label="Last name" v-model="last_name"></v-text-field>
-    </v-flex>
-    <v-flex xs12 sm6 pa-2>
-      <v-text-field label="Address" v-model="line_1"></v-text-field>
-    </v-flex>
-    <v-flex xs12 sm6 pa-2>
-      <v-text-field label="City" v-model="city"></v-text-field>
-    </v-flex>
-    <v-flex xs12 sm6 pa-2>
-      <v-select label="Country" :items="countries" item-text="name" item-value="code" v-model="country_code"></v-select>
-    </v-flex>
-    <v-flex xs12 sm6 pa-2>
-      <v-text-field label="State" v-model="state_code"></v-text-field>
-    </v-flex>
-    <v-flex xs12 sm6 pa-2>
-      <v-text-field label="Zip code" v-model="zip_code"></v-text-field>
-    </v-flex>
-    <v-flex xs12 sm6 pa-2>
-      <v-text-field label="Phone" v-model="phone"></v-text-field>
-    </v-flex>
-    <v-flex xs12 pa-2>
-      <v-checkbox label="Ship to this address" input-value="true"></v-checkbox>
+    <v-flex xs12 px-2 py-1>
+      <v-text-field label="Email" v-model="customer_email" :autofocus="autofocusEmail"></v-text-field>
     </v-flex>
   </v-layout>
 </template>

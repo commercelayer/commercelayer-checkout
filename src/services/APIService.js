@@ -75,7 +75,7 @@ const orderAttributes = [
   'payment_source.name'
 ]
 
-const billingAddressDefaults = (order) => {
+const addressDefaults = (order) => {
   return {
     first_name: '',
     last_name: '',
@@ -112,7 +112,10 @@ const getOrder = (orderId) => {
     .then(response => {
       var normalizedOrder = normalize(response.data).get(orderAttributes)
       return _.defaults(normalizedOrder, {
-        billing_address: billingAddressDefaults(normalizedOrder),
+        billing_address: addressDefaults(normalizedOrder),
+        shipping_address: addressDefaults(normalizedOrder),
+        ship_to_different_address: false,
+        ship_to_different_address_required: false,
         shipments: [],
         payment_method: {}
       })
