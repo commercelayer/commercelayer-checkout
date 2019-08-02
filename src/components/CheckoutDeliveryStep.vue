@@ -2,13 +2,17 @@
   <div class="step-wrapper">
     <v-stepper-step :step="step" :complete="complete" :editable="complete" :edit-icon="editIcon" :rules="rules">
       Delivery
-      <small>Review shipment and select a shipping method.</small>
+      <small>Select a shipping method for each shipment</small>
     </v-stepper-step>
 
     <v-stepper-content :step="step">
-      <v-expansion-panel>
-        <OrderShipment v-for="shipment in shipments" :shipment="shipment" :key="shipment.id" />
-      </v-expansion-panel>
+      <OrderShipment
+        v-for="(shipment, index) in shipments"
+        :shipment="shipment"
+        :key="shipment.id"
+        :count="index+1"
+        :total="shipments.length"
+        />
       <v-btn color="primary" @click="nextStep" :block="isMobile">Continue to payment</v-btn>
     </v-stepper-content>
   </div>

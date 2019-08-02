@@ -7,7 +7,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    currentStep: 1,
+    currentStep: 2,
     order: {}
   },
   getters: {

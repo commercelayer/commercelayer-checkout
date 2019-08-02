@@ -1,27 +1,22 @@
 <template>
-  <div class="line-item">
+  <div class="shipment-line-item">
     <v-layout row>
-      <v-flex xs3>
+      <v-flex shrink px-2 py-1>
         <v-img
-          :src="line_item.image_url"
+          :src="shipment_line_item.line_item.image_url"
           aspect-ratio="1"
-          width="75"
+          width="50"
           />
       </v-flex>
-      <v-flex xs6>
+      <v-flex grow px-2 py-1>
         <div class="name">
-          {{ line_item.name }}
+          {{ shipment_line_item.line_item.name }}
         </div>
         <div class="sku-code">
-          {{ line_item.sku_code }}
+          {{ shipment_line_item.line_item.sku_code }}
         </div>
         <div class="quanity">
-          Quantity: {{ line_item.quantity }}
-        </div>
-      </v-flex>
-      <v-flex xs3>
-        <div class="amount">
-          {{ line_item.formatted_total_amount }}
+          Quantity: {{ shipment_line_item.quantity }}
         </div>
       </v-flex>
     </v-layout>
@@ -31,7 +26,7 @@
 <script>
 export default {
   props: {
-    line_item: {
+    shipment_line_item: {
       type: Object,
       required: true
     }
@@ -41,7 +36,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .line-item {
+  .shipment-line-item {
     margin-bottom: 1rem;
     padding-bottom: 1rem;
     &:not(:last-child) {
@@ -49,9 +44,6 @@ export default {
     }
     .name {
       font-weight: bolder;
-    }
-    .amount {
-      text-align: right;
     }
   }
 </style>

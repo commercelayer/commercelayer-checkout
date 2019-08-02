@@ -59,9 +59,9 @@ export default {
     ])
   },
   methods: {
-    updateShipToDifferentAddressRequired() {
+    updateShipToDifferentAddressRequired () {
       if (!_.isEmpty(this.shipping_country_code_lock)) {
-        let isRequired = this.shipping_country_code_lock != this.country_code
+        let isRequired = this.shipping_country_code_lock !== this.country_code
         this.ship_to_different_address_required = isRequired
         this.ship_to_different_address = isRequired
       }
