@@ -2,12 +2,12 @@
   <div class="step-wrapper">
     <v-stepper-step :step="step" :complete="complete" :editable="complete" :edit-icon="editIcon">
       Customer
-      <small>filippo.conforti@gmail.com</small>
+      <small>Add your billing information and delivery address</small>
     </v-stepper-step>
 
     <v-stepper-content :step="step">
       <OrderCustomer />
-      <v-btn color="primary" @click="nextStep" :block="isMobile">Continue to billing</v-btn>
+      <v-btn color="primary" @click="nextStep" :block="isMobile">Continue to delivery</v-btn>
     </v-stepper-content>
   </div>
 </template>

@@ -20,6 +20,7 @@ const orderAttributes = [
   'skus_count',
   'customer_email',
   'coupon_code',
+  'shipping_country_code_lock',
   'formatted_subtotal_amount',
   'formatted_shipping_amount',
   'formatted_payment_method_amount',
@@ -74,16 +75,18 @@ const orderAttributes = [
   'payment_source.name'
 ]
 
-const billingAddressDefaults = {
-  first_name: '',
-  last_name: '',
-  line_1: '',
-  line_2: '',
-  city: '',
-  zip_code: '',
-  state_code: '',
-  country_code: '',
-  phone: ''
+const billingAddressDefaults = (order) => {
+  return {
+    first_name: '',
+    last_name: '',
+    line_1: '',
+    line_2: '',
+    city: '',
+    zip_code: '',
+    state_code: '',
+    country_code: order.shipping_country_code_lock || '',
+    phone: ''
+  }
 }
 
 const apiClient = axios.create({
@@ -109,8 +112,9 @@ const getOrder = (orderId) => {
     .then(response => {
       var normalizedOrder = normalize(response.data).get(orderAttributes)
       return _.defaults(normalizedOrder, {
-        billing_address: billingAddressDefaults,
-        shipments: []
+        billing_address: billingAddressDefaults(normalizedOrder),
+        shipments: [],
+        payment_method: {}
       })
     })
 }
