@@ -16,6 +16,7 @@ const orderIncludes = [
 ]
 
 const orderAttributes = [
+  'id',
   'number',
   'skus_count',
   'customer_email',
@@ -56,9 +57,6 @@ const orderAttributes = [
   'shipping_address.country_code',
   'shipping_address.phone',
   'shipping_address.notes',
-  'available_payment_methods.id',
-  'available_payment_methods.name',
-  'available_payment_methods.payment_source_type',
   'shipments.id',
   'shipments.number',
   'shipments.skus_count',
@@ -70,12 +68,78 @@ const orderAttributes = [
   'shipments.available_shipping_methods.id',
   'shipments.available_shipping_methods.name',
   'shipments.available_shipping_methods.formatted_price_amount',
+  'shipments.available_shipping_methods.price_amount_cents',
   'shipments.shipping_method.id',
   'shipments.shipping_method.name',
+  'shipments.shipping_method.formatted_price_amount',
+  'shipments.shipping_method.price_amount_cents',
+  'available_payment_methods.id',
+  'available_payment_methods.name',
+  'available_payment_methods.payment_source_type',
   'payment_method.id',
-  'payment_source.id',
-  'payment_source.name'
+  'payment_method.name',
+  'payment_method.payment_source_type',
+  'payment_source.id'
 ]
+
+const shipmentIncludes = [
+  'shipment_line_items.line_item',
+  'available_shipping_methods',
+  'shipping_method'
+]
+
+const shipmentAttributes = [
+  'id',
+  'number',
+  'skus_count',
+  'shipment_line_items.line_item.item_type',
+  'shipment_line_items.line_item.name',
+  'shipment_line_items.line_item.sku_code',
+  'shipment_line_items.line_item.image_url',
+  'shipment_line_items.quantity',
+  'available_shipping_methods.id',
+  'available_shipping_methods.name',
+  'available_shipping_methods.formatted_price_amount',
+  'available_shipping_methods.price_amount_cents',
+  'shipping_method.id',
+  'shipping_method.name',
+  'shipping_method.formatted_price_amount',
+  'shipping_method.price_amount_cents'
+]
+
+const paymentSourceAttributesMap = {
+  stripe_payments: [
+    'id',
+    'client_secret'
+  ],
+  adyen_payments: [
+    'id',
+    'payment_methods'
+  ],
+  braintree_payments: [
+    'id',
+    'client_token'
+  ],
+  paypal_payments: [
+    'id',
+    'approval_url'
+  ],
+  wire_transfers: [
+    'id'
+  ]
+}
+
+const orderDefaults = (order) => {
+  return {
+    billing_address: addressDefaults(order),
+    shipping_address: addressDefaults(order),
+    ship_to_different_address: order.ship_to_different_address || false,
+    ship_to_different_address_required: order.ship_to_different_address_required || false,
+    shipments: [],
+    payment_method: {},
+    payment_source: {}
+  }
+}
 
 const addressDefaults = (order) => {
   return {
@@ -112,18 +176,80 @@ apiClient.interceptors.request.use(config => {
 const getOrder = (orderId) => {
   return apiClient.get('/orders/' + orderId + '?include=' + orderIncludes.join(','))
     .then(response => {
-      var normalizedOrder = normalize(response.data).get(orderAttributes)
-      return _.defaults(normalizedOrder, {
-        billing_address: addressDefaults(normalizedOrder),
-        shipping_address: addressDefaults(normalizedOrder),
-        ship_to_different_address: false,
-        ship_to_different_address_required: false,
-        shipments: [],
-        payment_method: {}
-      })
+      let normalizedOrder = normalize(response.data).get(orderAttributes)
+      return _.defaults(normalizedOrder, orderDefaults({}))
+    })
+}
+
+const updateShipmentShippingMethod = (shipment, shippingMethod) => {
+  return apiClient.patch('/shipments/' + shipment.id + '?include=' + shipmentIncludes.join(','),
+    {
+      data: {
+        type: 'shipments',
+        id: shipment.id,
+        relationships: {
+          shipping_method: {
+            data: {
+              type: 'shipping_methods',
+              id: shippingMethod.id
+            }
+          }
+        }
+      }
+    })
+    .then(response => {
+      return normalize(response.data).get(shipmentAttributes)
+    })
+}
+
+const updateOrderPaymentMethod = (order, paymentMethod) => {
+  return apiClient.patch('/orders/' + order.id + '?include=' + orderIncludes.join(','),
+    {
+      data: {
+        type: 'orders',
+        id: order.id,
+        relationships: {
+          payment_method: {
+            data: {
+              type: 'payment_methods',
+              id: paymentMethod.id
+            }
+          }
+        }
+      }
+    })
+    .then(response => {
+      let normalizedOrder = normalize(response.data).get(orderAttributes)
+      return _.defaults(normalizedOrder, orderDefaults(order))
+    })
+}
+
+const createOrderPaymentSource = (order, paymentMethod, paymentSourceAttributes) => {
+  return apiClient.post(`/${paymentMethod.payment_source_type}`,
+    {
+      data: {
+        type: paymentMethod.payment_source_type,
+        attributes: paymentSourceAttributes,
+        relationships: {
+          order: {
+            data: {
+              type: 'orders',
+              id: order.id
+            }
+          }
+        }
+      }
+    })
+    .then(response => {
+      let attributes = paymentSourceAttributesMap[paymentMethod.payment_source_type]
+      let normalizedPaymentSource = normalize(response.data).get(attributes)
+      return normalizedPaymentSource
     })
 }
 
 export default {
-  getOrder
+  getOrder,
+  updateShipmentShippingMethod,
+  updateOrderPaymentMethod,
+  createOrderPaymentSource
 }

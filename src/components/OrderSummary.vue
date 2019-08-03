@@ -12,9 +12,10 @@
       <OrderSummarySubtotal label="subtotal" :amount="order.formatted_subtotal_amount" />
       <OrderSummarySubtotal label="discount" :amount="order.formatted_discount_amount" />
       <OrderSummarySubtotal label="shipping" :amount="order.formatted_shipping_amount" />
+      <OrderSummarySubtotal label="payment_method" :amount="order.formatted_payment_method_amount" />
       <OrderSummarySubtotal label="taxes" :amount="order.formatted_total_tax_amount" />
       <OrderSummarySubtotal label="order_total" :amount="order.formatted_total_amount_with_taxes" :total="true"/>
-    </div>  
+    </div>
   </div>
 </template>
 
@@ -22,14 +23,9 @@
 import _ from 'lodash'
 import OrderSummaryLineItem from '@/components/OrderSummaryLineItem'
 import OrderSummarySubtotal from '@/components/OrderSummarySubtotal'
+import { mapState } from 'vuex'
 
 export default {
-  props: {
-    order: {
-      type: Object,
-      required: true
-    }
-  },
   components: {
     OrderSummaryLineItem,
     OrderSummarySubtotal
@@ -37,7 +33,8 @@ export default {
   computed: {
     skuLineItems () {
       return _.filter(this.order.line_items, { item_type: 'skus' })
-    }
+    },
+    ...mapState(['order'])
   }
 }
 

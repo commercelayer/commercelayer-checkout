@@ -5,12 +5,12 @@
       <small>Add a payment method and place the order.</small>
     </v-stepper-step>
     <v-stepper-content :step="step">
-      <v-radio-group v-model="order.payment_method.id" class="payment-methods">
+      <v-radio-group v-model="payment_method" class="payment-methods">
         <component
-          v-for="payment_method in order.available_payment_methods"
-          :is="payment_method.payment_source_type"
-          :key="payment_method.id"
-          :payment_method="payment_method"
+          v-for="available_payment_method in order.available_payment_methods"
+          :is="componentType(available_payment_method)"
+          :key="available_payment_method.id"
+          :payment_method="available_payment_method"
           />
       </v-radio-group>
       <v-btn color="primary" @click="placeOrder" :block="isMobile" min-width="50%">Place order</v-btn>
@@ -21,27 +21,24 @@
 <script>
 import _ from 'lodash'
 import { checkoutStepMixin } from '@/mixins/checkoutStepMixin'
-import StripePayment from '@/components/payment_methods/StripePayment'
-import BraintreePayment from '@/components/payment_methods/BraintreePayment'
-import AdyenPayment from '@/components/payment_methods/AdyenPayment'
-import PaypalPayment from '@/components/payment_methods/PaypalPayment'
-import WireTransfer from '@/components/payment_methods/WireTransfer'
-import CreditCard from '@/components/payment_methods/CreditCard'
+import { mapState } from 'vuex'
+import { mapFields } from 'vuex-map-fields'
+
+import stripePayments from '@/components/payment_methods/stripePayments'
+import braintreePayments from '@/components/payment_methods/braintreePayments'
+import adyenPayments from '@/components/payment_methods/adyenPayments'
+import paypalPayments from '@/components/payment_methods/paypalPayments'
+import wireTransfers from '@/components/payment_methods/wireTransfers'
+import creditCards from '@/components/payment_methods/creditCards'
 
 export default {
   components: {
-    StripePayment,
-    BraintreePayment,
-    AdyenPayment,
-    PaypalPayment,
-    WireTransfer,
-    CreditCard
-  },
-  props: {
-    order: {
-      type: Object,
-      required: true
-    }
+    stripePayments,
+    braintreePayments,
+    adyenPayments,
+    paypalPayments,
+    wireTransfers,
+    creditCards
   },
   mixins: [checkoutStepMixin],
   computed: {
@@ -49,9 +46,18 @@ export default {
       return [() => {
         return !_.isEmpty(this.order.available_payment_methods)
       }]
-    }
+    },
+    ...mapState([
+      'order'
+    ]),
+    ...mapFields([
+      'order.payment_method'
+    ])
   },
   methods: {
+    componentType (paymentMethod) {
+      return _.camelCase(paymentMethod.payment_source_type)
+    },
     placeOrder () {
       this.$store.dispatch('setCurrentStep', 1)
     }
@@ -59,6 +65,20 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+  .payment-method {
+    margin-bottom: 1rem;
 
+    .payment-method-fields {
+      margin: 1rem 0rem;
+      padding-top: 1rem;
+      border-top: 1px solid $v-border;
+    }
+  }
+
+  .v-input--selection-controls {
+    .v-input__control {
+      width: 100%;
+    }
+  }
 </style>

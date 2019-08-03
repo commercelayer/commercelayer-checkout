@@ -14,7 +14,7 @@ import countries from '@/data/countries'
 export default {
   computed: {
     autofocusEmail () {
-      return _.isEmpty(this.$store.state.order.customer_email)
+      return _.isEmpty(this.customer_email)
     },
     countries () {
       return countries

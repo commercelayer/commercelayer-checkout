@@ -4,6 +4,7 @@
   "subtotal": "subtotale",
   "discount": "promozioni",
   "shipping": "spedizione",
+  "payment_method": "metodo di pagamento",
   "taxes": "tasse",
   "order_total": "totale ordine"
 }

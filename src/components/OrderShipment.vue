@@ -9,10 +9,11 @@
       />
     <v-radio-group v-model="shipment.shipping_method">
       <v-radio
-        v-for="shipping_method in shipment.available_shipping_methods"
+        v-for="shipping_method in sortedAvailableShippingMethods"
         :key="shipping_method.id"
         :label="shippingMethodLabel(shipping_method)"
         :value="shipping_method"
+        @change="handleChange(shipping_method)"
       ></v-radio>
     </v-radio-group>
   </div>
@@ -21,6 +22,7 @@
 <script>
 import _ from 'lodash'
 import OrderShipmentLineItem from '@/components/OrderShipmentLineItem'
+import { mapState } from 'vuex'
 
 export default {
   components: {
@@ -43,12 +45,26 @@ export default {
   methods: {
     shippingMethodLabel: shippingMethod => {
       return `${shippingMethod.name} (${shippingMethod.formatted_price_amount})`
+    },
+    handleChange (shippingMethod) {
+      let payload = {
+        order: this.order,
+        shipment: this.shipment,
+        shippingMethod: shippingMethod
+      }
+      this.$store.dispatch('setShipmentShippingMethod', payload)
     }
+  },
+  computed: {
+    sortedAvailableShippingMethods () {
+      return _.sortBy(this.shipment.available_shipping_methods, ['price_amount_cents'])
+    },
+    ...mapState(['order'])
   }
 }
 </script>
 
-<style>
+<style lang="scss">
   .v-divider {
     margin-bottom: 1rem;
   }

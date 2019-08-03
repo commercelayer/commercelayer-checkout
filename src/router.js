@@ -20,8 +20,7 @@ const router = new Router({
       component: Layout,
       props: true,
       beforeEnter (routeTo, routeFrom, next) {
-        store.dispatch('setOrder', routeTo.params.order_id).then(order => {
-          routeTo.params.order = order
+        store.dispatch('setOrder', routeTo.params.order_id).then(() => {
           next()
         })
       },

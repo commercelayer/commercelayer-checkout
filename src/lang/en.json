@@ -4,6 +4,7 @@
   "subtotal": "subtotal",
   "discount": "discount",
   "shipping": "shipping",
+  "payment_method": "payment method",
   "taxes": "taxes",
   "order_total": "order total"
 }
