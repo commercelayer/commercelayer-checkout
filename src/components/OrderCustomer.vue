@@ -1,7 +1,13 @@
 <template>
   <v-layout row wrap>
     <v-flex xs12 px-2 py-1>
-      <v-text-field label="Email" v-model="customer_email" :autofocus="autofocusEmail"></v-text-field>
+      <v-text-field
+        label="Email"
+        v-model="customer_email"
+        :autofocus="autofocusEmail"
+        :error-messages="errorMessages"
+        @blur="handleBlur()">
+        </v-text-field>
     </v-flex>
   </v-layout>
 </template>
@@ -10,6 +16,7 @@
 import _ from 'lodash'
 import { mapFields } from 'vuex-map-fields'
 import countries from '@/data/countries'
+import { required, email } from 'vuelidate/lib/validators'
 
 export default {
   computed: {
@@ -18,6 +25,13 @@ export default {
     },
     countries () {
       return countries
+    },
+    errorMessages () {
+      const errors = []
+      if (!this.$v.customer_email.$dirty) return errors
+      !this.$v.customer_email.email && errors.push('Must be valid email')
+      !this.$v.customer_email.required && errors.push('Can\'t be blank')
+      return errors
     },
     ...mapFields([
       'order.customer_email',
@@ -31,6 +45,14 @@ export default {
       'order.billing_address.state_code',
       'order.billing_address.country_code'
     ])
+  },
+  validations: {
+    customer_email: { required, email }
+  },
+  methods: {
+    handleBlur () {
+      this.$v.customer_email.$touch()
+    }
   }
 }
 </script>
