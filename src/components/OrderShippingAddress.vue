@@ -73,6 +73,7 @@
           @blur="handleBlur('phone')">
         </v-text-field>
       </v-flex>
+      <v-flex xs12 py-2></v-flex>
     </template>
   </v-layout>
 </template>
@@ -106,4 +107,7 @@ export default {
 </script>
 
 <style>
+  .shipping-address {
+    margin-bottom: 1rem;
+  }
 </style>

@@ -34,18 +34,31 @@ export default {
 
 <style lang="scss">
   .step-wrapper {
-    &:not(:last-child) > .v-stepper__content {
-      border-left: 1px solid $v-border;
+    .v-stepper__content {
+      margin-left: 0;
+
+      .v-subheader {
+        padding: 0;
+      }
     }
-    button {
-      margin: 2rem 0;
-      min-width: 50%;
-    }
-    .v-subheader {
-      padding: 0;
-    }
-    .payment-methods {
-      margin-bottom: 1rem;
+  }
+  .sm-and-up {
+    .step-wrapper {
+      .v-stepper__content {
+        margin: -8px -36px -16px 36px;
+        padding: 16px 60px 16px 23px;
+      }
+      &:not(:last-child) > .v-stepper__content {
+        border-left: 1px solid $v-border;
+      }
+      button {
+        margin: 1rem 0 0;
+        min-width: 50%;
+
+        &.place-order {
+          margin-top: 0;
+        }
+      }
     }
   }
 </style>

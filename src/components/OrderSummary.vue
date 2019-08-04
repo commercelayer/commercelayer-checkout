@@ -1,20 +1,27 @@
 <template>
   <div class="order-summary">
-    <h2>{{ $t('order') | capitalize }} #{{ order.number }} ({{ order.skus_count }} {{ $tc('item', order.skus_count)}})</h2>
-    <div class="line-items">
-      <OrderSummaryLineItem
-        v-for="line_item in skuLineItems"
-        :line_item="line_item"
-        :key="line_item.id"
-        />
-    </div>
-    <div class="subtotals">
-      <OrderSummarySubtotal label="subtotal" :amount="order.formatted_subtotal_amount" />
-      <OrderSummarySubtotal label="discount" :amount="order.formatted_discount_amount" />
-      <OrderSummarySubtotal label="shipping" :amount="order.formatted_shipping_amount" />
-      <OrderSummarySubtotal label="payment_method" :amount="order.formatted_payment_method_amount" />
-      <OrderSummarySubtotal label="taxes" :amount="order.formatted_total_tax_amount" />
-      <OrderSummarySubtotal label="order_total" :amount="order.formatted_total_amount_with_taxes" :total="true"/>
+    <h2 class="order-summary-title">
+      {{ $t('order') | capitalize }} #{{ order.number }} ({{ order.skus_count }} {{ $tc('item', order.skus_count)}})
+      <span class="view-cart-wrap">
+        <a @click="toggleCart()">{{ viewCartLabel }}</a>
+      </span>  
+    </h2>
+    <div class="order-summary-content" v-show="viewCart">
+      <div class="line-items">
+        <OrderSummaryLineItem
+          v-for="line_item in skuLineItems"
+          :line_item="line_item"
+          :key="line_item.id"
+          />
+      </div>
+      <div class="subtotals">
+        <OrderSummarySubtotal label="subtotal" :amount="order.formatted_subtotal_amount" />
+        <OrderSummarySubtotal label="discount" :amount="order.formatted_discount_amount" />
+        <OrderSummarySubtotal label="shipping" :amount="order.formatted_shipping_amount" />
+        <OrderSummarySubtotal label="payment_method" :amount="order.formatted_payment_method_amount" />
+        <OrderSummarySubtotal label="taxes" :amount="order.formatted_total_tax_amount" />
+        <OrderSummarySubtotal label="order_total" :amount="order.formatted_total_amount_with_taxes" :total="true"/>
+      </div>
     </div>
   </div>
 </template>
@@ -26,26 +33,58 @@ import OrderSummarySubtotal from '@/components/OrderSummarySubtotal'
 import { mapState } from 'vuex'
 
 export default {
+  data () {
+    return {
+      viewCart: false
+    }
+  },
   components: {
     OrderSummaryLineItem,
     OrderSummarySubtotal
   },
   computed: {
+    viewCartLabel () {
+      return this.viewCart ? "hide cart" : "view cart"
+    },
     skuLineItems () {
       return _.filter(this.order.line_items, { item_type: 'skus' })
     },
     ...mapState(['order'])
+  },
+  methods: {
+    toggleCart () {
+      this.viewCart = !this.viewCart
+    }
+  },
+  mounted () {
+    this.viewCart = this.$vuetify.breakpoint.mdAndUp
   }
 }
 
 </script>
 
 <style lang="scss" scoped>
-  .order-summary {
-    padding: 2rem;
 
+  .view-cart-wrap {
+    float: right;
+  }
+
+  .order-summary {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+  .order-summary-content {
     .line-items {
       margin: 2rem 0;
+    }
+  }
+
+  .md-and-up {
+    .view-cart-wrap {
+      display: none;
+    }
+    .order-summary {
+      padding: 2rem;
     }
   }
 </style>

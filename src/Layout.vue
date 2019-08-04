@@ -1,14 +1,14 @@
 <template>
-  <v-content id="layout">
+  <v-content id="layout" :class="{ 'sm-and-up': $vuetify.breakpoint.smAndUp, 'md-and-up': $vuetify.breakpoint.mdAndUp }">
     <v-container>
       <v-img :src="logoUrl" :width="logoWidth"/>
     </v-container>
     <v-container>
       <v-layout wrap>
-        <v-flex xs12 md7>
+        <v-flex xs12 md7 order-xs2 order-md1>
           <router-view></router-view>
         </v-flex>
-        <v-flex xs12 md5>
+        <v-flex xs12 md5 order-xs1 order-md2>
           <OrderSummary />
         </v-flex>
       </v-layout>

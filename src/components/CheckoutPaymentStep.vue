@@ -13,7 +13,14 @@
           :payment_method="available_payment_method"
           />
       </v-radio-group>
-      <v-btn color="primary" @click="placeOrder" :block="isMobile" min-width="50%">Place order</v-btn>
+      <v-btn
+        color="primary"
+        @click="placeOrder"
+        :block="isMobile"
+        min-width="50%"
+        class="place-order">
+          Place order
+      </v-btn>
     </v-stepper-content>
   </div>
 </template>
