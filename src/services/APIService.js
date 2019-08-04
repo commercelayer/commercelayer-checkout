@@ -36,6 +36,7 @@ const orderAttributes = [
   'line_items.formatted_unit_amount',
   'line_items.quantity',
   'line_items.formatted_total_amount',
+  'billing_address.id',
   'billing_address.first_name',
   'billing_address.last_name',
   'billing_address.line_1',
@@ -47,6 +48,7 @@ const orderAttributes = [
   'billing_address.phone',
   'billing_address.billing_info',
   'billing_address.notes',
+  'shipping_address.id',
   'shipping_address.first_name',
   'shipping_address.last_name',
   'shipping_address.line_1',
@@ -80,6 +82,21 @@ const orderAttributes = [
   'payment_method.name',
   'payment_method.payment_source_type',
   'payment_source.id'
+]
+
+const addressAttributes = [
+  'id',
+  'first_name',
+  'last_name',
+  'line_1',
+  'line_2',
+  'city',
+  'zip_code',
+  'state_code',
+  'country_code',
+  'phone',
+  'billing_info',
+  'notes'
 ]
 
 const shipmentIncludes = [
@@ -202,6 +219,121 @@ const updateShipmentShippingMethod = (shipment, shippingMethod) => {
     })
 }
 
+const updateOrderCustomerEmail = (order) => {
+  return apiClient.patch('/orders/' + order.id + '?include=' + orderIncludes.join(','),
+    {
+      data: {
+        type: 'orders',
+        id: order.id,
+        attributes: {
+          customer_email: order.customer_email
+        }
+      }
+    })
+    .then(response => {
+      let normalizedOrder = normalize(response.data).get(orderAttributes)
+      return _.defaults(normalizedOrder, orderDefaults(order))
+    })
+}
+
+const createAddress = (address) => {
+  return apiClient.post(`/addresses`,
+    {
+      data: {
+        type: 'addresses',
+        attributes: _.omit(address, ['id'])
+      }
+    })
+    .then(response => {
+      return normalize(response.data).get(addressAttributes)
+    })
+}
+
+const updateAddress = (address) => {
+  return apiClient.patch(`/addresses/${address.id}`,
+    {
+      data: {
+        type: 'addresses',
+        id: address.id,
+        attributes: _.omit(address, ['id'])
+      }
+    })
+    .then(response => {
+      return normalize(response.data).get(addressAttributes)
+    })
+}
+
+const updateOrCreateAddress = (address) => {
+  return address.id ? updateAddress(address) : createAddress(address)
+}
+
+const updateOrderBillingAddress = (order, billingAddress) => {
+  return apiClient.patch('/orders/' + order.id + '?include=' + orderIncludes.join(','),
+    {
+      data: {
+        type: 'orders',
+        id: order.id,
+        attributes: {
+          _shipping_address_same_as_billing: !order.ship_to_different_address
+        },
+        relationships: {
+          billing_address: {
+            data: {
+              type: 'addresses',
+              id: billingAddress.id
+            }
+          }
+        }
+      }
+    })
+    .then(response => {
+      let normalizedOrder = normalize(response.data).get(orderAttributes)
+      return _.defaults(normalizedOrder, orderDefaults(order))
+    })
+}
+
+const updateOrderShippingAddress = (order, shippingAddress) => {
+  return apiClient.patch('/orders/' + order.id + '?include=' + orderIncludes.join(','),
+    {
+      data: {
+        type: 'orders',
+        id: order.id,
+        relationships: {
+          shipping_address: {
+            data: {
+              type: 'addresses',
+              id: shippingAddress.id
+            }
+          }
+        }
+      }
+    })
+    .then(response => {
+      let normalizedOrder = normalize(response.data).get(orderAttributes)
+      return _.defaults(normalizedOrder, orderDefaults(order))
+    })
+}
+
+const updateOrderAddresses = (order) => {
+  return updateOrCreateAddress(order.billing_address)
+  .then(billingAddress => {
+    return updateOrderBillingAddress(order, billingAddress)
+    .then((updatedOrder) => {
+      if (order.ship_to_different_address) {
+        return updateOrCreateAddress(order.shipping_address)
+        .then(shippingAddress => {
+          return updateOrderShippingAddress(order, shippingAddress)
+          .then(updatedOrder => {
+            return _.defaults(updatedOrder, orderDefaults(updatedOrder))
+          })
+        })
+      } else {
+        return _.defaults(updatedOrder, orderDefaults(updatedOrder))
+      }
+    })
+  })
+}
+
 const updateOrderPaymentMethod = (order, paymentMethod) => {
   return apiClient.patch('/orders/' + order.id + '?include=' + orderIncludes.join(','),
     {
@@ -249,6 +381,8 @@ const createOrderPaymentSource = (order, paymentMethod, paymentSourceAttributes)
 
 export default {
   getOrder,
+  updateOrderCustomerEmail,
+  updateOrderAddresses,
   updateShipmentShippingMethod,
   updateOrderPaymentMethod,
   createOrderPaymentSource

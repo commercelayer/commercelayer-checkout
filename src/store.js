@@ -8,7 +8,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    current_step: 3,
+    current_step: 1,
     validations: {
       invalid_customer: false,
       invalid_billing_address: false,
@@ -39,6 +39,30 @@ export default new Vuex.Store({
         })
         .catch(error => {
           console.log('Set order error:', error.response)
+        })
+    },
+    setOrderCustomerEmail ({ commit }, order) {
+      NProgress.start()
+      return APIService.updateOrderCustomerEmail(order)
+        .then(order => {
+          commit('updateOrder', order)
+          NProgress.done()
+          return order
+        })
+        .catch(error => {
+          console.log('Set order customer email error:', error.response)
+        })
+    },
+    setOrderAddresses ({ commit }, order) {
+      NProgress.start()
+      return APIService.updateOrderAddresses(order)
+        .then(order => {
+          commit('updateOrder', order)
+          NProgress.done()
+          return order
+        })
+        .catch(error => {
+          console.log('Set order addresses error:', error.response)
         })
     },
     setShipmentShippingMethod ({ dispatch }, payload) {
