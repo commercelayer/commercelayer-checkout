@@ -6,6 +6,7 @@
         v-model="customer_email"
         :autofocus="autofocusEmail"
         :error-messages="errorMessages"
+        @input="handleInput()"
         @blur="handleBlur()">
         </v-text-field>
     </v-flex>
@@ -15,16 +16,12 @@
 <script>
 import _ from 'lodash'
 import { mapFields } from 'vuex-map-fields'
-import countries from '@/data/countries'
 import { required, email } from 'vuelidate/lib/validators'
 
 export default {
   computed: {
     autofocusEmail () {
       return _.isEmpty(this.customer_email)
-    },
-    countries () {
-      return countries
     },
     errorMessages () {
       const errors = []
@@ -34,25 +31,26 @@ export default {
       return errors
     },
     ...mapFields([
-      'order.customer_email',
-      'order.billing_address.phone',
-      'order.billing_address.first_name',
-      'order.billing_address.last_name',
-      'order.billing_address.line_1',
-      'order.billing_address.line_2',
-      'order.billing_address.zip_code',
-      'order.billing_address.city',
-      'order.billing_address.state_code',
-      'order.billing_address.country_code'
+      'validations.invalid_customer',
+      'order.customer_email'
     ])
   },
   validations: {
     customer_email: { required, email }
   },
   methods: {
+    updateValidations () {
+      this.invalid_customer = this.$v.$invalid
+    },
+    handleInput () {
+      this.updateValidations()
+    },
     handleBlur () {
       this.$v.customer_email.$touch()
     }
+  },
+  mounted () {
+    this.updateValidations()
   }
 }
 </script>

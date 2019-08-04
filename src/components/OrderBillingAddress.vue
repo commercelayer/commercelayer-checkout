@@ -1,18 +1,20 @@
 <template>
   <v-layout row wrap>
-    <v-flex xs12 sm6 px-2 py-1>
+    <v-flex xs6 px-2 py-1>
       <v-text-field
         label="First name"
         v-model="first_name"
         :error-messages="errorMessages('first_name')"
+        @input="handleInput()"
         @blur="handleBlur('first_name')">
       </v-text-field>
     </v-flex>
-    <v-flex xs12 sm6 px-2 py-1>
+    <v-flex xs6 px-2 py-1>
       <v-text-field
         label="Last name"
         v-model="last_name"
         :error-messages="errorMessages('last_name')"
+        @input="handleInput()"
         @blur="handleBlur('last_name')">
       </v-text-field>
     </v-flex>
@@ -21,40 +23,47 @@
         label="Address"
         v-model="line_1"
         :error-messages="errorMessages('line_1')"
+        @input="handleInput()"
         @blur="handleBlur('line_1')">
       </v-text-field>
     </v-flex>
-    <v-flex xs12 sm6 px-2 py-1>
+    <v-flex xs6 px-2 py-1>
       <v-text-field
         label="City"
         v-model="city"
         :error-messages="errorMessages('city')"
+        @input="handleInput()"
         @blur="handleBlur('city')">
       </v-text-field>
     </v-flex>
-    <v-flex xs12 sm6 px-2 py-1>
+    <v-flex xs6 px-2 py-1>
       <v-select
         label="Country"
         :items="countries"
         item-text="name"
         item-value="code"
         v-model="country_code"
+        :error-messages="errorMessages('country_code')"
+        @input="handleInput()"
+        @blur="handleBlur('country_code')"
         @change="updateShipToDifferentAddressRequired">
         </v-select>
     </v-flex>
-    <v-flex xs12 sm6 px-2 py-1>
+    <v-flex xs6 px-2 py-1>
       <v-text-field
         label="State"
         v-model="state_code"
         :error-messages="errorMessages('state_code')"
+        @input="handleInput()"
         @blur="handleBlur('state_code')">
       </v-text-field>
     </v-flex>
-    <v-flex xs12 sm6 px-2 py-1>
+    <v-flex xs6 px-2 py-1>
       <v-text-field
         label="Zip code"
         v-model="zip_code"
         :error-messages="errorMessages('zip_code')"
+        @input="handleInput()"
         @blur="handleBlur('zip_code')">
       </v-text-field>
     </v-flex>
@@ -63,6 +72,7 @@
         label="Phone"
         v-model="phone"
         :error-messages="errorMessages('phone')"
+        @input="handleInput()"
         @blur="handleBlur('phone')">
       </v-text-field>
     </v-flex>
@@ -78,6 +88,7 @@ export default {
   mixins: [addressMixin],
   computed: {
     ...mapFields([
+      'validations.invalid_billing_address',
       'order.shipping_country_code_lock',
       'order.ship_to_different_address',
       'order.ship_to_different_address_required',
@@ -92,6 +103,12 @@ export default {
     ])
   },
   methods: {
+    updateAddressInvalid () {
+      this.invalid_billing_address = this.$v.$invalid
+    },
+    handleInput () {
+      this.updateAddressInvalid()
+    },
     updateShipToDifferentAddressRequired () {
       if (!_.isEmpty(this.shipping_country_code_lock)) {
         let isRequired = this.shipping_country_code_lock !== this.country_code
@@ -99,6 +116,9 @@ export default {
         this.ship_to_different_address = isRequired
       }
     }
+  },
+  mounted () {
+    this.updateAddressInvalid()
   }
 }
 </script>

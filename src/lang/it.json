@@ -6,5 +6,8 @@
   "shipping": "spedizione",
   "payment_method": "metodo di pagamento",
   "taxes": "tasse",
-  "order_total": "totale ordine"
+  "order_total": "totale ordine",
+  "your_cart": "il tuo carrello",
+  "view_cart": "mostra carrello",
+  "hide_cart": "nascondi carrello"
 }

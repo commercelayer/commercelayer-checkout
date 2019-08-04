@@ -13,7 +13,13 @@
         :count="index+1"
         :total="shipments.length"
         />
-      <v-btn color="primary" @click="nextStep" :block="isMobile">Continue to payment</v-btn>
+      <v-btn
+        color="primary"
+        @click="nextStep"
+        :block="isMobile"
+        :disabled="disabled">
+        Continue to payment
+      </v-btn>
     </v-stepper-content>
   </div>
 </template>
@@ -22,6 +28,7 @@
 import _ from 'lodash'
 import { checkoutStepMixin } from '@/mixins/checkoutStepMixin'
 import { mapMultiRowFields } from 'vuex-map-fields'
+import { mapState } from 'vuex'
 import OrderShipment from '@/components/OrderShipment'
 
 export default {
@@ -38,6 +45,10 @@ export default {
         return true
       }]
     },
+    disabled () {
+      return this.validations.invalid_shipments
+    },
+    ...mapState(['validations']),
     ...mapMultiRowFields([
       'order.shipments'
     ])

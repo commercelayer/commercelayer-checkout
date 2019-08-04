@@ -19,6 +19,7 @@ export default {
   methods: {
     setupPayment () {
       console.log(this.order.payment_source)
+      this.updateValidations()
     }
   },
   mounted () {

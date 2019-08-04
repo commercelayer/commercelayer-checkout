@@ -12,6 +12,7 @@ export const addressMixin = {
     last_name: { required },
     line_1: { required },
     city: { required },
+    country_code: { required },
     state_code: { required },
     zip_code: { required },
     phone: { required }

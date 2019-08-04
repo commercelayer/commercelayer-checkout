@@ -17,6 +17,7 @@
         color="primary"
         @click="placeOrder"
         :block="isMobile"
+        :disabled="disabled"
         min-width="50%"
         class="place-order">
           Place order
@@ -28,7 +29,6 @@
 <script>
 import _ from 'lodash'
 import { checkoutStepMixin } from '@/mixins/checkoutStepMixin'
-import { mapState } from 'vuex'
 import { mapFields } from 'vuex-map-fields'
 
 import stripePayments from '@/components/payment_methods/stripePayments'
@@ -54,10 +54,12 @@ export default {
         return !_.isEmpty(this.order.available_payment_methods)
       }]
     },
-    ...mapState([
-      'order'
-    ]),
+    disabled () {
+      return this.invalid_payment_method
+    },
     ...mapFields([
+      'validations.invalid_payment_method',
+      'order',
       'order.payment_method'
     ])
   },
@@ -66,7 +68,7 @@ export default {
       return _.camelCase(paymentMethod.payment_source_type)
     },
     placeOrder () {
-      this.$store.dispatch('setCurrentStep', 1)
+      this.current_step = 1
     }
   }
 }

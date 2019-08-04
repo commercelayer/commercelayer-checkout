@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import { mapState } from 'vuex'
+import { mapFields } from 'vuex-map-fields'
 
 export const paymentMethodMixin = {
   props: {
@@ -9,6 +10,9 @@ export const paymentMethodMixin = {
     }
   },
   methods: {
+    updateValidations () {
+      this.invalid_payment_method = _.isEmpty(this.order.payment_method)
+    },
     paymentSourceAttributes () {
       return {}
     },
@@ -35,6 +39,10 @@ export const paymentMethodMixin = {
     selected () {
       return _.isEqual(this.payment_method, this.order.payment_method)
     },
-    ...mapState(['order'])
+    ...mapState(['order']),
+    ...mapFields(['validations.invalid_payment_method'])
+  },
+  mounted () {
+    this.updateValidations()
   }
 }

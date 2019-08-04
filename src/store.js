@@ -8,7 +8,14 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    currentStep: 1,
+    current_step: 3,
+    validations: {
+      invalid_customer: false,
+      invalid_billing_address: false,
+      invalid_shipping_address: false,
+      invalid_shipments: false,
+      invalid_payment_method: false
+    },
     order: {}
   },
   getters: {
@@ -17,9 +24,6 @@ export default new Vuex.Store({
   mutations: {
     updateOrder (state, order) {
       state.order = order
-    },
-    updateCurrentStep (state, step) {
-      state.currentStep = step
     },
     updateOrderPaymentSource (state, paymentSource) {
       state.order.payment_source = paymentSource
@@ -36,9 +40,6 @@ export default new Vuex.Store({
         .catch(error => {
           console.log('Set order error:', error.response)
         })
-    },
-    setCurrentStep ({ commit }, step) {
-      commit('updateCurrentStep', step)
     },
     setShipmentShippingMethod ({ dispatch }, payload) {
       NProgress.start()

@@ -1,3 +1,4 @@
+import { mapFields } from 'vuex-map-fields'
 import { mapState } from 'vuex'
 
 export const checkoutStepMixin = {
@@ -9,7 +10,7 @@ export const checkoutStepMixin = {
   },
   computed: {
     complete () {
-      return this.currentStep > this.step
+      return this.current_step > this.step
     },
     isMobile () {
       return this.$vuetify.breakpoint.xs
@@ -17,11 +18,12 @@ export const checkoutStepMixin = {
     editIcon () {
       return this.$vuetify.icons.complete
     },
-    ...mapState(['currentStep'])
+    ...mapState(['validations']),
+    ...mapFields(['current_step'])
   },
   methods: {
     nextStep () {
-      this.$store.dispatch('setCurrentStep', (this.step + 1))
+      this.current_step = (this.step + 1)
     }
   }
 }

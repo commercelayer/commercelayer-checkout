@@ -6,5 +6,8 @@
   "shipping": "shipping",
   "payment_method": "payment method",
   "taxes": "taxes",
-  "order_total": "order total"
+  "order_total": "order total",
+  "your_cart": "your shopping cart",
+  "view_cart": "view shopping cart",
+  "hide_cart": "hide shopping cart"
 }

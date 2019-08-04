@@ -1,12 +1,20 @@
 <template>
   <div class="order-summary">
     <h2 class="order-summary-title">
-      {{ $t('order') | capitalize }} #{{ order.number }} ({{ order.skus_count }} {{ $tc('item', order.skus_count)}})
-      <span class="view-cart-wrap">
-        <a @click="toggleCart()">{{ viewCartLabel }}</a>
-      </span>  
+      <a v-if="viewCartLink" @click="toggleCart()">
+        {{ viewCartLabel | capitalize }}
+      </a>
+      <span v-if="!viewCartLink">
+        {{ $t('your_cart') | capitalize }}
+      </span>
+      <span class="order-summary-title-total">
+        {{ order.formatted_total_amount_with_taxes }}
+      </span>
     </h2>
     <div class="order-summary-content" v-show="viewCart">
+      <v-subheader>
+        {{ $t('order') | capitalize }} #{{ order.number }} ({{ order.skus_count }} {{ $tc('item', order.skus_count)}})
+      </v-subheader>
       <div class="line-items">
         <OrderSummaryLineItem
           v-for="line_item in skuLineItems"
@@ -43,8 +51,11 @@ export default {
     OrderSummarySubtotal
   },
   computed: {
+    viewCartLink () {
+      return this.$vuetify.breakpoint.smAndDown
+    },
     viewCartLabel () {
-      return this.viewCart ? "hide cart" : "view cart"
+      return this.viewCart ? this.$t('hide_cart') : this.$t('view_cart')
     },
     skuLineItems () {
       return _.filter(this.order.line_items, { item_type: 'skus' })
@@ -64,8 +75,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-  .view-cart-wrap {
+  .order-summary-title-total {
     float: right;
   }
 
@@ -74,15 +84,18 @@ export default {
     margin-bottom: 1rem;
   }
   .order-summary-content {
+    margin-top: 1rem;
+    border-top: 1px solid $v-border;
+
+    .v-subheader {
+      padding: 0;
+    }
     .line-items {
-      margin: 2rem 0;
+      margin: 1rem 0;
     }
   }
 
   .md-and-up {
-    .view-cart-wrap {
-      display: none;
-    }
     .order-summary {
       padding: 2rem;
     }

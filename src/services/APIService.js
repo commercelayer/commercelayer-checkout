@@ -177,7 +177,7 @@ const getOrder = (orderId) => {
   return apiClient.get('/orders/' + orderId + '?include=' + orderIncludes.join(','))
     .then(response => {
       let normalizedOrder = normalize(response.data).get(orderAttributes)
-      return _.defaults(normalizedOrder, orderDefaults({}))
+      return _.defaults(normalizedOrder, orderDefaults(normalizedOrder))
     })
 }
 

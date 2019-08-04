@@ -24,6 +24,7 @@ export default {
     },
     setupPayment () {
       console.log(this.order.payment_source)
+      this.updateValidations()
     }
   }
 }

@@ -9,7 +9,13 @@
       <OrderCustomer />
       <OrderBillingAddress />
       <OrderShippingAddress />
-      <v-btn color="primary" @click="nextStep" :block="isMobile">Continue to delivery</v-btn>
+      <v-btn
+        color="primary"
+        @click="nextStep"
+        :block="isMobile"
+        :disabled="disabled">
+          Continue to delivery
+      </v-btn>
     </v-stepper-content>
   </div>
 </template>
@@ -26,7 +32,12 @@ export default {
     OrderBillingAddress,
     OrderShippingAddress
   },
-  mixins: [checkoutStepMixin]
+  mixins: [checkoutStepMixin],
+  computed: {
+    disabled () {
+      return this.validations.invalid_customer || this.validations.invalid_billing_address || this.validations.invalid_shipping_address
+    }
+  }
 }
 </script>
 

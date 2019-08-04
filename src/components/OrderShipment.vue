@@ -1,6 +1,8 @@
 <template>
   <div class="shipment">
-    <v-subheader>Shipment {{count}} of {{total}} ({{ shipment.skus_count }} {{ $tc('item', shipment.skus_count)}})</v-subheader>
+    <v-subheader>
+      Shipment {{count}} of {{total}} ({{ shipment.skus_count }} {{ $tc('item', shipment.skus_count)}})
+    </v-subheader>
     <v-divider></v-divider>
     <OrderShipmentLineItem
       v-for="shipment_line_item in shipment.shipment_line_items"
@@ -23,6 +25,7 @@
 import _ from 'lodash'
 import OrderShipmentLineItem from '@/components/OrderShipmentLineItem'
 import { mapState } from 'vuex'
+import { mapFields } from 'vuex-map-fields'
 
 export default {
   components: {
@@ -43,6 +46,11 @@ export default {
     }
   },
   methods: {
+    updateValidations () {
+      this.invalid_shipments = !_.isEmpty(_.find(this.order.shipments, (shipment) => {
+        return _.isEmpty(shipment.shipping_method)
+      }))
+    },
     shippingMethodLabel: shippingMethod => {
       return `${shippingMethod.name} (${shippingMethod.formatted_price_amount})`
     },
@@ -53,13 +61,20 @@ export default {
         shippingMethod: shippingMethod
       }
       this.$store.dispatch('setShipmentShippingMethod', payload)
+        .then(() => {
+          this.updateValidations()
+        })
     }
   },
   computed: {
     sortedAvailableShippingMethods () {
       return _.sortBy(this.shipment.available_shipping_methods, ['price_amount_cents'])
     },
-    ...mapState(['order'])
+    ...mapState(['order']),
+    ...mapFields(['validations.invalid_shipments'])
+  },
+  mounted () {
+    this.updateValidations()
   }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <v-stepper v-model="currentStep" vertical>
+  <v-stepper v-model="current_step" vertical>
     <CheckoutCustomerStep :step=1 />
     <CheckoutDeliveryStep :step=2 />
     <CheckoutPaymentStep :step=3 />
@@ -10,7 +10,7 @@
 import CheckoutCustomerStep from '@/components/CheckoutCustomerStep'
 import CheckoutDeliveryStep from '@/components/CheckoutDeliveryStep'
 import CheckoutPaymentStep from '@/components/CheckoutPaymentStep'
-import { mapState } from 'vuex'
+import { mapFields } from 'vuex-map-fields'
 
 export default {
   components: {
@@ -19,15 +19,10 @@ export default {
     CheckoutPaymentStep
   },
   computed: {
-    currentStep: {
-      get () {
-        return this.$store.state.currentStep
-      },
-      set (value) {
-        this.$store.dispatch('setCurrentStep', value)
-      }
-    },
-    ...mapState(['order'])
+    ...mapFields([
+      'current_step',
+      'order'
+    ])
   }
 }
 </script>
