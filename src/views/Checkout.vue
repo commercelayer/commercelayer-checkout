@@ -28,16 +28,28 @@ export default {
 </script>
 
 <style lang="scss">
+  .v-subheader {
+    padding: 0;
+  }
+
+  .step-summary {
+    padding: 0 2rem;
+  }
+
   .step-wrapper {
     .v-stepper__content {
       margin-left: 0;
-
-      .v-subheader {
-        padding: 0;
-      }
     }
   }
   .sm-and-up {
+    .step-summary {
+      margin-top: 16px;
+      margin-left: 36px;
+      padding-left: 24px;
+      padding-bottom: 16px;
+      border-left: 1px solid $v-border;
+    }
+
     .step-wrapper {
       .v-stepper__content {
         margin: -8px -36px -16px 36px;

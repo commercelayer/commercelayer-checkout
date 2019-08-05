@@ -21,6 +21,17 @@
           {{ $t('steps.delivery.button') }}
       </v-btn>
     </v-stepper-content>
+
+    <div class="step-summary" v-if="complete">
+      <ShipmentSummary 
+        v-for="(shipment, index) in shipments"
+        :shipment="shipment"
+        :key="shipment.id"
+        :count="index+1"
+        :total="shipments.length"
+        />
+    </div>
+
   </div>
 </template>
 
@@ -30,10 +41,12 @@ import { checkoutStepMixin } from '@/mixins/checkoutStepMixin'
 import { mapMultiRowFields } from 'vuex-map-fields'
 import { mapState } from 'vuex'
 import OrderShipment from '@/components/OrderShipment'
+import ShipmentSummary from '@/components/ShipmentSummary'
 
 export default {
   components: {
-    OrderShipment
+    OrderShipment,
+    ShipmentSummary
   },
   mixins: [checkoutStepMixin],
   computed: {
@@ -56,6 +69,5 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
 </style>

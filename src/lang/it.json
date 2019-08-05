@@ -15,6 +15,7 @@
     "of": "di",
     "quantity": "quantità",
     "shipment": "spedizione",
+    "ship_to": "spedisci a",
     "ship_to_different_address": "spedisci ad un altro indirizzo",
     "view_cart": "mostra carrello"
   },  
@@ -48,17 +49,17 @@
   "steps": {
     "customer": {
       "title": "cliente",
-      "hint": "aggiungi le tue informazioni personali e l'indirizzo di spedizione",
+      "hint": "informazioni personali e indirizzo di spedizione",
       "button": "continua alla consegna"
     },
     "delivery": {
       "title": "consegna",
-      "hint": "seleziona un metodo di spedizione per ogni consegna",
+      "hint": "riepilogo spedizioni e metodi di consegna",
       "button": "continua al pagamento"
     },
     "payment": {
       "title": "pagamento",
-      "hint": "aggiungi un metodo di pagamento e conferma l'ordine",
+      "hint": "metodo di pagamento e conferma ordine",
       "button": "conferma ordine"
     }
   }

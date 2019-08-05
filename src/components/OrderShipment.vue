@@ -2,7 +2,6 @@
   <div class="shipment">
     <v-subheader>
       {{ $t('generic.shipment') | capitalize }} {{count}} {{ $t('generic.of') }} {{total}}
-      ({{ shipment.skus_count }} {{ $tc('generic.item', shipment.skus_count)}})
     </v-subheader>
     <v-divider></v-divider>
     <OrderShipmentLineItem
@@ -25,6 +24,7 @@
 <script>
 import _ from 'lodash'
 import OrderShipmentLineItem from '@/components/OrderShipmentLineItem'
+
 import { mapState } from 'vuex'
 import { mapFields } from 'vuex-map-fields'
 
@@ -53,7 +53,7 @@ export default {
       }))
     },
     shippingMethodLabel: shippingMethod => {
-      return `${shippingMethod.name} (${shippingMethod.formatted_price_amount})`
+      return `${shippingMethod.name} - ${shippingMethod.formatted_price_amount}`
     },
     handleChange (shippingMethod) {
       let payload = {

@@ -15,6 +15,7 @@
     "of": "of",
     "quantity": "quantity",
     "shipment": "shipment",
+    "ship_to": "ship to",
     "ship_to_different_address": "ship to different address",
     "view_cart": "view shopping cart"
   },  
@@ -48,17 +49,17 @@
   "steps": {
     "customer": {
       "title": "customer",
-      "hint": "add your billing information and delivery address",
+      "hint": "billing information and shipping address",
       "button": "continue to delivery"
     },
     "delivery": {
       "title": "delivery",
-      "hint": "select a shipping method for each shipment",
+      "hint": "shipments summary and delivery methods",
       "button": "continue to payment"
     },
     "payment": {
       "title": "payment",
-      "hint": "add a payment method and place the order",
+      "hint": "payment method and order confirmation",
       "button": "place order"
     }
   }
