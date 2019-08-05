@@ -2,7 +2,7 @@
   <div :class="{subtotal: true, total: total}">
     <v-layout row>
       <v-flex xs6 offset-xs3>
-        {{ $t(label) | capitalize }}
+        {{ $t(`order_summary.${label}`) | capitalize }}
       </v-flex>
       <v-flex xs3>
         <div class="amount">

@@ -1,7 +1,7 @@
 <template>
   <div class="payment-method">
     <v-radio
-      label="PayPal"
+      :label="inputLabel('paypal')"
       :value="payment_method"
       @change="setPaymentMethod"
     ></v-radio>

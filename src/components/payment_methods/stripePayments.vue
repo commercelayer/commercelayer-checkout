@@ -1,7 +1,7 @@
 <template>
   <div class="payment-method">
     <v-radio
-      label="Credit Card (Powered by Stripe)"
+      :label="inputLabel('stripe')"
       :value="payment_method"
       @change="setPaymentMethod"
     ></v-radio>

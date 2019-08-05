@@ -1,7 +1,7 @@
 <template>
   <v-layout row wrap>
     <v-flex xs12 pa-2>
-      <v-checkbox label="Ship to different address"
+      <v-checkbox :label="$t('generic.ship_to_different_address') | capitalize"
         v-model="ship_to_different_address"
         @change="handleChange()"
         :disabled="ship_to_different_address_required">
@@ -10,7 +10,7 @@
     <template v-if="ship_to_different_address">
       <v-flex xs6 px-2 py-1>
         <v-text-field
-          label="First name"
+          :label="inputLabel('first_name')"
           v-model="first_name"
           :error-messages="errorMessages('first_name')"
           @input="handleInput()"
@@ -19,7 +19,7 @@
       </v-flex>
       <v-flex xs6 px-2 py-1>
         <v-text-field
-          label="Last name"
+          :label="inputLabel('last_name')"
           v-model="last_name"
           :error-messages="errorMessages('last_name')"
           @input="handleInput()"
@@ -28,7 +28,7 @@
       </v-flex>
       <v-flex xs12 sm6 px-2 py-1>
         <v-text-field
-          label="Address"
+          :label="inputLabel('line_1')"
           v-model="line_1"
           :error-messages="errorMessages('line_1')"
           @input="handleInput()"
@@ -37,7 +37,7 @@
       </v-flex>
       <v-flex xs6 px-2 py-1>
         <v-text-field
-          label="City"
+          :label="inputLabel('city')"
           v-model="city"
           :error-messages="errorMessages('city')"
           @input="handleInput()"
@@ -46,7 +46,7 @@
       </v-flex>
       <v-flex xs6 px-2 py-1>
         <v-select
-          label="Country"
+          :label="inputLabel('country_code')"
           :items="countries"
           item-text="name"
           item-value="code"
@@ -59,7 +59,7 @@
       </v-flex>
       <v-flex xs6 px-2 py-1>
         <v-text-field
-          label="State"
+          :label="inputLabel('state_code')"
           v-model="state_code"
           :error-messages="errorMessages('state_code')"
           @input="handleInput()"
@@ -68,7 +68,7 @@
       </v-flex>
       <v-flex xs6 px-2 py-1>
         <v-text-field
-          label="Zip code"
+          :label="inputLabel('zip_code')"
           v-model="zip_code"
           :error-messages="errorMessages('zip_code')"
           @input="handleInput()"
@@ -77,7 +77,7 @@
       </v-flex>
       <v-flex xs12 sm6 px-2 py-1>
         <v-text-field
-          label="Phone"
+          :label="inputLabel('phone')"
           v-model="phone"
           :error-messages="errorMessages('phone')"
           @input="handleInput()"
@@ -121,13 +121,7 @@ export default {
     },
     handleChange () {
       this.updateAddressInvalid()
-    },
-    handleInput () {
-      this.updateAddressInvalid()
     }
-  },
-  mounted () {
-    this.updateAddressInvalid()
   }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div class="payment-method">
     <v-radio
-      label="Credit Card (Powered by Adyen)"
+      :label="inputLabel('adyen')"
       :value="payment_method"
       @change="setPaymentMethod"
     ></v-radio>

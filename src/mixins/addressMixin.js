@@ -21,11 +21,20 @@ export const addressMixin = {
     handleBlur (fieldName) {
       this.$v[fieldName].$touch()
     },
+    inputLabel (fieldName) {
+      return _.capitalize(this.$t(`addresses.${fieldName}`))
+    },
     errorMessages (fieldName) {
       const errors = []
       if (!this.$v[fieldName].$dirty) return errors
       !this.$v[fieldName].required && errors.push('Can\'t be blank')
       return errors
+    },
+    handleInput () {
+      this.updateAddressInvalid()
     }
+  },
+  mounted () {
+    this.updateAddressInvalid()
   }
 }

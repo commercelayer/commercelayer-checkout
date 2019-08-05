@@ -16,7 +16,7 @@
           {{ line_item.sku_code }}
         </div>
         <div class="quanity">
-          Quantity: {{ line_item.quantity }}
+          {{ $t('generic.quantity') | capitalize }}: {{ line_item.quantity }}
         </div>
       </v-flex>
       <v-flex xs3>

@@ -18,6 +18,7 @@ const orderIncludes = [
 const orderAttributes = [
   'id',
   'number',
+  'language_code',
   'skus_count',
   'customer_email',
   'coupon_code',

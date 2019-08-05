@@ -1,8 +1,8 @@
 <template>
   <div class="step-wrapper">
     <v-stepper-step :step="step" :rules="rules">
-      Payment
-      <small>Add a payment method and place the order.</small>
+      {{ $t('steps.payment.title') | capitalize }}
+      <small>{{ $t('steps.payment.hint') | capitalize }}</small>
     </v-stepper-step>
     <v-stepper-content :step="step">
       <v-radio-group v-model="payment_method" class="payment-methods">
@@ -20,7 +20,7 @@
         :disabled="disabled"
         min-width="50%"
         class="place-order">
-          Place order
+          {{ $t('steps.payment.button') }}
       </v-btn>
     </v-stepper-content>
   </div>

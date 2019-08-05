@@ -1,7 +1,8 @@
 <template>
   <div class="shipment">
     <v-subheader>
-      Shipment {{count}} of {{total}} ({{ shipment.skus_count }} {{ $tc('item', shipment.skus_count)}})
+      {{ $t('generic.shipment') | capitalize }} {{count}} {{ $t('generic.of') }} {{total}}
+      ({{ shipment.skus_count }} {{ $tc('generic.item', shipment.skus_count)}})
     </v-subheader>
     <v-divider></v-divider>
     <OrderShipmentLineItem

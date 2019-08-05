@@ -1,8 +1,8 @@
 <template>
   <div class="step-wrapper">
     <v-stepper-step :step="step" :complete="complete" :editable="complete" :edit-icon="editIcon" :rules="rules">
-      Delivery
-      <small>Select a shipping method for each shipment</small>
+      {{ $t('steps.delivery.title') | capitalize }}
+      <small>{{ $t('steps.delivery.hint') | capitalize }}</small>
     </v-stepper-step>
 
     <v-stepper-content :step="step">
@@ -18,7 +18,7 @@
         @click="nextStep"
         :block="isMobile"
         :disabled="disabled">
-        Continue to payment
+          {{ $t('steps.delivery.button') }}
       </v-btn>
     </v-stepper-content>
   </div>

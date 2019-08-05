@@ -9,6 +9,9 @@ import NProgress from 'nprogress'
 
 import store from '@/store'
 
+import i18n from '@/plugins/i18n'
+import _ from 'lodash'
+
 Vue.use(Router)
 
 const router = new Router({
@@ -20,7 +23,8 @@ const router = new Router({
       component: Layout,
       props: true,
       beforeEnter (routeTo, routeFrom, next) {
-        store.dispatch('setOrder', routeTo.params.order_id).then(() => {
+        store.dispatch('setOrder', routeTo.params.order_id).then((order) => {
+          i18n.locale = _.lowerCase(order.language_code)
           next()
         })
       },

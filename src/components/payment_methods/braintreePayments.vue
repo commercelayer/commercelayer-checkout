@@ -1,7 +1,7 @@
 <template>
   <div class="payment-method">
     <v-radio
-      label="Credit Card (Powered by Braintree)"
+      :label="inputLabel('braintree')"
       :value="payment_method"
       @change="setPaymentMethod"
     ></v-radio>

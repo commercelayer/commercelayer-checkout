@@ -5,7 +5,7 @@
         {{ viewCartLabel | capitalize }}
       </a>
       <span v-if="!viewCartLink">
-        {{ $t('your_cart') | capitalize }}
+        {{ $t('order_summary.title') | capitalize }}
       </span>
       <span class="order-summary-title-total">
         {{ order.formatted_total_amount_with_taxes }}
@@ -13,7 +13,7 @@
     </h2>
     <div class="order-summary-content" v-show="viewCart">
       <v-subheader>
-        {{ $t('order') | capitalize }} #{{ order.number }} ({{ order.skus_count }} {{ $tc('item', order.skus_count)}})
+        {{ $t('order_summary.number') | capitalize }}: #{{ order.number }}
       </v-subheader>
       <div class="line-items">
         <OrderSummaryLineItem
@@ -28,7 +28,7 @@
         <OrderSummarySubtotal label="shipping" :amount="order.formatted_shipping_amount" />
         <OrderSummarySubtotal label="payment_method" :amount="order.formatted_payment_method_amount" />
         <OrderSummarySubtotal label="taxes" :amount="order.formatted_total_tax_amount" />
-        <OrderSummarySubtotal label="order_total" :amount="order.formatted_total_amount_with_taxes" :total="true"/>
+        <OrderSummarySubtotal label="total" :amount="order.formatted_total_amount_with_taxes" :total="true"/>
       </div>
     </div>
   </div>
@@ -55,7 +55,7 @@ export default {
       return this.$vuetify.breakpoint.smAndDown
     },
     viewCartLabel () {
-      return this.viewCart ? this.$t('hide_cart') : this.$t('view_cart')
+      return this.viewCart ? this.$t('generic.hide_cart') : this.$t('generic.view_cart')
     },
     skuLineItems () {
       return _.filter(this.order.line_items, { item_type: 'skus' })

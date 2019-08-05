@@ -10,6 +10,9 @@ export const paymentMethodMixin = {
     }
   },
   methods: {
+    inputLabel (paymentSourceType) {
+      return _.capitalize(this.$t(`payment_methods.${paymentSourceType}.title`))
+    },
     updateValidations () {
       this.invalid_payment_method = _.isEmpty(this.order.payment_method)
     },

@@ -1,13 +1,65 @@
 {
-  "order": "order",
-  "item": "item | items",
-  "subtotal": "subtotal",
-  "discount": "discount",
-  "shipping": "shipping",
-  "payment_method": "payment method",
-  "taxes": "taxes",
-  "order_total": "order total",
-  "your_cart": "your shopping cart",
-  "view_cart": "view shopping cart",
-  "hide_cart": "hide shopping cart"
+  "addresses": {
+    "city": "city",
+    "country_code": "country",
+    "first_name": "first name",
+    "last_name": "last name",
+    "line_1": "address",
+    "phone": "phone",
+    "state_code": "state",
+    "zip_code": "zip code"
+  },
+  "generic": {
+    "hide_cart": "hide shopping cart",
+    "item": "item | items",
+    "of": "of",
+    "quantity": "quantity",
+    "shipment": "shipment",
+    "ship_to_different_address": "ship to different address",
+    "view_cart": "view shopping cart"
+  },  
+  "order_summary": {
+    "discount": "discount",
+    "number": "order number",
+    "payment_method": "payment method",
+    "shipping": "shipping",
+    "subtotal": "subtotal",
+    "taxes": "taxes",  
+    "title": "order summary",
+    "total": "order total"
+  },
+  "payment_methods": {
+    "adyen": {
+      "title": "credit card (powered by adyen)"
+    },
+    "braintree": {
+      "title": "credit card (powered by braintree)"
+    },
+    "paypal": {
+      "title": "paypal"
+    },
+    "stripe": {
+      "title": "credit card (powered by stripe)"
+    },
+    "wire_transfer": {
+      "title": "wire transfer"
+    }
+  },
+  "steps": {
+    "customer": {
+      "title": "customer",
+      "hint": "add your billing information and delivery address",
+      "button": "continue to delivery"
+    },
+    "delivery": {
+      "title": "delivery",
+      "hint": "select a shipping method for each shipment",
+      "button": "continue to payment"
+    },
+    "payment": {
+      "title": "payment",
+      "hint": "add a payment method and place the order",
+      "button": "place order"
+    }
+  }
 }

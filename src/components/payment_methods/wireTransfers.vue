@@ -1,7 +1,7 @@
 <template>
   <div class="payment-method">
     <v-radio
-      label="Wire Transfer"
+      :label="inputLabel('wire_transfer')"
       :value="payment_method"
       @change="setPaymentMethod"
     ></v-radio>
