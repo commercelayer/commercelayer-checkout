@@ -10,20 +10,23 @@
     "zip_code": "zip code"
   },
   "generic": {
-    "hide_cart": "hide shopping cart",
+    "edit_cart": "edit cart",
     "item": "item | items",
     "of": "of",
+    "privacy_policy": "privacy policy",
     "quantity": "quantity",
     "shipment": "shipment",
     "ship_to": "ship to",
     "ship_to_different_address": "ship to different address",
-    "view_cart": "view shopping cart"
+    "terms_and_conditions": "terms and conditions"
   },  
   "order_summary": {
     "discount": "discount",
+    "hide": "hide order summary",
     "number": "order number",
     "payment_method": "payment method",
     "shipping": "shipping",
+    "show": "show order summary",
     "subtotal": "subtotal",
     "taxes": "taxes",  
     "title": "order summary",

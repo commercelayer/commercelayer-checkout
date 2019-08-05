@@ -82,7 +82,10 @@ const orderAttributes = [
   'payment_method.id',
   'payment_method.name',
   'payment_method.payment_source_type',
-  'payment_source.id'
+  'payment_source.id',
+  'cart_url',
+  'privacy_url',
+  'terms_url'
 ]
 
 const addressAttributes = [

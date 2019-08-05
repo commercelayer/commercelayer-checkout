@@ -52,7 +52,7 @@ export default {
 
     .step-wrapper {
       .v-stepper__content {
-        margin: -8px -36px -16px 36px;
+        margin: 0px -36px -16px 36px;
         padding: 16px 60px 16px 23px;
       }
       &:not(:last-child) > .v-stepper__content {

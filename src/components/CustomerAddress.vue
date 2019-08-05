@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <p>
     {{ address.first_name }} {{ address.last_name }}<br/>
     {{ address.line_1 }}<br/>
     {{ address.zip_code }} {{ address.city }} ({{ address.state_code }})<br/>
     {{ countryName }}
-  </div>
+  </p>
 </template>
 
 <script>

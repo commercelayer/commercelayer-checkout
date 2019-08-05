@@ -10,20 +10,23 @@
     "zip_code": "cap"
   },
   "generic": {
-    "hide_cart": "nascondi carrello",
+    "edit_cart": "modifica carrello",
     "item": "articolo | articoli",
     "of": "di",
+    "privacy_policy": "privacy policy",
     "quantity": "quantità",
     "shipment": "spedizione",
     "ship_to": "spedisci a",
     "ship_to_different_address": "spedisci ad un altro indirizzo",
-    "view_cart": "mostra carrello"
+    "terms_and_conditions": "condizioni di vendita"
   },  
   "order_summary": {
     "discount": "sconto",
+    "hide": "nascondi riepilogo ordine",
     "number": "numero ordine",
     "payment_method": "metodo di pagamento",
     "shipping": "spedizione",
+    "show": "mostra riepilogo ordine",
     "subtotal": "subtotale",
     "taxes": "tasse",  
     "title": "riepilogo ordine",
@@ -50,12 +53,12 @@
     "customer": {
       "title": "cliente",
       "hint": "informazioni personali e indirizzo di spedizione",
-      "button": "continua alla consegna"
+      "button": "vai alla consegna"
     },
     "delivery": {
       "title": "consegna",
       "hint": "riepilogo spedizioni e metodi di consegna",
-      "button": "continua al pagamento"
+      "button": "vai al pagamento"
     },
     "payment": {
       "title": "pagamento",

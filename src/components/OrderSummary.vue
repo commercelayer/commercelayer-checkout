@@ -1,19 +1,25 @@
 <template>
   <div class="order-summary">
-    <h2 class="order-summary-title">
-      <a v-if="viewCartLink" @click="toggleCart()">
-        {{ viewCartLabel | capitalize }}
-      </a>
-      <span v-if="!viewCartLink">
-        {{ $t('order_summary.title') | capitalize }}
-      </span>
+    <h2 class="order-summary-title" v-if="!viewCartLink">
+      {{ $t('order_summary.title') | capitalize }}
       <span class="order-summary-title-total">
         {{ order.formatted_total_amount_with_taxes }}
       </span>
     </h2>
+    <div class="order-summary-toggle" v-if="viewCartLink">
+      <a @click="toggleCart()">
+        {{ viewCartLabel | capitalize }}
+      </a>
+      <span class="order-summary-title-total">
+        {{ order.formatted_total_amount_with_taxes }}
+      </span>
+    </div>
     <div class="order-summary-content" v-show="viewCart">
       <v-subheader>
         {{ $t('order_summary.number') | capitalize }}: #{{ order.number }}
+        <span v-if="order.cart_url" class="edit-cart">
+          &mdash; <a :href="order.cart_url">{{ $t('generic.edit_cart') }}</a>
+        </span>
       </v-subheader>
       <div class="line-items">
         <OrderSummaryLineItem
@@ -55,7 +61,7 @@ export default {
       return this.$vuetify.breakpoint.smAndDown
     },
     viewCartLabel () {
-      return this.viewCart ? this.$t('generic.hide_cart') : this.$t('generic.view_cart')
+      return this.viewCart ? this.$t('order_summary.hide') : this.$t('order_summary.show')
     },
     skuLineItems () {
       return _.filter(this.order.line_items, { item_type: 'skus' })
@@ -78,9 +84,14 @@ export default {
   .order-summary-title-total {
     float: right;
   }
-
+  .order-summary-toggle {
+    font-size: 1.2rem;
+    .order-summary-title-total {
+      font-weight: bolder;
+    }
+  }
   .order-summary {
-    padding: 1rem;
+    padding: 0.5rem;
     margin-bottom: 1rem;
   }
   .order-summary-content {
@@ -94,7 +105,6 @@ export default {
       margin: 1rem 0;
     }
   }
-
   .md-and-up {
     .order-summary {
       padding: 2rem;
