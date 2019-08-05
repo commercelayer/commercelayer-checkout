@@ -15,7 +15,6 @@
 
 <script>
 import _ from 'lodash'
-import { mapState } from 'vuex'
 import { mapFields } from 'vuex-map-fields'
 import { required, email } from 'vuelidate/lib/validators'
 
@@ -31,7 +30,6 @@ export default {
       !this.$v.customer_email.required && errors.push('Can\'t be blank')
       return errors
     },
-    ...mapState(['order']),
     ...mapFields([
       'validations.invalid_customer',
       'order.customer_email'
@@ -52,7 +50,7 @@ export default {
       if (!this.$v.$invalid) this.setCustomerEmail()
     },
     setCustomerEmail () {
-      this.$store.dispatch('setOrderCustomerEmail', this.order)
+      this.$store.dispatch('setOrderCustomerEmail')
     }
   },
   mounted () {

@@ -172,6 +172,11 @@ const addressDefaults = (order) => {
   }
 }
 
+const normalizedOrder = (order, response) => {
+  let nOrder = normalize(response.data).get(orderAttributes)
+  return _.defaults(nOrder, orderDefaults(order))
+}
+
 const apiClient = axios.create({
   baseURL: process.env.VUE_APP_API_BASE_URL + '/api',
   headers: {
@@ -193,8 +198,7 @@ apiClient.interceptors.request.use(config => {
 const getOrder = (orderId) => {
   return apiClient.get('/orders/' + orderId + '?include=' + orderIncludes.join(','))
     .then(response => {
-      let normalizedOrder = normalize(response.data).get(orderAttributes)
-      return _.defaults(normalizedOrder, orderDefaults(normalizedOrder))
+      return normalizedOrder(response.data, response)
     })
 }
 
@@ -231,8 +235,7 @@ const updateOrderCustomerEmail = (order) => {
       }
     })
     .then(response => {
-      let normalizedOrder = normalize(response.data).get(orderAttributes)
-      return _.defaults(normalizedOrder, orderDefaults(order))
+      return normalizedOrder(order, response)
     })
 }
 
@@ -287,8 +290,7 @@ const updateOrderBillingAddress = (order, billingAddress) => {
       }
     })
     .then(response => {
-      let normalizedOrder = normalize(response.data).get(orderAttributes)
-      return _.defaults(normalizedOrder, orderDefaults(order))
+      return normalizedOrder(order, response)
     })
 }
 
@@ -309,29 +311,28 @@ const updateOrderShippingAddress = (order, shippingAddress) => {
       }
     })
     .then(response => {
-      let normalizedOrder = normalize(response.data).get(orderAttributes)
-      return _.defaults(normalizedOrder, orderDefaults(order))
+      return normalizedOrder(order, response)
     })
 }
 
 const updateOrderAddresses = (order) => {
   return updateOrCreateAddress(order.billing_address)
-  .then(billingAddress => {
-    return updateOrderBillingAddress(order, billingAddress)
-    .then((updatedOrder) => {
-      if (order.ship_to_different_address) {
-        return updateOrCreateAddress(order.shipping_address)
-        .then(shippingAddress => {
-          return updateOrderShippingAddress(order, shippingAddress)
-          .then(updatedOrder => {
+    .then(billingAddress => {
+      return updateOrderBillingAddress(order, billingAddress)
+        .then((updatedOrder) => {
+          if (order.ship_to_different_address) {
+            return updateOrCreateAddress(order.shipping_address)
+              .then(shippingAddress => {
+                return updateOrderShippingAddress(order, shippingAddress)
+                  .then(updatedOrder => {
+                    return _.defaults(updatedOrder, orderDefaults(updatedOrder))
+                  })
+              })
+          } else {
             return _.defaults(updatedOrder, orderDefaults(updatedOrder))
-          })
+          }
         })
-      } else {
-        return _.defaults(updatedOrder, orderDefaults(updatedOrder))
-      }
     })
-  })
 }
 
 const updateOrderPaymentMethod = (order, paymentMethod) => {
@@ -351,8 +352,7 @@ const updateOrderPaymentMethod = (order, paymentMethod) => {
       }
     })
     .then(response => {
-      let normalizedOrder = normalize(response.data).get(orderAttributes)
-      return _.defaults(normalizedOrder, orderDefaults(order))
+      return normalizedOrder(order, response)
     })
 }
 

@@ -25,7 +25,6 @@ import { checkoutStepMixin } from '@/mixins/checkoutStepMixin'
 import OrderCustomer from '@/components/OrderCustomer'
 import OrderBillingAddress from '@/components/OrderBillingAddress'
 import OrderShippingAddress from '@/components/OrderShippingAddress'
-import { mapState } from 'vuex'
 
 export default {
   components: {
@@ -37,12 +36,11 @@ export default {
   computed: {
     disabled () {
       return this.validations.invalid_customer || this.validations.invalid_billing_address || this.validations.invalid_shipping_address
-    },
-    ...mapState(['order'])
+    }
   },
   methods: {
     submit () {
-      this.$store.dispatch('setOrderAddresses', this.order)
+      this.$store.dispatch('setOrderAddresses')
         .then(() => {
           this.nextStep()
         })

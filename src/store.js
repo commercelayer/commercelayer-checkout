@@ -41,9 +41,9 @@ export default new Vuex.Store({
           console.log('Set order error:', error.response)
         })
     },
-    setOrderCustomerEmail ({ commit }, order) {
+    setOrderCustomerEmail ({ commit, state }) {
       NProgress.start()
-      return APIService.updateOrderCustomerEmail(order)
+      return APIService.updateOrderCustomerEmail(state.order)
         .then(order => {
           commit('updateOrder', order)
           NProgress.done()
@@ -53,9 +53,9 @@ export default new Vuex.Store({
           console.log('Set order customer email error:', error.response)
         })
     },
-    setOrderAddresses ({ commit }, order) {
+    setOrderAddresses ({ commit, state }) {
       NProgress.start()
-      return APIService.updateOrderAddresses(order)
+      return APIService.updateOrderAddresses(state.order)
         .then(order => {
           commit('updateOrder', order)
           NProgress.done()
