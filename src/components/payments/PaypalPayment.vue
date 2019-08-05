@@ -1,8 +1,9 @@
 <template>
   <div class="payment-method">
     <v-radio
-      :label="inputLabel('braintree')"
+      :label="inputLabel('paypal')"
       :value="payment_method"
+      color="primary"
       @change="setPaymentMethod"
     ></v-radio>
     <div class="payment-method-fields" v-show="selected">
@@ -16,6 +17,12 @@ import { paymentMethodMixin } from '@/mixins/paymentMethodMixin'
 export default {
   mixins: [paymentMethodMixin],
   methods: {
+    paymentSourceAttributes () {
+      return {
+        return_url: window.location.href,
+        cancel_url: window.location.href
+      }
+    },
     setupPayment () {
       console.log(this.order.payment_source)
       this.updateValidations()

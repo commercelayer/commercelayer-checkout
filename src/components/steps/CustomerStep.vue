@@ -1,14 +1,14 @@
 <template>
   <div class="step-wrapper">
     <v-stepper-step :step="step" :complete="complete" :editable="complete" :edit-icon="editIcon">
-      {{ $t('steps.customer.title') | capitalize }}
+      <div>{{ $t('steps.customer.title') | capitalize }}<span v-if="complete"> &mdash; <a>{{ $t('generic.edit') }}</a></span></div>
       <small>{{ $t('steps.customer.hint') | capitalize }}</small>
     </v-stepper-step>
 
     <v-stepper-content :step="step">
-      <OrderCustomer />
-      <OrderBillingAddress />
-      <OrderShippingAddress />
+      <CustomerFields />
+      <BillingAddressFields />
+      <ShippingAddressFields />
       <v-btn
         color="primary"
         @click="submit()"
@@ -25,7 +25,7 @@
             {{ order.customer_email }}
           </div>
           <div class="billing-address">
-            <CustomerAddress :address="order.billing_address" />
+            <AddressSummary :address="order.billing_address" />
           </div>
         </v-flex>
         <v-flex xs12 md4>
@@ -33,7 +33,7 @@
             {{ $t('generic.ship_to') | capitalize }}:
           </div>
           <div class="shipping-address">
-            <CustomerAddress :address="order.shipping_address" />
+            <AddressSummary :address="order.shipping_address" />
           </div>
         </v-flex>
       </v-layout>
@@ -43,19 +43,19 @@
 
 <script>
 import { checkoutStepMixin } from '@/mixins/checkoutStepMixin'
-import OrderCustomer from '@/components/OrderCustomer'
-import OrderBillingAddress from '@/components/OrderBillingAddress'
-import OrderShippingAddress from '@/components/OrderShippingAddress'
-import CustomerAddress from '@/components/CustomerAddress'
+import CustomerFields from '@/components/fields/CustomerFields'
+import BillingAddressFields from '@/components/fields/BillingAddressFields'
+import ShippingAddressFields from '@/components/fields/ShippingAddressFields'
+import AddressSummary from '@/components/summaries/AddressSummary'
 
 import { mapState } from 'vuex'
 
 export default {
   components: {
-    OrderCustomer,
-    OrderBillingAddress,
-    OrderShippingAddress,
-    CustomerAddress
+    CustomerFields,
+    BillingAddressFields,
+    ShippingAddressFields,
+    AddressSummary
   },
   mixins: [checkoutStepMixin],
   computed: {
@@ -78,6 +78,6 @@ export default {
 <style scoped>
   .header {
     font-weight: bolder;
-    margin-bottom: 0.5rem; 
+    margin-bottom: 0.5rem;
   }
 </style>

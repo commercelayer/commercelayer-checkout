@@ -1,22 +1,22 @@
 <template>
   <v-stepper v-model="current_step" vertical>
-    <CheckoutCustomerStep :step=1 />
-    <CheckoutDeliveryStep :step=2 />
-    <CheckoutPaymentStep :step=3 />
+    <CustomerStep :step=1 />
+    <DeliveryStep :step=2 />
+    <PaymentStep :step=3 />
   </v-stepper>
 </template>
 
 <script>
-import CheckoutCustomerStep from '@/components/CheckoutCustomerStep'
-import CheckoutDeliveryStep from '@/components/CheckoutDeliveryStep'
-import CheckoutPaymentStep from '@/components/CheckoutPaymentStep'
+import CustomerStep from '@/components/steps/CustomerStep'
+import DeliveryStep from '@/components/steps/DeliveryStep'
+import PaymentStep from '@/components/steps/PaymentStep'
 import { mapFields } from 'vuex-map-fields'
 
 export default {
   components: {
-    CheckoutCustomerStep,
-    CheckoutDeliveryStep,
-    CheckoutPaymentStep
+    CustomerStep,
+    DeliveryStep,
+    PaymentStep
   },
   computed: {
     ...mapFields([

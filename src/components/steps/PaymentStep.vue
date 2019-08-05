@@ -31,21 +31,21 @@ import _ from 'lodash'
 import { checkoutStepMixin } from '@/mixins/checkoutStepMixin'
 import { mapFields } from 'vuex-map-fields'
 
-import stripePayments from '@/components/payment_methods/stripePayments'
-import braintreePayments from '@/components/payment_methods/braintreePayments'
-import adyenPayments from '@/components/payment_methods/adyenPayments'
-import paypalPayments from '@/components/payment_methods/paypalPayments'
-import wireTransfers from '@/components/payment_methods/wireTransfers'
-import creditCards from '@/components/payment_methods/creditCards'
+import StripePayment from '@/components/payments/StripePayment'
+import BraintreePayment from '@/components/payments/BraintreePayment'
+import AdyenPayment from '@/components/payments/AdyenPayment'
+import PaypalPayment from '@/components/payments/PaypalPayment'
+import WireTransfer from '@/components/payments/WireTransfer'
+import CreditCard from '@/components/payments/CreditCard'
 
 export default {
   components: {
-    stripePayments,
-    braintreePayments,
-    adyenPayments,
-    paypalPayments,
-    wireTransfers,
-    creditCards
+    StripePayment,
+    BraintreePayment,
+    AdyenPayment,
+    PaypalPayment,
+    WireTransfer,
+    CreditCard
   },
   mixins: [checkoutStepMixin],
   computed: {
@@ -65,7 +65,10 @@ export default {
   },
   methods: {
     componentType (paymentMethod) {
-      return _.camelCase(paymentMethod.payment_source_type)
+      let result = _.startCase(paymentMethod.payment_source_type)
+      result = _.replace(result, ' ', '')
+      result = _.trimEnd(result, 's')
+      return result
     },
     placeOrder () {
       this.current_step = 1

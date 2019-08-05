@@ -4,6 +4,7 @@
       <v-checkbox :label="$t('generic.ship_to_different_address') | capitalize"
         v-model="ship_to_different_address"
         @change="handleChange()"
+        color="primary"
         :disabled="ship_to_different_address_required">
         </v-checkbox>
     </v-flex>

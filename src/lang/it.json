@@ -10,7 +10,7 @@
     "zip_code": "cap"
   },
   "generic": {
-    "edit_cart": "modifica carrello",
+    "edit": "modifica",
     "item": "articolo | articoli",
     "of": "di",
     "privacy_policy": "privacy policy",
@@ -18,7 +18,7 @@
     "shipment": "spedizione",
     "ship_to": "spedisci a",
     "ship_to_different_address": "spedisci ad un altro indirizzo",
-    "terms_and_conditions": "condizioni di vendita"
+    "terms_of_service": "condizioni di vendita"
   },  
   "order_summary": {
     "discount": "sconto",

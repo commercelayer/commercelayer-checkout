@@ -3,7 +3,8 @@
     {{ address.first_name }} {{ address.last_name }}<br/>
     {{ address.line_1 }}<br/>
     {{ address.zip_code }} {{ address.city }} ({{ address.state_code }})<br/>
-    {{ countryName }}
+    {{ countryName }}<br/>
+    <v-icon :small="true">phone</v-icon> {{ address.phone }}
   </p>
 </template>
 
@@ -28,5 +29,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

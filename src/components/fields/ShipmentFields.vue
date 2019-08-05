@@ -1,10 +1,10 @@
 <template>
   <div class="shipment">
-    <v-subheader>
+    <div class="shipment-header">
       {{ $t('generic.shipment') | capitalize }} {{count}} {{ $t('generic.of') }} {{total}}
-    </v-subheader>
+    </div>
     <v-divider></v-divider>
-    <OrderShipmentLineItem
+    <ShipmentLineItem
       v-for="shipment_line_item in shipment.shipment_line_items"
       :key="shipment_line_item.id"
       :shipment_line_item="shipment_line_item"
@@ -15,6 +15,7 @@
         :key="shipping_method.id"
         :label="shippingMethodLabel(shipping_method)"
         :value="shipping_method"
+        color="primary"
         @change="handleChange(shipping_method)"
       ></v-radio>
     </v-radio-group>
@@ -23,14 +24,14 @@
 
 <script>
 import _ from 'lodash'
-import OrderShipmentLineItem from '@/components/OrderShipmentLineItem'
+import ShipmentLineItem from '@/components/partials/ShipmentLineItem'
 
 import { mapState } from 'vuex'
 import { mapFields } from 'vuex-map-fields'
 
 export default {
   components: {
-    OrderShipmentLineItem
+    ShipmentLineItem
   },
   props: {
     shipment: {
@@ -81,6 +82,9 @@ export default {
 </script>
 
 <style lang="scss">
+  .shipment-header {
+    margin-bottom: 0.5rem;
+  }
   .v-divider {
     margin-bottom: 1rem;
   }

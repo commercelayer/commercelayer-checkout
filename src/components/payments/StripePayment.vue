@@ -3,6 +3,7 @@
     <v-radio
       :label="inputLabel('stripe')"
       :value="payment_method"
+      color="primary"
       @change="setPaymentMethod"
     ></v-radio>
     <div class="payment-method-fields" v-show="selected">

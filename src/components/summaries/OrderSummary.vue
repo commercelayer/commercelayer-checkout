@@ -15,12 +15,12 @@
       </span>
     </div>
     <div class="order-summary-content" v-show="viewCart">
-      <v-subheader>
+      <div class="order-summary-header">
         {{ $t('order_summary.number') | capitalize }}: #{{ order.number }}
         <span v-if="order.cart_url" class="edit-cart">
-          &mdash; <a :href="order.cart_url">{{ $t('generic.edit_cart') }}</a>
+          &mdash; <a :href="order.cart_url">{{ $t('generic.edit') }}</a>
         </span>
-      </v-subheader>
+      </div>
       <div class="line-items">
         <OrderSummaryLineItem
           v-for="line_item in skuLineItems"
@@ -42,8 +42,8 @@
 
 <script>
 import _ from 'lodash'
-import OrderSummaryLineItem from '@/components/OrderSummaryLineItem'
-import OrderSummarySubtotal from '@/components/OrderSummarySubtotal'
+import OrderSummaryLineItem from '@/components/summaries/OrderSummaryLineItem'
+import OrderSummarySubtotal from '@/components/summaries/OrderSummarySubtotal'
 import { mapState } from 'vuex'
 
 export default {
@@ -98,8 +98,8 @@ export default {
     margin-top: 1rem;
     border-top: 1px solid $v-border;
 
-    .v-subheader {
-      padding: 0;
+    .order-summary-header {
+      margin: 1rem 0 2rem;
     }
     .line-items {
       margin: 1rem 0;

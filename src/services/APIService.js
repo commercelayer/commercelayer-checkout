@@ -274,7 +274,7 @@ const updateOrCreateAddress = (address) => {
   return address.id ? updateAddress(address) : createAddress(address)
 }
 
-const updateOrderBillingAddress = (order, billingAddress) => {
+const updateBillingAddressFields = (order, billingAddress) => {
   return apiClient.patch('/orders/' + order.id + '?include=' + orderIncludes.join(','),
     {
       data: {
@@ -298,7 +298,7 @@ const updateOrderBillingAddress = (order, billingAddress) => {
     })
 }
 
-const updateOrderShippingAddress = (order, shippingAddress) => {
+const updateShippingAddressFields = (order, shippingAddress) => {
   return apiClient.patch('/orders/' + order.id + '?include=' + orderIncludes.join(','),
     {
       data: {
@@ -322,12 +322,12 @@ const updateOrderShippingAddress = (order, shippingAddress) => {
 const updateOrderAddresses = (order) => {
   return updateOrCreateAddress(order.billing_address)
     .then(billingAddress => {
-      return updateOrderBillingAddress(order, billingAddress)
+      return updateBillingAddressFields(order, billingAddress)
         .then((updatedOrder) => {
           if (order.ship_to_different_address) {
             return updateOrCreateAddress(order.shipping_address)
               .then(shippingAddress => {
-                return updateOrderShippingAddress(order, shippingAddress)
+                return updateShippingAddressFields(order, shippingAddress)
                   .then(updatedOrder => {
                     return _.defaults(updatedOrder, orderDefaults(updatedOrder))
                   })

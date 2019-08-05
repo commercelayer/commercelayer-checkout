@@ -12,14 +12,14 @@
           <OrderSummary />
         </v-flex>
       </v-layout>
-      <OrderFooter />
+      <Footer />
     </v-container>
   </v-content>
 </template>
 
 <script>
-import OrderSummary from '@/components/OrderSummary.vue'
-import OrderFooter from '@/components/OrderFooter.vue'
+import OrderSummary from '@/components/summaries/OrderSummary.vue'
+import Footer from '@/components/partials/Footer.vue'
 
 export default {
   name: 'Layout',
@@ -31,7 +31,7 @@ export default {
   },
   components: {
     OrderSummary,
-    OrderFooter
+    Footer
   }
 }
 </script>

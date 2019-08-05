@@ -2,7 +2,7 @@
   <footer>
     <span v-if="order.terms_url">
       <a :href="order.terms_url">
-        {{ $t('generic.terms_and_conditions') | capitalize }}
+        {{ $t('generic.terms_of_service') | capitalize }}
       </a>
     </span>
     <span v-if="order.privacy_url">
@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   computed: {

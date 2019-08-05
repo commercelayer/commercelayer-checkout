@@ -1,8 +1,9 @@
 <template>
   <div class="payment-method">
     <v-radio
-      :label="inputLabel('wire_transfer')"
+      :label="inputLabel('braintree')"
       :value="payment_method"
+      color="primary"
       @change="setPaymentMethod"
     ></v-radio>
     <div class="payment-method-fields" v-show="selected">

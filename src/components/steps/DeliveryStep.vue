@@ -1,12 +1,12 @@
 <template>
   <div class="step-wrapper">
     <v-stepper-step :step="step" :complete="complete" :editable="complete" :edit-icon="editIcon" :rules="rules">
-      {{ $t('steps.delivery.title') | capitalize }}
+      <div>{{ $t('steps.delivery.title') | capitalize }}<span v-if="complete"> &mdash; <a>{{ $t('generic.edit') }}</a></span></div>
       <small>{{ $t('steps.delivery.hint') | capitalize }}</small>
     </v-stepper-step>
 
     <v-stepper-content :step="step">
-      <OrderShipment
+      <ShipmentFields
         v-for="(shipment, index) in shipments"
         :shipment="shipment"
         :key="shipment.id"
@@ -23,7 +23,7 @@
     </v-stepper-content>
 
     <div class="step-summary" v-if="complete">
-      <ShipmentSummary 
+      <ShipmentSummary
         v-for="(shipment, index) in shipments"
         :shipment="shipment"
         :key="shipment.id"
@@ -40,12 +40,12 @@ import _ from 'lodash'
 import { checkoutStepMixin } from '@/mixins/checkoutStepMixin'
 import { mapMultiRowFields } from 'vuex-map-fields'
 import { mapState } from 'vuex'
-import OrderShipment from '@/components/OrderShipment'
-import ShipmentSummary from '@/components/ShipmentSummary'
+import ShipmentFields from '@/components/fields/ShipmentFields'
+import ShipmentSummary from '@/components/summaries/ShipmentSummary'
 
 export default {
   components: {
-    OrderShipment,
+    ShipmentFields,
     ShipmentSummary
   },
   mixins: [checkoutStepMixin],

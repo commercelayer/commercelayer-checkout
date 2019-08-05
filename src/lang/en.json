@@ -10,7 +10,7 @@
     "zip_code": "zip code"
   },
   "generic": {
-    "edit_cart": "edit cart",
+    "edit": "edit",
     "item": "item | items",
     "of": "of",
     "privacy_policy": "privacy policy",
@@ -18,7 +18,7 @@
     "shipment": "shipment",
     "ship_to": "ship to",
     "ship_to_different_address": "ship to different address",
-    "terms_and_conditions": "terms and conditions"
+    "terms_of_service": "terms of service"
   },  
   "order_summary": {
     "discount": "discount",
