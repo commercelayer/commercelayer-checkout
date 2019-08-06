@@ -15,11 +15,10 @@
       </v-radio-group>
       <v-btn
         color="primary"
-        @click="placeOrder"
         :block="isMobile"
         :disabled="disabled"
         min-width="50%"
-        class="place-order">
+        id="place-order-button">
           {{ $t('steps.payment.button') }}
       </v-btn>
     </v-stepper-content>
@@ -69,9 +68,6 @@ export default {
       result = _.replace(result, ' ', '')
       result = _.trimEnd(result, 's')
       return result
-    },
-    placeOrder () {
-      this.current_step = 1
     }
   }
 }

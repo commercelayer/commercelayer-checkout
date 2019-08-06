@@ -26,8 +26,15 @@ export const paymentMethodMixin = {
       }
       this.$store.dispatch('setOrderPaymentMethod', payload)
         .then(() => {
+          this.updateValidations()
           this.setupPayment()
         })
+    },
+    setupPayment () {
+      let btn = document.getElementById('place-order-button')
+      btn.onclick = () => {
+        this.handlePayment()
+      }
     },
     setPaymentSource () {
       let payload = {
@@ -35,7 +42,7 @@ export const paymentMethodMixin = {
         paymentMethod: this.payment_method,
         paymentSourceAttributes: this.paymentSourceAttributes()
       }
-      this.$store.dispatch('setOrderPaymentSource', payload)
+      return this.$store.dispatch('setOrderPaymentSource', payload)
     }
   },
   computed: {
@@ -47,5 +54,6 @@ export const paymentMethodMixin = {
   },
   mounted () {
     this.updateValidations()
+    if (this.selected) this.setPaymentMethod()
   }
 }

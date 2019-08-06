@@ -5,6 +5,7 @@
       :value="payment_method"
       color="primary"
       @change="setPaymentMethod"
+      id="paypal_payments_radio"
     ></v-radio>
     <div class="payment-method-fields" v-show="selected">
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit eligendi natus odit ullam, minima ipsa tempore voluptates harum perferendis a doloribus quia hic id voluptatum amet labore expedita sit itaque.
@@ -23,9 +24,8 @@ export default {
         cancel_url: window.location.href
       }
     },
-    setupPayment () {
-      console.log(this.order.payment_source)
-      this.updateValidations()
+    handlePayment () {
+      console.log('handle paypal payment')
     }
   }
 }

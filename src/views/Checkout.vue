@@ -62,7 +62,7 @@ export default {
         margin: 1rem 0 0;
         min-width: 50%;
 
-        &.place-order {
+        &#place-order-button {
           margin-top: 0;
         }
       }
