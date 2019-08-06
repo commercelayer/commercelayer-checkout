@@ -2,7 +2,7 @@ import _ from 'lodash'
 import { mapState } from 'vuex'
 import { mapFields } from 'vuex-map-fields'
 
-export const paymentMethodMixin = {
+export const paymentMixin = {
   props: {
     payment_method: {
       type: Object,
@@ -33,7 +33,12 @@ export const paymentMethodMixin = {
     setupPayment () {
       let btn = document.getElementById('place-order-button')
       btn.onclick = () => {
-        this.handlePayment()
+        this.loading_payment = true
+        this.setPaymentSource()
+          .then(paymentSource => {
+            this.handlePayment(paymentSource)
+            this.loading_payment = false
+          })
       }
     },
     setPaymentSource () {
@@ -50,7 +55,10 @@ export const paymentMethodMixin = {
       return _.isEqual(this.payment_method, this.order.payment_method)
     },
     ...mapState(['order']),
-    ...mapFields(['validations.invalid_payment_method'])
+    ...mapFields([
+      'validations.invalid_payment_method',
+      'buttons.loading_payment'
+    ])
   },
   mounted () {
     this.updateValidations()

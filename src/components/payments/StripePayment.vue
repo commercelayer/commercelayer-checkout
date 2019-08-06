@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { paymentMethodMixin } from '@/mixins/paymentMethodMixin'
+import { paymentMixin } from '@/mixins/paymentMixin'
 
 export default {
   data () {
@@ -22,40 +22,35 @@ export default {
       scriptSrc: 'https://js.stripe.com/v3/'
     }
   },
-  mixins: [paymentMethodMixin],
+  mixins: [paymentMixin],
   methods: {
-    handlePayment () {
-      console.log('handle stripe payment')
-      // this.setPaymentSource()
-      //   .then(paymentSource => {
-      //     console.log(paymentSource.client_secret)
-      //   })
+    handlePayment (paymentSource) {
+      console.log(paymentSource.client_secret)
     },
-    checkScript () {
+    getScript () {
       let scripts = document.getElementsByTagName('script')
       for (let i = 0; i < scripts.length; i++) {
-        if (scripts[i].src === this.scriptSrc) return true
+        if (scripts[i].src === this.scriptSrc) return scripts[i]
       }
-      return false
-    }
-  },
-  mounted () {
-    // Add Stripe.js to document head if not exists
-    if (!this.checkScript()) {
       let script = document.createElement('script')
       script.type = 'text/javascript'
       script.src = this.scriptSrc
       document.head.appendChild(script)
-
-      // Init card element
-      script.addEventListener('load', () => {
-        let stripe = Stripe(process.env.VUE_APP_STRIPE_PUBLIC_KEY) // eslint-disable-line
-        let elements = stripe.elements({ locale: 'en' })
-
-        let card = elements.create('card')
-        card.mount('#card')
-      })
+      return script
     }
+  },
+  mounted () {
+    // Add Stripe.js to document head if not exists
+    let script = this.getScript()
+    let i18n = this.$i18n
+
+    // Init card element
+    script.addEventListener('load', () => {
+      let stripe = Stripe(process.env.VUE_APP_STRIPE_PUBLIC_KEY) // eslint-disable-line
+      let elements = stripe.elements({ locale: i18n.locale })
+      let card = elements.create('card')
+      card.mount('#card')
+    })
   }
 }
 </script>

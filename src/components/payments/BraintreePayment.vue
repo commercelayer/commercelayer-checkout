@@ -14,12 +14,12 @@
 </template>
 
 <script>
-import { paymentMethodMixin } from '@/mixins/paymentMethodMixin'
+import { paymentMixin } from '@/mixins/paymentMixin'
 export default {
-  mixins: [paymentMethodMixin],
+  mixins: [paymentMixin],
   methods: {
-    handlePayment () {
-      console.log('handle braintree payment')
+    handlePayment (paymentSource) {
+      console.log(paymentSource.client_token)
     }
   }
 }

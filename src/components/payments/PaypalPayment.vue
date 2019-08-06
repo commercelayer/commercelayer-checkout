@@ -14,9 +14,9 @@
 </template>
 
 <script>
-import { paymentMethodMixin } from '@/mixins/paymentMethodMixin'
+import { paymentMixin } from '@/mixins/paymentMixin'
 export default {
-  mixins: [paymentMethodMixin],
+  mixins: [paymentMixin],
   methods: {
     paymentSourceAttributes () {
       return {
@@ -24,8 +24,8 @@ export default {
         cancel_url: window.location.href
       }
     },
-    handlePayment () {
-      console.log('handle paypal payment')
+    handlePayment (paymentSource) {
+      console.log(paymentSource)
     }
   }
 }

@@ -1,7 +1,7 @@
 import { mapFields } from 'vuex-map-fields'
 import { mapState } from 'vuex'
 
-export const checkoutStepMixin = {
+export const stepMixin = {
   props: {
     step: {
       type: Number,

@@ -16,6 +16,11 @@ export default new Vuex.Store({
       invalid_shipments: false,
       invalid_payment_method: false
     },
+    buttons: {
+      loading_customer: false,
+      loading_delivery: false,
+      loading_payment: false
+    },
     order: {}
   },
   getters: {

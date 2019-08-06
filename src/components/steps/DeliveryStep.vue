@@ -17,7 +17,8 @@
         color="primary"
         @click="nextStep"
         :block="isMobile"
-        :disabled="disabled">
+        :disabled="disabled"
+        :loading="buttons.loading_delivery">
           {{ $t('steps.delivery.button') }}
       </v-btn>
     </v-stepper-content>
@@ -37,7 +38,7 @@
 
 <script>
 import _ from 'lodash'
-import { checkoutStepMixin } from '@/mixins/checkoutStepMixin'
+import { stepMixin } from '@/mixins/stepMixin'
 import { mapMultiRowFields } from 'vuex-map-fields'
 import { mapState } from 'vuex'
 import ShipmentFields from '@/components/fields/ShipmentFields'
@@ -48,7 +49,7 @@ export default {
     ShipmentFields,
     ShipmentSummary
   },
-  mixins: [checkoutStepMixin],
+  mixins: [stepMixin],
   computed: {
     rules () {
       return [() => {
@@ -61,7 +62,10 @@ export default {
     disabled () {
       return this.validations.invalid_shipments
     },
-    ...mapState(['validations']),
+    ...mapState([
+      'validations',
+      'buttons'
+    ]),
     ...mapMultiRowFields([
       'order.shipments'
     ])

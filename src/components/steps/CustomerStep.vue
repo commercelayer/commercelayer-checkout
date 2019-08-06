@@ -13,7 +13,8 @@
         color="primary"
         @click="submit()"
         :block="isMobile"
-        :disabled="disabled">
+        :disabled="disabled"
+        :loading="loading_customer">
           {{ $t('steps.customer.button') }}
       </v-btn>
     </v-stepper-content>
@@ -42,13 +43,14 @@
 </template>
 
 <script>
-import { checkoutStepMixin } from '@/mixins/checkoutStepMixin'
+import { stepMixin } from '@/mixins/stepMixin'
 import CustomerFields from '@/components/fields/CustomerFields'
 import BillingAddressFields from '@/components/fields/BillingAddressFields'
 import ShippingAddressFields from '@/components/fields/ShippingAddressFields'
 import AddressSummary from '@/components/summaries/AddressSummary'
 
 import { mapState } from 'vuex'
+import { mapFields } from 'vuex-map-fields'
 
 export default {
   components: {
@@ -57,17 +59,22 @@ export default {
     ShippingAddressFields,
     AddressSummary
   },
-  mixins: [checkoutStepMixin],
+  mixins: [stepMixin],
   computed: {
     disabled () {
       return this.validations.invalid_customer || this.validations.invalid_billing_address || this.validations.invalid_shipping_address
     },
-    ...mapState(['order'])
+    ...mapState([
+      'order'
+    ]),
+    ...mapFields(['buttons.loading_customer'])
   },
   methods: {
     submit () {
+      this.loading_customer = true
       this.$store.dispatch('setOrderAddresses')
         .then(() => {
+          this.loading_customer = false
           this.nextStep()
         })
     }

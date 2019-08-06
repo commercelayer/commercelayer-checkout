@@ -18,7 +18,8 @@
         :block="isMobile"
         :disabled="disabled"
         min-width="50%"
-        id="place-order-button">
+        id="place-order-button"
+        :loading="buttons.loading_payment">
           {{ $t('steps.payment.button') }}
       </v-btn>
     </v-stepper-content>
@@ -27,8 +28,9 @@
 
 <script>
 import _ from 'lodash'
-import { checkoutStepMixin } from '@/mixins/checkoutStepMixin'
+import { stepMixin } from '@/mixins/stepMixin'
 import { mapFields } from 'vuex-map-fields'
+import { mapState } from 'vuex'
 
 import StripePayment from '@/components/payments/StripePayment'
 import BraintreePayment from '@/components/payments/BraintreePayment'
@@ -46,7 +48,7 @@ export default {
     WireTransfer,
     CreditCard
   },
-  mixins: [checkoutStepMixin],
+  mixins: [stepMixin],
   computed: {
     rules () {
       return [() => {
@@ -56,6 +58,7 @@ export default {
     disabled () {
       return this.invalid_payment_method
     },
+    ...mapState(['buttons']),
     ...mapFields([
       'validations.invalid_payment_method',
       'order',
