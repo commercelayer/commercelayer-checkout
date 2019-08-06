@@ -8,10 +8,8 @@
       id="stripe_payments_radio"
     ></v-radio>
     <div class="payment-method-fields" v-show="selected">
-      <div class="card-wrap">
-        <div id="stripe-card"></div>
-        <div id="stripe-card-error"></div>
-      </div>
+      <div id="stripe-card"></div>
+      <div class="payment-error" id="stripe-card-error"></div>
     </div>
   </div>
 </template>
@@ -105,36 +103,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.card-wrap {
-  padding: 1rem 0;
-  .StripeElement {
-    box-sizing: border-box;
-    height: 40px;
-    padding: 10px 12px;
-    border: 1px solid $v-border;
-    border-radius: 4px;
-    background-color: white;
-    box-shadow: 0 1px 3px 0 #e6ebf1;
-    -webkit-transition: box-shadow 150ms ease;
-    transition: box-shadow 150ms ease;
-  }
-  .StripeElement--focus {
-    box-shadow: 0 1px 3px 0 #cfd7df;
-  }
-  .StripeElement--invalid {
-    border-color: $ERROR_COLOR;
-  }
-  .StripeElement--webkit-autofill {
-    background-color: #fefde5 !important;
-  }
-  #stripe-card-error {
-    color: $ERROR_COLOR;
-    margin-top: 0.5rem;
-  }
+.StripeElement {
+  box-sizing: border-box;
+  height: 40px;
+  padding: 10px 12px;
+  border: 1px solid $v-border;
+  border-radius: 4px;
+  background-color: white;
+  box-shadow: 0 1px 3px 0 #e6ebf1;
+  -webkit-transition: box-shadow 150ms ease;
+  transition: box-shadow 150ms ease;
 }
-.sm-and-up {
-  .card-wrap {
-    padding: 1rem 2rem;
-  }
+.StripeElement--focus {
+  box-shadow: 0 1px 3px 0 #cfd7df;
+}
+.StripeElement--invalid {
+  border-color: $ERROR_COLOR;
+}
+.StripeElement--webkit-autofill {
+  background-color: #fefde5 !important;
 }
 </style>

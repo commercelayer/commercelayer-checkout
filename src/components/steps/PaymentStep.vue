@@ -82,14 +82,29 @@ export default {
 
     .payment-method-fields {
       margin: 1rem 0rem;
-      padding-top: 1rem;
+      padding: 1rem 0;
       border-top: 1px solid $v-border;
+
+      .payment-error {
+        color: $ERROR_COLOR;
+        margin-top: 0.5rem;
+      }
+
     }
+
   }
 
   .v-input--selection-controls {
     .v-input__control {
       width: 100%;
+    }
+  }
+
+  .sm-and-up {
+    .payment-method {
+      .payment-method-fields {
+        padding: 2rem;
+      }
     }
   }
 </style>

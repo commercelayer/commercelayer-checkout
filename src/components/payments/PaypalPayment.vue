@@ -8,7 +8,8 @@
       id="paypal_payments_radio"
     ></v-radio>
     <div class="payment-method-fields" v-show="selected">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit eligendi natus odit ullam, minima ipsa tempore voluptates harum perferendis a doloribus quia hic id voluptatum amet labore expedita sit itaque.
+      <div>{{ $t('payment_methods.paypal.hint') | capitalize }}</div>
+      <div class="payment-error" id="paypal-payment-error"></div>
     </div>
   </div>
 </template>
@@ -20,12 +21,28 @@ export default {
   methods: {
     paymentSourceAttributes () {
       return {
-        return_url: window.location.href,
+        return_url: window.location.href + '/paypal',
         cancel_url: window.location.href
       }
     },
+    setupPayment () {
+      let that = this
+      let btn = document.getElementById('place-order-button')
+      btn.onclick = () => {
+        that.loading_payment = true
+        this.setPaymentSource()
+          .then(paymentSource => {
+            this.handlePayment(paymentSource)
+          })
+          .catch(error => {
+            let paypalError = document.getElementById('paypal-payment-error')
+            paypalError.innerHTML = error.data.errors[0].detail
+            that.loading_payment = false
+          })
+      }
+    },
     handlePayment (paymentSource) {
-      console.log(paymentSource)
+      window.location = paymentSource.approval_url
     }
   }
 }

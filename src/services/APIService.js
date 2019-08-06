@@ -205,6 +205,9 @@ const getOrder = (orderId) => {
     .then(response => {
       return normalizedOrder(response.data, response)
     })
+    .catch(error => {
+      return Promise.reject(error.response)
+    })
 }
 
 const updateShipmentShippingMethod = (shipment, shippingMethod) => {
@@ -226,6 +229,9 @@ const updateShipmentShippingMethod = (shipment, shippingMethod) => {
     .then(response => {
       return normalize(response.data).get(shipmentAttributes)
     })
+    .catch(error => {
+      return Promise.reject(error.response)
+    })
 }
 
 const updateOrderCustomerEmail = (order) => {
@@ -242,6 +248,9 @@ const updateOrderCustomerEmail = (order) => {
     .then(response => {
       return normalizedOrder(order, response)
     })
+    .catch(error => {
+      return Promise.reject(error.response)
+    })
 }
 
 const createAddress = (address) => {
@@ -254,6 +263,9 @@ const createAddress = (address) => {
     })
     .then(response => {
       return normalize(response.data).get(addressAttributes)
+    })
+    .catch(error => {
+      return Promise.reject(error.response)
     })
 }
 
@@ -268,6 +280,9 @@ const updateAddress = (address) => {
     })
     .then(response => {
       return normalize(response.data).get(addressAttributes)
+    })
+    .catch(error => {
+      return Promise.reject(error.response)
     })
 }
 
@@ -297,6 +312,9 @@ const updateBillingAddressFields = (order, billingAddress) => {
     .then(response => {
       return normalizedOrder(order, response)
     })
+    .catch(error => {
+      return Promise.reject(error.response)
+    })
 }
 
 const updateShippingAddressFields = (order, shippingAddress) => {
@@ -318,6 +336,9 @@ const updateShippingAddressFields = (order, shippingAddress) => {
     .then(response => {
       return normalizedOrder(order, response)
     })
+    .catch(error => {
+      return Promise.reject(error.response)
+    })
 }
 
 const updateOrderAddresses = (order) => {
@@ -337,6 +358,9 @@ const updateOrderAddresses = (order) => {
             return _.defaults(updatedOrder, orderDefaults(updatedOrder))
           }
         })
+    })
+    .catch(error => {
+      return Promise.reject(error.response)
     })
 }
 
@@ -358,6 +382,9 @@ const updateOrderPaymentMethod = (order, paymentMethod) => {
     })
     .then(response => {
       return normalizedOrder(order, response)
+    })
+    .catch(error => {
+      return Promise.reject(error.response)
     })
 }
 
@@ -382,6 +409,28 @@ const createOrderPaymentSource = (order, paymentMethod, paymentSourceAttributes)
       let normalizedPaymentSource = normalize(response.data).get(attributes)
       return normalizedPaymentSource
     })
+    .catch(error => {
+      return Promise.reject(error.response)
+    })
+}
+
+const updateOrderPaymentSource = (order, paymentSourceAttributes) => {
+  return apiClient.patch(`/${order.payment_method.payment_source_type}/${order.payment_source.id}`,
+    {
+      data: {
+        type: order.payment_method.payment_source_type,
+        id: order.payment_source.id,
+        attributes: paymentSourceAttributes
+      }
+    })
+    .then(response => {
+      let attributes = paymentSourceAttributesMap[order.payment_method.payment_source_type]
+      let normalizedPaymentSource = normalize(response.data).get(attributes)
+      return normalizedPaymentSource
+    })
+    .catch(error => {
+      return Promise.reject(error.response)
+    })
 }
 
 const placeOrder = (order) => {
@@ -398,6 +447,9 @@ const placeOrder = (order) => {
     .then(response => {
       return normalizedOrder(order, response)
     })
+    .catch(error => {
+      return Promise.reject(error.response)
+    })
 }
 
 export default {
@@ -407,5 +459,6 @@ export default {
   updateShipmentShippingMethod,
   updateOrderPaymentMethod,
   createOrderPaymentSource,
+  updateOrderPaymentSource,
   placeOrder
 }

@@ -40,7 +40,8 @@
       "title": "carta di credito (powered by braintree)"
     },
     "paypal": {
-      "title": "paypal"
+      "title": "paypal",
+      "hint": "confermando l'ordine, verrai rimandato sul sito di PayPal per effettuare l'accesso e autorizzare il pagamento"
     },
     "stripe": {
       "title": "carta di credito (powered by stripe)"

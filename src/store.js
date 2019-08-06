@@ -8,7 +8,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    current_step: 3,
+    current_step: 1,
     validations: {
       invalid_customer: false,
       invalid_billing_address: false,
@@ -42,20 +42,16 @@ export default new Vuex.Store({
           commit('updateOrder', order)
           return order
         })
-        .catch(error => {
-          console.log('Set order error:', error.response)
-        })
     },
     setOrderCustomerEmail ({ commit, state }) {
       NProgress.start()
       return APIService.updateOrderCustomerEmail(state.order)
         .then(order => {
           commit('updateOrder', order)
-          NProgress.done()
           return order
         })
-        .catch(error => {
-          console.log('Set order customer email error:', error.response)
+        .finally(() => {
+          NProgress.done()
         })
     },
     setOrderAddresses ({ commit, state }) {
@@ -63,11 +59,10 @@ export default new Vuex.Store({
       return APIService.updateOrderAddresses(state.order)
         .then(order => {
           commit('updateOrder', order)
-          NProgress.done()
           return order
         })
-        .catch(error => {
-          console.log('Set order addresses error:', error.response)
+        .finally(() => {
+          NProgress.done()
         })
     },
     setShipmentShippingMethod ({ dispatch }, payload) {
@@ -76,12 +71,11 @@ export default new Vuex.Store({
         .then(() => {
           return dispatch('setOrder', payload.order.id)
             .then(order => {
-              NProgress.done()
               return order
             })
         })
-        .catch(error => {
-          console.log('Set shipment shipping method error:', error.response)
+        .finally(() => {
+          NProgress.done()
         })
     },
     setOrderPaymentMethod ({ commit }, payload) {
@@ -89,11 +83,10 @@ export default new Vuex.Store({
       return APIService.updateOrderPaymentMethod(payload.order, payload.paymentMethod)
         .then(order => {
           commit('updateOrder', order)
-          NProgress.done()
           return order
         })
-        .catch(error => {
-          console.log('Set order payment method error:', error.response)
+        .finally(() => {
+          NProgress.done()
         })
     },
     setOrderPaymentSource ({ commit }, payload) {
@@ -101,11 +94,21 @@ export default new Vuex.Store({
       return APIService.createOrderPaymentSource(payload.order, payload.paymentMethod, payload.paymentSourceAttributes)
         .then(paymentSource => {
           commit('updateOrderPaymentSource', paymentSource)
-          NProgress.done()
           return paymentSource
         })
-        .catch(error => {
-          console.log('Set order payment source error:', error.response)
+        .finally(() => {
+          NProgress.done()
+        })
+    },
+    updateOrderPaymentSource ({ commit, state }, paymentSourceAttributes) {
+      NProgress.start()
+      return APIService.updateOrderPaymentSource(state.order, paymentSourceAttributes)
+        .then(paymentSource => {
+          commit('updateOrderPaymentSource', paymentSource)
+          return paymentSource
+        })
+        .finally(() => {
+          NProgress.done()
         })
     },
     placeOrder ({ commit, state }) {
@@ -113,11 +116,10 @@ export default new Vuex.Store({
       return APIService.placeOrder(state.order)
         .then(order => {
           commit('updateOrder', order)
-          NProgress.done()
           return order
         })
-        .catch(error => {
-          console.log('Place order error:', error.response)
+        .finally(() => {
+          NProgress.done()
         })
     }
   }

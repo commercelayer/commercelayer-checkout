@@ -40,7 +40,8 @@
       "title": "credit card (powered by braintree)"
     },
     "paypal": {
-      "title": "paypal"
+      "title": "paypal",
+      "hint": "by placing the order, you will be redirected to the PayPal website to sign in and authorize the payment"
     },
     "stripe": {
       "title": "credit card (powered by stripe)"
