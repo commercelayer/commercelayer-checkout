@@ -87,7 +87,7 @@ export default {
 
       .payment-error {
         color: $ERROR_COLOR;
-        margin-top: 0.5rem;
+        margin-top: 1rem;
       }
 
     }

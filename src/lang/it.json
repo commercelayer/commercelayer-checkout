@@ -9,6 +9,9 @@
     "state_code": "provincia",
     "zip_code": "cap"
   },
+  "errors": {
+    "unauthorized_card": "la tua carta non è stata autorizzata"
+  },
   "generic": {
     "edit": "modifica",
     "item": "articolo | articoli",

@@ -38,7 +38,6 @@ const router = new Router({
           path: 'paypal',
           beforeEnter (routeTo, routeFrom, next) {
             let paymentSourceAttributes = { paypal_payer_id: routeTo.query.PayerID }
-            console.log(paymentSourceAttributes)
             store.dispatch('updateOrderPaymentSource', paymentSourceAttributes)
               .then(() => {
                 store.dispatch('placeOrder')

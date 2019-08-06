@@ -8,7 +8,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    current_step: 1,
+    current_step: 3,
     validations: {
       invalid_customer: false,
       invalid_billing_address: false,

@@ -9,6 +9,9 @@
     "state_code": "state",
     "zip_code": "zip code"
   },
+  "errors": {
+    "unauthorized_card": "your card was not authorized"
+  },
   "generic": {
     "edit": "edit",
     "item": "item | items",
