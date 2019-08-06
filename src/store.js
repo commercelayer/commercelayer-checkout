@@ -107,6 +107,18 @@ export default new Vuex.Store({
         .catch(error => {
           console.log('Set order payment source error:', error.response)
         })
+    },
+    placeOrder ({ commit, state }) {
+      NProgress.start()
+      return APIService.placeOrder(state.order)
+        .then(order => {
+          commit('updateOrder', order)
+          NProgress.done()
+          return order
+        })
+        .catch(error => {
+          console.log('Place order error:', error.response)
+        })
     }
   }
 })

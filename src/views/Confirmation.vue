@@ -1,6 +1,6 @@
 <template>
   <div>
-    Confirmation
+    Thank you!
   </div>
 </template>
 

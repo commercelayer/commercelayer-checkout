@@ -92,6 +92,7 @@ const addressAttributes = [
   'id',
   'first_name',
   'last_name',
+  'full_name',
   'line_1',
   'line_2',
   'city',
@@ -383,11 +384,28 @@ const createOrderPaymentSource = (order, paymentMethod, paymentSourceAttributes)
     })
 }
 
+const placeOrder = (order) => {
+  return apiClient.patch('/orders/' + order.id + '?include=' + orderIncludes.join(','),
+    {
+      data: {
+        type: 'orders',
+        id: order.id,
+        attributes: {
+          _place: 1
+        }
+      }
+    })
+    .then(response => {
+      return normalizedOrder(order, response)
+    })
+}
+
 export default {
   getOrder,
   updateOrderCustomerEmail,
   updateOrderAddresses,
   updateShipmentShippingMethod,
   updateOrderPaymentMethod,
-  createOrderPaymentSource
+  createOrderPaymentSource,
+  placeOrder
 }

@@ -30,17 +30,6 @@ export const paymentMixin = {
           this.setupPayment()
         })
     },
-    setupPayment () {
-      let btn = document.getElementById('place-order-button')
-      btn.onclick = () => {
-        this.loading_payment = true
-        this.setPaymentSource()
-          .then(paymentSource => {
-            this.handlePayment(paymentSource)
-            this.loading_payment = false
-          })
-      }
-    },
     setPaymentSource () {
       let payload = {
         order: this.order,

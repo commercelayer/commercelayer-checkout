@@ -35,7 +35,7 @@ const router = new Router({
           component: Checkout
         },
         {
-          path: 'thankyou',
+          path: 'confirmation',
           name: 'confirmation',
           component: Confirmation
         }
