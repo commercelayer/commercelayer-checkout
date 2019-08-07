@@ -13,6 +13,9 @@
     "unauthorized_card": "la tua carta non è stata autorizzata"
   },
   "generic": {
+    "card_cvv": "CVC/CVV",
+    "card_exp_date": "scadenza",
+    "card_number": "numero carta",
     "edit": "modifica",
     "item": "articolo | articoli",
     "of": "di",

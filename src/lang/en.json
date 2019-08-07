@@ -13,6 +13,9 @@
     "unauthorized_card": "your card was not authorized"
   },
   "generic": {
+    "card_cvv": "CVC/CVV",
+    "card_exp_date": "expiry date",
+    "card_number": "card number",
     "edit": "edit",
     "item": "item | items",
     "of": "of",

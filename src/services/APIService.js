@@ -29,6 +29,7 @@ const orderAttributes = [
   'formatted_discount_amount',
   'formatted_total_tax_amount',
   'formatted_total_amount_with_taxes',
+  'total_amount_with_taxes_float',
   'line_items.item_type',
   'line_items.id',
   'line_items.name',
