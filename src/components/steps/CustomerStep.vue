@@ -16,6 +16,7 @@
       <BillingAddressFields />
       <ShippingAddressFields />
       <v-btn
+        id="customer-step-submit"
         color="primary"
         @click="submit()"
         :block="isMobile"
@@ -62,7 +63,7 @@ export default {
   },
   mixins: [stepMixin],
   computed: {
-    disabled () {
+    disabled() {
       return (
         this.validations.invalid_customer ||
         this.validations.invalid_billing_address ||
@@ -73,7 +74,7 @@ export default {
     ...mapFields(['buttons.loading_customer'])
   },
   methods: {
-    submit () {
+    submit() {
       this.loading_customer = true
       this.$store.dispatch('setOrderAddresses').then(() => {
         this.loading_customer = false

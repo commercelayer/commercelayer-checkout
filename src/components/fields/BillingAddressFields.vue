@@ -2,6 +2,7 @@
   <v-layout row wrap>
     <v-flex xs6 px-2 py-1>
       <v-text-field
+        id="billing-address-first-name"
         :label="inputLabel('first_name')"
         v-model="first_name"
         :error-messages="errorMessages('first_name')"
@@ -11,6 +12,7 @@
     </v-flex>
     <v-flex xs6 px-2 py-1>
       <v-text-field
+        id="billing-address-last-name"
         :label="inputLabel('last_name')"
         v-model="last_name"
         :error-messages="errorMessages('last_name')"
@@ -20,6 +22,7 @@
     </v-flex>
     <v-flex xs12 sm6 px-2 py-1>
       <v-text-field
+        id="billing-address-line_1"
         :label="inputLabel('line_1')"
         v-model="line_1"
         :error-messages="errorMessages('line_1')"
@@ -29,6 +32,7 @@
     </v-flex>
     <v-flex xs6 px-2 py-1>
       <v-text-field
+        id="billing-address-city"
         :label="inputLabel('city')"
         v-model="city"
         :error-messages="errorMessages('city')"
@@ -38,6 +42,7 @@
     </v-flex>
     <v-flex xs6 px-2 py-1>
       <v-select
+        id="billing-address-country-code"
         :label="inputLabel('country_code')"
         :items="countries"
         item-text="name"
@@ -51,6 +56,7 @@
     </v-flex>
     <v-flex xs6 px-2 py-1>
       <v-text-field
+        id="billing-address-state-code"
         :label="inputLabel('state_code')"
         v-model="state_code"
         :error-messages="errorMessages('state_code')"
@@ -60,6 +66,7 @@
     </v-flex>
     <v-flex xs6 px-2 py-1>
       <v-text-field
+        id="billing-address-zip-code"
         :label="inputLabel('zip_code')"
         v-model="zip_code"
         :error-messages="errorMessages('zip_code')"
@@ -69,6 +76,7 @@
     </v-flex>
     <v-flex xs12 sm6 px-2 py-1>
       <v-text-field
+        id="billing-address-phone"
         :label="inputLabel('phone')"
         v-model="phone"
         :error-messages="errorMessages('phone')"

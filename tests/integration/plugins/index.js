@@ -15,10 +15,10 @@ module.exports = (on, config) => {
   // }))
 
   return Object.assign({}, config, {
-    fixturesFolder: 'tests/e2e/fixtures',
-    integrationFolder: 'tests/e2e/specs',
-    screenshotsFolder: 'tests/e2e/screenshots',
-    videosFolder: 'tests/e2e/videos',
-    supportFile: 'tests/e2e/support/index.js'
+    fixturesFolder: 'tests/integration/fixtures',
+    integrationFolder: 'tests/integration/specs',
+    screenshotsFolder: 'tests/integration/screenshots',
+    videosFolder: 'tests/integration/videos',
+    supportFile: 'tests/integration/support/index.js'
   })
 }
