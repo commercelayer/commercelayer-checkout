@@ -53,7 +53,8 @@
       "title": "carta di credito (powered by stripe)"
     },
     "wire_transfer": {
-      "title": "bonifico bancario"
+      "title": "bonifico bancario",
+      "hint": "dopo aver confermato l'ordine, procederai al pagamento manuale tramite bonifico tramite la tua banca"
     }
   },
   "steps": {

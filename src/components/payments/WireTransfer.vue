@@ -8,7 +8,8 @@
       id="wire_transfers_radio"
     ></v-radio>
     <div class="payment-method-fields" v-show="selected">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit eligendi natus odit ullam, minima ipsa tempore voluptates harum perferendis a doloribus quia hic id voluptatum amet labore expedita sit itaque.
+      <div>{{ $t('payment_methods.wire_transfer.hint') | capitalize }}</div>
+      <div class="payment-error" id="wire-transfer-payment-error"></div>      
     </div>
   </div>
 </template>
@@ -18,8 +19,21 @@ import { paymentMixin } from '@/mixins/paymentMixin'
 export default {
   mixins: [paymentMixin],
   methods: {
-    handlePayment (paymentSource) {
-      console.log(paymentSource)
+    setupPayment () {
+      let btn = document.getElementById('place-order-button')
+      btn.onclick = () => {
+        this.loading_payment = true
+        this.setPaymentSource()
+          .then(paymentSource => {
+            this.handlePayment()
+          })
+      }
+    },    
+    handlePayment () {
+      this.$store.dispatch('placeOrder')
+        .then(order => {
+          this.$router.push({ name: 'confirmation' })
+        })
     }
   }
 }

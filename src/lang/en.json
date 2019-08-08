@@ -53,7 +53,8 @@
       "title": "credit card (powered by stripe)"
     },
     "wire_transfer": {
-      "title": "wire transfer"
+      "title": "wire transfer",
+      "hint": "after placing the order, you will manually complete the payment with your bank"
     }
   },
   "steps": {
