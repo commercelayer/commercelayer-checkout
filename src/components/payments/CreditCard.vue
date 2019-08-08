@@ -1,5 +1,5 @@
 <template>
-<div>
-  <!-- noop -->
-</div>
+  <div>
+    <!-- noop -->
+  </div>
 </template>

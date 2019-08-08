@@ -26,28 +26,23 @@ export default {
       }
     },
     setupPayment () {
-      let that = this
       let btn = document.getElementById('place-order-button')
       btn.onclick = () => {
-        that.loading_payment = true
-        this.setPaymentSource()
-          .then(paymentSource => {
-            this.handlePayment(paymentSource)
-          })
-          .catch(error => {
-            let paypalError = document.getElementById('paypal-payment-error')
-            paypalError.innerHTML = error.data.errors[0].detail
-            that.loading_payment = false
-          })
+        this.handlePayment()
       }
     },
-    handlePayment (paymentSource) {
-      window.location = paymentSource.approval_url
+    handlePaymentSourceError (error) {
+      let paypalError = document.getElementById('paypal-payment-error')
+      paypalError.innerHTML = error.data.errors[0].detail
+      this.loading_payment = false
+    },
+    handlePayment () {
+      this.loading_payment = true
+      window.location = this.order.payment_source.approval_url
     }
   }
 }
 </script>
 
 <style>
-
 </style>

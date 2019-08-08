@@ -11,7 +11,7 @@
           :is="componentType(available_payment_method)"
           :key="available_payment_method.id"
           :payment_method="available_payment_method"
-          />
+        />
       </v-radio-group>
       <v-btn
         color="primary"
@@ -19,9 +19,8 @@
         :disabled="disabled"
         min-width="50%"
         id="place-order-button"
-        :loading="buttons.loading_payment">
-          {{ $t('steps.payment.button') }}
-      </v-btn>
+        :loading="buttons.loading_payment"
+      >{{ $t('steps.payment.button') }}</v-btn>
     </v-stepper-content>
   </div>
 </template>
@@ -51,9 +50,11 @@ export default {
   mixins: [stepMixin],
   computed: {
     rules () {
-      return [() => {
-        return !_.isEmpty(this.order.available_payment_methods)
-      }]
+      return [
+        () => {
+          return !_.isEmpty(this.order.available_payment_methods)
+        }
+      ]
     },
     disabled () {
       return this.invalid_payment_method
@@ -77,34 +78,32 @@ export default {
 </script>
 
 <style lang="scss">
+.payment-method {
+  margin-bottom: 1rem;
+
+  .payment-method-fields {
+    margin: 1rem 0rem;
+    padding: 1rem 0;
+    border-top: 1px solid $v-border;
+
+    .payment-error {
+      color: $ERROR_COLOR;
+      margin-top: 1rem;
+    }
+  }
+}
+
+.v-input--selection-controls {
+  .v-input__control {
+    width: 100%;
+  }
+}
+
+.sm-and-up {
   .payment-method {
-    margin-bottom: 1rem;
-
     .payment-method-fields {
-      margin: 1rem 0rem;
-      padding: 1rem 0;
-      border-top: 1px solid $v-border;
-
-      .payment-error {
-        color: $ERROR_COLOR;
-        margin-top: 1rem;
-      }
-
-    }
-
-  }
-
-  .v-input--selection-controls {
-    .v-input__control {
-      width: 100%;
+      padding: 2rem;
     }
   }
-
-  .sm-and-up {
-    .payment-method {
-      .payment-method-fields {
-        padding: 2rem;
-      }
-    }
-  }
+}
 </style>

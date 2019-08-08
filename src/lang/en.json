@@ -25,7 +25,7 @@
     "ship_to": "ship to",
     "ship_to_different_address": "ship to different address",
     "terms_of_service": "terms of service"
-  },  
+  },
   "order_summary": {
     "discount": "discount",
     "hide": "hide order summary",
@@ -34,7 +34,7 @@
     "shipping": "shipping",
     "show": "show order summary",
     "subtotal": "subtotal",
-    "taxes": "taxes",  
+    "taxes": "taxes",
     "title": "order summary",
     "total": "order total"
   },
@@ -54,7 +54,7 @@
     },
     "wire_transfer": {
       "title": "wire transfer",
-      "hint": "after placing the order, you will manually complete the payment with your bank"
+      "hint": "after placing the order, you will need to manually complete the payment with your bank"
     }
   },
   "steps": {

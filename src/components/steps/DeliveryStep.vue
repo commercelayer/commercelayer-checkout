@@ -1,7 +1,19 @@
 <template>
   <div class="step-wrapper">
-    <v-stepper-step :step="step" :complete="complete" :editable="complete" :edit-icon="editIcon" :rules="rules">
-      <div>{{ $t('steps.delivery.title') | capitalize }}<span v-if="complete"> &mdash; <a>{{ $t('generic.edit') }}</a></span></div>
+    <v-stepper-step
+      :step="step"
+      :complete="complete"
+      :editable="complete"
+      :edit-icon="editIcon"
+      :rules="rules"
+    >
+      <div>
+        {{ $t('steps.delivery.title') | capitalize }}
+        <span v-if="complete">
+          &mdash;
+          <a>{{ $t('generic.edit') }}</a>
+        </span>
+      </div>
       <small>{{ $t('steps.delivery.hint') | capitalize }}</small>
     </v-stepper-step>
 
@@ -12,15 +24,14 @@
         :key="shipment.id"
         :count="index+1"
         :total="shipments.length"
-        />
+      />
       <v-btn
         color="primary"
         @click="nextStep"
         :block="isMobile"
         :disabled="disabled"
-        :loading="buttons.loading_delivery">
-          {{ $t('steps.delivery.button') }}
-      </v-btn>
+        :loading="buttons.loading_delivery"
+      >{{ $t('steps.delivery.button') }}</v-btn>
     </v-stepper-content>
 
     <div class="step-summary" v-if="complete">
@@ -30,9 +41,8 @@
         :key="shipment.id"
         :count="index+1"
         :total="shipments.length"
-        />
+      />
     </div>
-
   </div>
 </template>
 
@@ -52,23 +62,20 @@ export default {
   mixins: [stepMixin],
   computed: {
     rules () {
-      return [() => {
-        _.forEach(this.$store.state.order.shipments, shipment => {
-          if (_.isEmpty(shipment.available_shipping_methods)) return false
-        })
-        return true
-      }]
+      return [
+        () => {
+          _.forEach(this.$store.state.order.shipments, shipment => {
+            if (_.isEmpty(shipment.available_shipping_methods)) return false
+          })
+          return true
+        }
+      ]
     },
     disabled () {
       return this.validations.invalid_shipments
     },
-    ...mapState([
-      'validations',
-      'buttons'
-    ]),
-    ...mapMultiRowFields([
-      'order.shipments'
-    ])
+    ...mapState(['validations', 'buttons']),
+    ...mapMultiRowFields(['order.shipments'])
   }
 }
 </script>

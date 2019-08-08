@@ -1,12 +1,13 @@
 <template>
   <v-layout row wrap>
     <v-flex xs12 pa-2>
-      <v-checkbox :label="$t('generic.ship_to_different_address') | capitalize"
+      <v-checkbox
+        :label="$t('generic.ship_to_different_address') | capitalize"
         v-model="ship_to_different_address"
         @change="handleChange()"
         color="primary"
-        :disabled="ship_to_different_address_required">
-        </v-checkbox>
+        :disabled="ship_to_different_address_required"
+      ></v-checkbox>
     </v-flex>
     <template v-if="ship_to_different_address">
       <v-flex xs6 px-2 py-1>
@@ -15,8 +16,8 @@
           v-model="first_name"
           :error-messages="errorMessages('first_name')"
           @input="handleInput()"
-          @blur="handleBlur('first_name')">
-        </v-text-field>
+          @blur="handleBlur('first_name')"
+        ></v-text-field>
       </v-flex>
       <v-flex xs6 px-2 py-1>
         <v-text-field
@@ -24,8 +25,8 @@
           v-model="last_name"
           :error-messages="errorMessages('last_name')"
           @input="handleInput()"
-          @blur="handleBlur('last_name')">
-        </v-text-field>
+          @blur="handleBlur('last_name')"
+        ></v-text-field>
       </v-flex>
       <v-flex xs12 sm6 px-2 py-1>
         <v-text-field
@@ -33,8 +34,8 @@
           v-model="line_1"
           :error-messages="errorMessages('line_1')"
           @input="handleInput()"
-          @blur="handleBlur('line_1')">
-        </v-text-field>
+          @blur="handleBlur('line_1')"
+        ></v-text-field>
       </v-flex>
       <v-flex xs6 px-2 py-1>
         <v-text-field
@@ -42,8 +43,8 @@
           v-model="city"
           :error-messages="errorMessages('city')"
           @input="handleInput()"
-          @blur="handleBlur('city')">
-        </v-text-field>
+          @blur="handleBlur('city')"
+        ></v-text-field>
       </v-flex>
       <v-flex xs6 px-2 py-1>
         <v-select
@@ -55,8 +56,8 @@
           :error-messages="errorMessages('country_code')"
           @input="handleInput()"
           @blur="handleBlur('country_code')"
-          :disabled="shippingCountryCodeLocked">
-        </v-select>
+          :disabled="shippingCountryCodeLocked"
+        ></v-select>
       </v-flex>
       <v-flex xs6 px-2 py-1>
         <v-text-field
@@ -64,8 +65,8 @@
           v-model="state_code"
           :error-messages="errorMessages('state_code')"
           @input="handleInput()"
-          @blur="handleBlur('state_code')">
-        </v-text-field>
+          @blur="handleBlur('state_code')"
+        ></v-text-field>
       </v-flex>
       <v-flex xs6 px-2 py-1>
         <v-text-field
@@ -73,8 +74,8 @@
           v-model="zip_code"
           :error-messages="errorMessages('zip_code')"
           @input="handleInput()"
-          @blur="handleBlur('zip_code')">
-        </v-text-field>
+          @blur="handleBlur('zip_code')"
+        ></v-text-field>
       </v-flex>
       <v-flex xs12 sm6 px-2 py-1>
         <v-text-field
@@ -82,8 +83,8 @@
           v-model="phone"
           :error-messages="errorMessages('phone')"
           @input="handleInput()"
-          @blur="handleBlur('phone')">
-        </v-text-field>
+          @blur="handleBlur('phone')"
+        ></v-text-field>
       </v-flex>
       <v-flex xs12 py-2></v-flex>
     </template>
@@ -118,7 +119,8 @@ export default {
   },
   methods: {
     updateAddressInvalid () {
-      this.invalid_shipping_address = this.ship_to_different_address && this.$v.$invalid
+      this.invalid_shipping_address =
+        this.ship_to_different_address && this.$v.$invalid
     },
     handleChange () {
       this.updateAddressInvalid()
@@ -128,7 +130,7 @@ export default {
 </script>
 
 <style>
-  .shipping-address {
-    margin-bottom: 1rem;
-  }
+.shipping-address {
+  margin-bottom: 1rem;
+}
 </style>

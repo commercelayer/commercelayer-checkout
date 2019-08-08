@@ -7,7 +7,6 @@
 </template>
 
 <script>
-
 export default {
   props: {
     shipment: {
@@ -27,7 +26,7 @@ export default {
 </script>
 
 <style scoped>
-  .shipment-summary {
-    margin-bottom: 0.5rem;
-  }
+.shipment-summary {
+  margin-bottom: 0.5rem;
+}
 </style>

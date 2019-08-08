@@ -14,7 +14,9 @@ export const paymentMixin = {
       return _.capitalize(this.$t(`payment_methods.${paymentSourceType}.title`))
     },
     updateValidations () {
-      this.invalid_payment_method = _.isEmpty(this.order.payment_method)
+      this.invalid_payment_method =
+        _.isEmpty(this.order.payment_method) ||
+        _.isEmpty(this.order.payment_source)
     },
     paymentSourceAttributes () {
       return {}
@@ -24,11 +26,21 @@ export const paymentMixin = {
         order: this.order,
         paymentMethod: this.payment_method
       }
-      this.$store.dispatch('setOrderPaymentMethod', payload)
-        .then(() => {
-          this.updateValidations()
-          this.setupPayment()
-        })
+      this.loading_payment = true
+      this.$store.dispatch('setOrderPaymentMethod', payload).then(() => {
+        this.setPaymentSource()
+          .then(() => {
+            this.updateValidations()
+            this.loading_payment = false
+            this.setupPayment()
+          })
+          .catch(error => {
+            this.handlePaymentSourceError(error)
+          })
+      })
+    },
+    handlePaymentSourceError (error) {
+      console.log(error)
     },
     setPaymentSource () {
       let payload = {

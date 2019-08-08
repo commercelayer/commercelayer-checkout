@@ -1,14 +1,14 @@
 <template>
   <div class="shipment">
-    <div class="shipment-header">
-      {{ $t('generic.shipment') | capitalize }} {{count}} {{ $t('generic.of') }} {{total}}
-    </div>
+    <div
+      class="shipment-header"
+    >{{ $t('generic.shipment') | capitalize }} {{count}} {{ $t('generic.of') }} {{total}}</div>
     <v-divider></v-divider>
     <ShipmentLineItem
       v-for="shipment_line_item in shipment.shipment_line_items"
       :key="shipment_line_item.id"
       :shipment_line_item="shipment_line_item"
-      />
+    />
     <v-radio-group v-model="shipment.shipping_method">
       <v-radio
         v-for="shipping_method in sortedAvailableShippingMethods"
@@ -49,9 +49,11 @@ export default {
   },
   methods: {
     updateValidations () {
-      this.invalid_shipments = !_.isEmpty(_.find(this.order.shipments, (shipment) => {
-        return _.isEmpty(shipment.shipping_method)
-      }))
+      this.invalid_shipments = !_.isEmpty(
+        _.find(this.order.shipments, shipment => {
+          return _.isEmpty(shipment.shipping_method)
+        })
+      )
     },
     shippingMethodLabel: shippingMethod => {
       return `${shippingMethod.name} - ${shippingMethod.formatted_price_amount}`
@@ -62,15 +64,16 @@ export default {
         shipment: this.shipment,
         shippingMethod: shippingMethod
       }
-      this.$store.dispatch('setShipmentShippingMethod', payload)
-        .then(() => {
-          this.updateValidations()
-        })
+      this.$store.dispatch('setShipmentShippingMethod', payload).then(() => {
+        this.updateValidations()
+      })
     }
   },
   computed: {
     sortedAvailableShippingMethods () {
-      return _.sortBy(this.shipment.available_shipping_methods, ['price_amount_cents'])
+      return _.sortBy(this.shipment.available_shipping_methods, [
+        'price_amount_cents'
+      ])
     },
     ...mapState(['order']),
     ...mapFields(['validations.invalid_shipments'])
@@ -82,10 +85,10 @@ export default {
 </script>
 
 <style lang="scss">
-  .shipment-header {
-    margin-bottom: 0.5rem;
-  }
-  .v-divider {
-    margin-bottom: 1rem;
-  }
+.shipment-header {
+  margin-bottom: 0.5rem;
+}
+.v-divider {
+  margin-bottom: 1rem;
+}
 </style>

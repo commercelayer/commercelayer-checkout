@@ -37,11 +37,10 @@ export default new Vuex.Store({
   },
   actions: {
     setOrder ({ commit }, orderId) {
-      return APIService.getOrder(orderId)
-        .then(order => {
-          commit('updateOrder', order)
-          return order
-        })
+      return APIService.getOrder(orderId).then(order => {
+        commit('updateOrder', order)
+        return order
+      })
     },
     setOrderCustomerEmail ({ commit, state }) {
       NProgress.start()
@@ -67,12 +66,14 @@ export default new Vuex.Store({
     },
     setShipmentShippingMethod ({ dispatch }, payload) {
       NProgress.start()
-      return APIService.updateShipmentShippingMethod(payload.shipment, payload.shippingMethod)
+      return APIService.updateShipmentShippingMethod(
+        payload.shipment,
+        payload.shippingMethod
+      )
         .then(() => {
-          return dispatch('setOrder', payload.order.id)
-            .then(order => {
-              return order
-            })
+          return dispatch('setOrder', payload.order.id).then(order => {
+            return order
+          })
         })
         .finally(() => {
           NProgress.done()
@@ -80,7 +81,10 @@ export default new Vuex.Store({
     },
     setOrderPaymentMethod ({ commit }, payload) {
       NProgress.start()
-      return APIService.updateOrderPaymentMethod(payload.order, payload.paymentMethod)
+      return APIService.updateOrderPaymentMethod(
+        payload.order,
+        payload.paymentMethod
+      )
         .then(order => {
           commit('updateOrder', order)
           return order
@@ -91,7 +95,11 @@ export default new Vuex.Store({
     },
     setOrderPaymentSource ({ commit }, payload) {
       NProgress.start()
-      return APIService.createOrderPaymentSource(payload.order, payload.paymentMethod, payload.paymentSourceAttributes)
+      return APIService.createOrderPaymentSource(
+        payload.order,
+        payload.paymentMethod,
+        payload.paymentSourceAttributes
+      )
         .then(paymentSource => {
           commit('updateOrderPaymentSource', paymentSource)
           return paymentSource
@@ -102,7 +110,10 @@ export default new Vuex.Store({
     },
     updateOrderPaymentSource ({ commit, state }, paymentSourceAttributes) {
       NProgress.start()
-      return APIService.updateOrderPaymentSource(state.order, paymentSourceAttributes)
+      return APIService.updateOrderPaymentSource(
+        state.order,
+        paymentSourceAttributes
+      )
         .then(paymentSource => {
           commit('updateOrderPaymentSource', paymentSource)
           return paymentSource

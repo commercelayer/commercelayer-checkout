@@ -7,8 +7,8 @@
         :autofocus="autofocusEmail"
         :error-messages="errorMessages"
         @input="handleInput()"
-        @blur="handleBlur()">
-        </v-text-field>
+        @blur="handleBlur()"
+      ></v-text-field>
     </v-flex>
   </v-layout>
 </template>
@@ -27,13 +27,10 @@ export default {
       const errors = []
       if (!this.$v.customer_email.$dirty) return errors
       !this.$v.customer_email.email && errors.push('Must be valid email')
-      !this.$v.customer_email.required && errors.push('Can\'t be blank')
+      !this.$v.customer_email.required && errors.push("Can't be blank")
       return errors
     },
-    ...mapFields([
-      'validations.invalid_customer',
-      'order.customer_email'
-    ])
+    ...mapFields(['validations.invalid_customer', 'order.customer_email'])
   },
   validations: {
     customer_email: { required, email }
@@ -60,5 +57,4 @@ export default {
 </script>
 
 <style>
-
 </style>

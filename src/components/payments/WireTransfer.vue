@@ -9,7 +9,7 @@
     ></v-radio>
     <div class="payment-method-fields" v-show="selected">
       <div>{{ $t('payment_methods.wire_transfer.hint') | capitalize }}</div>
-      <div class="payment-error" id="wire-transfer-payment-error"></div>      
+      <div class="payment-error" id="wire-transfer-payment-error"></div>
     </div>
   </div>
 </template>
@@ -22,23 +22,18 @@ export default {
     setupPayment () {
       let btn = document.getElementById('place-order-button')
       btn.onclick = () => {
-        this.loading_payment = true
-        this.setPaymentSource()
-          .then(paymentSource => {
-            this.handlePayment()
-          })
+        this.handlePayment()
       }
-    },    
+    },
     handlePayment () {
-      this.$store.dispatch('placeOrder')
-        .then(order => {
-          this.$router.push({ name: 'confirmation' })
-        })
+      this.loading_payment = true
+      this.$store.dispatch('placeOrder').then(order => {
+        this.$router.push({ name: 'confirmation' })
+      })
     }
   }
 }
 </script>
 
 <style>
-
 </style>

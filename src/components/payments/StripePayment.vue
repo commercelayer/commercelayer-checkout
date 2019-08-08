@@ -46,46 +46,46 @@ export default {
 
         let btn = document.getElementById('place-order-button')
         btn.onclick = () => {
-          this.loading_payment = true
-          this.setPaymentSource()
-            .then(paymentSource => {
-              this.handlePayment(stripe, cardElement, paymentSource.client_secret)
-            })
+          this.handlePayment(stripe, cardElement)
         }
       })
     },
-    handlePayment (stripe, cardElement, clientSecret) {
+    handlePayment (stripe, cardElement) {
+      this.loading_payment = true
       let that = this
 
-      stripe.handleCardPayment(
-        clientSecret, cardElement, {
-          payment_method_data: {
-            billing_details: {
-              email: that.order.customer_email,
-              name: that.order.billing_address.full_name,
-              phone: that.order.billing_address.phone,
-              address: {
-                city: that.order.billing_address.city,
-                country: that.order.billing_address.country_code,
-                line1: that.order.billing_address.line_1,
-                postal_code: that.order.billing_address.zip_code,
-                state: that.order.billing_address.state_code
+      stripe
+        .handleCardPayment(
+          this.order.payment_source.client_secret,
+          cardElement,
+          {
+            payment_method_data: {
+              billing_details: {
+                email: that.order.customer_email,
+                name: that.order.billing_address.full_name,
+                phone: that.order.billing_address.phone,
+                address: {
+                  city: that.order.billing_address.city,
+                  country: that.order.billing_address.country_code,
+                  line1: that.order.billing_address.line_1,
+                  postal_code: that.order.billing_address.zip_code,
+                  state: that.order.billing_address.state_code
+                }
               }
             }
           }
-        }
-      ).then(result => {
-        if (result.error) {
-          let cardError = document.getElementById('stripe-card-error')
-          cardError.innerHTML = result.error.message
-          that.loading_payment = false
-        } else {
-          that.$store.dispatch('placeOrder')
-            .then(() => {
+        )
+        .then(result => {
+          if (result.error) {
+            let cardError = document.getElementById('stripe-card-error')
+            cardError.innerHTML = result.error.message
+            that.loading_payment = false
+          } else {
+            that.$store.dispatch('placeOrder').then(() => {
               that.$router.push({ name: 'confirmation' })
             })
-        }
-      })
+          }
+        })
     },
     getScript () {
       let scripts = document.getElementsByTagName('script')

@@ -6,8 +6,8 @@
         v-model="first_name"
         :error-messages="errorMessages('first_name')"
         @input="handleInput()"
-        @blur="handleBlur('first_name')">
-      </v-text-field>
+        @blur="handleBlur('first_name')"
+      ></v-text-field>
     </v-flex>
     <v-flex xs6 px-2 py-1>
       <v-text-field
@@ -15,8 +15,8 @@
         v-model="last_name"
         :error-messages="errorMessages('last_name')"
         @input="handleInput()"
-        @blur="handleBlur('last_name')">
-      </v-text-field>
+        @blur="handleBlur('last_name')"
+      ></v-text-field>
     </v-flex>
     <v-flex xs12 sm6 px-2 py-1>
       <v-text-field
@@ -24,8 +24,8 @@
         v-model="line_1"
         :error-messages="errorMessages('line_1')"
         @input="handleInput()"
-        @blur="handleBlur('line_1')">
-      </v-text-field>
+        @blur="handleBlur('line_1')"
+      ></v-text-field>
     </v-flex>
     <v-flex xs6 px-2 py-1>
       <v-text-field
@@ -33,8 +33,8 @@
         v-model="city"
         :error-messages="errorMessages('city')"
         @input="handleInput()"
-        @blur="handleBlur('city')">
-      </v-text-field>
+        @blur="handleBlur('city')"
+      ></v-text-field>
     </v-flex>
     <v-flex xs6 px-2 py-1>
       <v-select
@@ -46,8 +46,8 @@
         :error-messages="errorMessages('country_code')"
         @input="handleInput()"
         @blur="handleBlur('country_code')"
-        @change="updateShipToDifferentAddressRequired">
-        </v-select>
+        @change="updateShipToDifferentAddressRequired"
+      ></v-select>
     </v-flex>
     <v-flex xs6 px-2 py-1>
       <v-text-field
@@ -55,8 +55,8 @@
         v-model="state_code"
         :error-messages="errorMessages('state_code')"
         @input="handleInput()"
-        @blur="handleBlur('state_code')">
-      </v-text-field>
+        @blur="handleBlur('state_code')"
+      ></v-text-field>
     </v-flex>
     <v-flex xs6 px-2 py-1>
       <v-text-field
@@ -64,8 +64,8 @@
         v-model="zip_code"
         :error-messages="errorMessages('zip_code')"
         @input="handleInput()"
-        @blur="handleBlur('zip_code')">
-      </v-text-field>
+        @blur="handleBlur('zip_code')"
+      ></v-text-field>
     </v-flex>
     <v-flex xs12 sm6 px-2 py-1>
       <v-text-field
@@ -73,8 +73,8 @@
         v-model="phone"
         :error-messages="errorMessages('phone')"
         @input="handleInput()"
-        @blur="handleBlur('phone')">
-      </v-text-field>
+        @blur="handleBlur('phone')"
+      ></v-text-field>
     </v-flex>
   </v-layout>
 </template>
@@ -118,5 +118,4 @@ export default {
 </script>
 
 <style>
-
 </style>

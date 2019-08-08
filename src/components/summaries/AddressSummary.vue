@@ -1,10 +1,15 @@
 <template>
   <p>
-    {{ address.first_name }} {{ address.last_name }}<br/>
-    {{ address.line_1 }}<br/>
-    {{ address.zip_code }} {{ address.city }} ({{ address.state_code }})<br/>
-    {{ countryName }}<br/>
-    <v-icon :small="true">phone</v-icon> {{ address.phone }}
+    {{ address.first_name }} {{ address.last_name }}
+    <br />
+    {{ address.line_1 }}
+    <br />
+    {{ address.zip_code }} {{ address.city }} ({{ address.state_code }})
+    <br />
+    {{ countryName }}
+    <br />
+    <v-icon :small="true">phone</v-icon>
+    {{ address.phone }}
   </p>
 </template>
 
@@ -21,7 +26,9 @@ export default {
   },
   computed: {
     countryName () {
-      let country = _.find(countries, { 'code': _.upperCase(this.address.country_code) })
+      let country = _.find(countries, {
+        code: _.upperCase(this.address.country_code)
+      })
       return country.name
     }
   }

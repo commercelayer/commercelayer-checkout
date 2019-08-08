@@ -16,7 +16,9 @@
 </template>
 
 <script>
+import _ from 'lodash'
 import { paymentMixin } from '@/mixins/paymentMixin'
+import { collectBrowserInfo } from '@/utils/browserInfo'
 
 export default {
   computed: {
@@ -35,7 +37,7 @@ export default {
         error: {
           color: process.env.VUE_APP_ERROR_COLOR
         }
-      }    
+      }
     }
   },
   mixins: [paymentMixin],
@@ -43,123 +45,96 @@ export default {
     setupPayment () {
       let script = this.getScript()
       script.addEventListener('load', () => {
-        this.setPaymentSource()
-          .then(paymentSource => {
-            let checkout = new AdyenCheckout(this.configuration(paymentSource))
+        // eslint-disable-next-line
+        let checkout = new AdyenCheckout({
+          locale: this.$i18n.locale,
+          environment: process.env.VUE_APP_ADYEN_ENV,
+          originKey: process.env.VUE_APP_ADYEN_ORIGIN_KEY,
+          paymentMethodsResponse: this.order.payment_source.payment_methods,
+          onChange: this.handleOnChange,
+          onAdditionalDetails: this.handleOnAdditionalDetails
+        })
 
-            let card = checkout.create("card", {
-              styles: this.styleObj
-            }).mount("#adyen-card")
-
-            let btn = document.getElementById('place-order-button')
-            btn.onclick = () => {
-              this.handlePayment(checkout)
-            }
-
+        checkout
+          .create('card', {
+            styles: this.styleObj
           })
+          .mount('#adyen-card')
+
+        let btn = document.getElementById('place-order-button')
+        btn.onclick = () => {
+          this.handlePayment(checkout)
+        }
       })
     },
-    configuration (paymentSource) {
-      return {
-        locale: this.$i18n.locale,
-        environment: process.env.VUE_APP_ADYEN_ENV,
-        originKey: process.env.VUE_APP_ADYEN_ORIGIN_KEY,
-        paymentMethodsResponse: paymentSource.payment_methods,
-        onChange: this.handleOnChange,
-        onAdditionalDetails:this.handleOnAdditionalDetails
-      }
-    },
-    collectBrowserInfo () {
-      const screenWidth = window && window.screen ? window.screen.width : ''
-      const screenHeight = window && window.screen ? window.screen.height : ''
-      const colorDepth = window && window.screen ? window.screen.colorDepth : ''
-      const userAgent = window && window.navigator ? window.navigator.userAgent : ''
-      const javaEnabled = window && window.navigator ? navigator.javaEnabled() : false
-
-      let language = ''
-      if (window && window.navigator) {
-          language = window.navigator.language
-              ? window.navigator.language
-              : window.navigator.browserLanguage // Else is for IE <+ 10
-      }
-
-      const d = new Date()
-      const timeZoneOffset = d.getTimezoneOffset()
-
-      const browserInfo = {
-          screenWidth,
-          screenHeight,
-          colorDepth,
-          userAgent,
-          timeZoneOffset,
-          language,
-          javaEnabled,
-      };
-
-      return browserInfo
-    },
     handleOnChange (state, component) {
-      let browserInfo = this.collectBrowserInfo()
-
       if (state.isValid) {
+        let browserInfo = collectBrowserInfo()
+
         this.$store.dispatch('updateOrderPaymentSource', {
           payment_request_data: {
             payment_method: state.data.paymentMethod,
             origin: window.location.origin,
             return_url: window.location.href,
             browser_info: {
-              acceptHeader: "text\/html,application\/xhtml+xml,application\/xml;q=0.9,image\/webp,image\/apng,*\/*;q=0.8",
+              acceptHeader:
+                'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
               colorDepth: browserInfo.colorDepth,
               javaEnabled: browserInfo.javaEnabled,
               language: browserInfo.language,
               screenHeight: browserInfo.screenHeight,
               screenWidth: browserInfo.screenWidth,
               timeZoneOffset: browserInfo.timeZoneOffset,
-              userAgent: browserInfo.userAgent            
+              userAgent: browserInfo.userAgent
             }
           }
         })
       }
     },
     handleOnAdditionalDetails (state, component) {
-      this.$store.dispatch('updateOrderPaymentSource', {
-        payment_request_details: state.data,
-        _details: 1
-      })
-      .then(paymentSource => {
-        let checkout = new AdyenCheckout(this.configuration(paymentSource))
-        this.handlePaymentResponse(paymentSource.payment_response, checkout)
-      })
+      this.$store
+        .dispatch('updateOrderPaymentSource', {
+          payment_request_details: state.data,
+          _details: 1
+        })
+        .then(paymentSource => {
+          // eslint-disable-next-line
+          let checkout = new AdyenCheckout(this.configuration(paymentSource))
+          this.handlePaymentResponse(paymentSource.payment_response, checkout)
+        })
     },
     handlePayment (checkout) {
-      this.$store.dispatch('updateOrderPaymentSource', {
-        _authorize: 1
-      })
-      .then(paymentSource => {
-        this.handlePaymentResponse(paymentSource.payment_response, checkout)
-      })
+      this.loading_payment = true
+      this.$store
+        .dispatch('updateOrderPaymentSource', {
+          _authorize: 1
+        })
+        .then(paymentSource => {
+          this.handlePaymentResponse(paymentSource.payment_response, checkout)
+        })
     },
     handlePaymentResponse (paymentResponse, checkout) {
-      if (paymentResponse.action != undefined) {
+      if (paymentResponse.action !== undefined) {
         // https://docs.adyen.com/checkout/components-web#step-4-additional-front-end
         checkout.createFromAction(paymentResponse.action).mount('#adyen-action')
       } else {
         // https://docs.adyen.com/checkout/components-web#step-6-present-payment-result
-        switch(paymentResponse.resultCode) {
-          case "Authorised":
-          case "Pending":
-          case "Received":
-            this.$store.dispatch('placeOrder')
-              .then(order => {
-                this.$router.push({ name: 'confirmation' })
-              })
-            break      
-          case "Error":
-          case "Refused":
+        switch (paymentResponse.resultCode) {
+          case 'Authorised':
+          case 'Pending':
+          case 'Received':
+            this.$store.dispatch('placeOrder').then(order => {
+              this.$router.push({ name: 'confirmation' })
+            })
+            break
+          case 'Error':
+          case 'Refused':
             let cardError = document.getElementById('adyen-card-error')
-            cardError.innerHTML = _.capitalize(this.$t('errors.unauthorized_card')) + ` (${paymentResponse.refusalReason})`
+            cardError.innerHTML =
+              _.capitalize(this.$t('errors.unauthorized_card')) +
+              ` (${paymentResponse.refusalReason})`
             this.loading_payment = false
-            break  
+            break
         }
       }
     },
@@ -172,7 +147,7 @@ export default {
       script.type = 'text/javascript'
       script.src = this.scriptSrc
       document.body.insertBefore(script, document.body.firstChild)
-      return script      
+      return script
     },
     checkStyle () {
       let links = document.getElementsByTagName('link')
@@ -188,11 +163,11 @@ export default {
       let style = document.createElement('link')
       style.rel = 'stylesheet'
       style.href = this.styleHref
-      document.head.appendChild(style)      
+      document.head.appendChild(style)
     }
   }
 }
 </script>
 
-<style lang="scss">
+<style lang='scss'>
 </style>
