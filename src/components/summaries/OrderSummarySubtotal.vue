@@ -1,11 +1,13 @@
 <template>
   <div :class="{subtotal: true, total: total}">
-    <v-layout row>
-      <v-flex xs6 offset-xs3>{{ $t(`order_summary.${label}`) | capitalize }}</v-flex>
-      <v-flex xs3>
-        <div class="amount">{{ amount }}</div>
-      </v-flex>
-    </v-layout>
+    <v-container>
+      <v-layout row>
+        <v-flex xs6 offset-xs3>{{ $t(`order_summary.${label}`) | capitalize }}</v-flex>
+        <v-flex xs3>
+          <div class="amount">{{ amount }}</div>
+        </v-flex>
+      </v-layout>
+    </v-container>
   </div>
 </template>
 
@@ -30,8 +32,6 @@ export default {
 
 <style lang="scss" scoped>
 .subtotal {
-  margin-top: 1rem;
-  padding-top: 1rem;
   border-top: 1px solid $v-border;
 }
 .amount {

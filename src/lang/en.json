@@ -65,7 +65,7 @@
     },
     "delivery": {
       "title": "delivery",
-      "hint": "shipments summary and delivery methods",
+      "hint": "shipment summary and delivery methods",
       "button": "continue to payment"
     },
     "payment": {

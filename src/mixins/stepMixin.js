@@ -15,15 +15,12 @@ export const stepMixin = {
     isMobile () {
       return this.$vuetify.breakpoint.xs
     },
-    editIcon () {
-      return this.$vuetify.icons.complete
-    },
     ...mapState(['validations']),
     ...mapFields(['current_step'])
   },
   methods: {
     nextStep () {
-      this.current_step = (this.step + 1)
+      this.current_step = this.step + 1
     }
   }
 }

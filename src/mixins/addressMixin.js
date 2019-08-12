@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import countries from '@/data/countries'
 import { required } from 'vuelidate/lib/validators'
 
@@ -27,7 +28,7 @@ export const addressMixin = {
     errorMessages (fieldName) {
       const errors = []
       if (!this.$v[fieldName].$dirty) return errors
-      !this.$v[fieldName].required && errors.push('Can\'t be blank')
+      !this.$v[fieldName].required && errors.push("Can't be blank")
       return errors
     },
     handleInput () {

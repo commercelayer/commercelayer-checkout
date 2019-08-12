@@ -1,7 +1,10 @@
 <template>
-  <v-content id="layout" :class="{ 'sm-and-up': $vuetify.breakpoint.smAndUp, 'md-and-up': $vuetify.breakpoint.mdAndUp }">
+  <v-content
+    id="layout"
+    :class="{ 'sm-and-up': $vuetify.breakpoint.smAndUp, 'md-and-up': $vuetify.breakpoint.mdAndUp }"
+  >
     <v-container>
-      <v-img :src="logoUrl" :width="logoWidth"/>
+      <v-img :src="logoUrl" :width="logoWidth" />
     </v-container>
     <v-container>
       <v-layout wrap>

@@ -2,7 +2,7 @@
   <div class="payment-method">
     <v-radio
       :label="inputLabel('adyen')"
-      :value="payment_method"
+      :value="payment_method.id"
       color="primary"
       @change="setPaymentMethod"
       id="adyen_payments_radio"
@@ -38,6 +38,16 @@ export default {
           color: process.env.VUE_APP_ERROR_COLOR
         }
       }
+    },
+    checkoutConfig () {
+      return {
+        locale: this.$i18n.locale,
+        environment: process.env.VUE_APP_ADYEN_ENV,
+        originKey: process.env.VUE_APP_ADYEN_ORIGIN_KEY,
+        paymentMethodsResponse: this.order.payment_source.payment_methods,
+        onChange: this.handleOnChange,
+        onAdditionalDetails: this.handleOnAdditionalDetails
+      }
     }
   },
   mixins: [paymentMixin],
@@ -46,14 +56,7 @@ export default {
       let script = this.getScript()
       script.addEventListener('load', () => {
         // eslint-disable-next-line
-        let checkout = new AdyenCheckout({
-          locale: this.$i18n.locale,
-          environment: process.env.VUE_APP_ADYEN_ENV,
-          originKey: process.env.VUE_APP_ADYEN_ORIGIN_KEY,
-          paymentMethodsResponse: this.order.payment_source.payment_methods,
-          onChange: this.handleOnChange,
-          onAdditionalDetails: this.handleOnAdditionalDetails
-        })
+        let checkout = new AdyenCheckout(this.checkoutConfig)
 
         checkout
           .create('card', {
@@ -99,7 +102,7 @@ export default {
         })
         .then(paymentSource => {
           // eslint-disable-next-line
-          let checkout = new AdyenCheckout(this.configuration(paymentSource))
+          let checkout = new AdyenCheckout(this.checkoutConfig)
           this.handlePaymentResponse(paymentSource.payment_response, checkout)
         })
     },
@@ -170,4 +173,11 @@ export default {
 </script>
 
 <style lang='scss'>
+.adyen-checkout__label__text {
+  font-size: 1rem !important;
+  margin-bottom: 0.5rem;
+}
+.adyen-checkout__input {
+  @include hosted-field;
+}
 </style>

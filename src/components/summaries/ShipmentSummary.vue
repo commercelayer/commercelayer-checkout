@@ -1,7 +1,8 @@
 <template>
   <div class="shipment-summary">
+    <strong>{{ shipment.shipping_method.name }}</strong>
+    &mdash;
     {{ shipment.skus_count }} {{ $tc('generic.item', shipment.skus_count)}} &mdash;
-    {{ shipment.shipping_method.name }} &mdash;
     {{ shipment.shipping_method.formatted_price_amount }}
   </div>
 </template>

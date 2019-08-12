@@ -1,18 +1,20 @@
 <template>
-  <div class="line-item">
-    <v-layout row>
-      <v-flex xs3>
-        <v-img :src="line_item.image_url" aspect-ratio="1" width="75" />
-      </v-flex>
-      <v-flex xs6>
-        <div class="name">{{ line_item.name }}</div>
-        <div class="sku-code">{{ line_item.sku_code }}</div>
-        <div class="quanity">{{ $t('generic.quantity') | capitalize }}: {{ line_item.quantity }}</div>
-      </v-flex>
-      <v-flex xs3>
-        <div class="amount">{{ line_item.formatted_total_amount }}</div>
-      </v-flex>
-    </v-layout>
+  <div class="line-item body-2">
+    <v-container>
+      <v-layout row>
+        <v-flex xs3>
+          <v-img :src="line_item.image_url" aspect-ratio="1" width="75" />
+        </v-flex>
+        <v-flex xs6>
+          <div class="name">{{ line_item.name }}</div>
+          <div class="sku-code">{{ line_item.sku_code }}</div>
+          <div class="quanity">{{ $t('generic.quantity') | capitalize }}: {{ line_item.quantity }}</div>
+        </v-flex>
+        <v-flex xs3>
+          <div class="amount">{{ line_item.formatted_total_amount }}</div>
+        </v-flex>
+      </v-layout>
+    </v-container>
   </div>
 </template>
 

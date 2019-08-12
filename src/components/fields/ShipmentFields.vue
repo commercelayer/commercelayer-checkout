@@ -9,12 +9,12 @@
       :key="shipment_line_item.id"
       :shipment_line_item="shipment_line_item"
     />
-    <v-radio-group v-model="shipment.shipping_method">
+    <v-radio-group :value="shippingMethodId">
       <v-radio
         v-for="shipping_method in sortedAvailableShippingMethods"
         :key="shipping_method.id"
         :label="shippingMethodLabel(shipping_method)"
-        :value="shipping_method"
+        :value="shipping_method.id"
         color="primary"
         @change="handleChange(shipping_method)"
       ></v-radio>
@@ -75,6 +75,11 @@ export default {
         'price_amount_cents'
       ])
     },
+    shippingMethodId () {
+      return this.shipment.shipping_method
+        ? this.shipment.shipping_method.id
+        : null
+    },
     ...mapState(['order']),
     ...mapFields(['validations.invalid_shipments'])
   },
@@ -87,8 +92,5 @@ export default {
 <style lang="scss">
 .shipment-header {
   margin-bottom: 0.5rem;
-}
-.v-divider {
-  margin-bottom: 1rem;
 }
 </style>

@@ -5,7 +5,7 @@
       <small>{{ $t('steps.payment.hint') | capitalize }}</small>
     </v-stepper-step>
     <v-stepper-content :step="step">
-      <v-radio-group v-model="payment_method" class="payment-methods">
+      <v-radio-group :value="paymentMethodId" class="payment-methods">
         <component
           v-for="available_payment_method in order.available_payment_methods"
           :is="componentType(available_payment_method)"
@@ -13,6 +13,7 @@
           :payment_method="available_payment_method"
         />
       </v-radio-group>
+
       <v-btn
         color="primary"
         :block="isMobile"
@@ -59,6 +60,9 @@ export default {
     disabled () {
       return this.invalid_payment_method
     },
+    paymentMethodId () {
+      return this.order.payment_method ? this.order.payment_method.id : null
+    },
     ...mapState(['buttons']),
     ...mapFields([
       'validations.invalid_payment_method',
@@ -82,9 +86,11 @@ export default {
   margin-bottom: 1rem;
 
   .payment-method-fields {
-    margin: 1rem 0rem;
-    padding: 1rem 0;
-    border-top: 1px solid $v-border;
+    background-color: #fafafa;
+    margin: 1rem 0;
+    padding: 1rem 1rem 0;
+    border: 1px solid $v-border;
+    border-radius: 4px;
 
     .payment-error {
       color: $ERROR_COLOR;
@@ -95,15 +101,14 @@ export default {
 
 .v-input--selection-controls {
   .v-input__control {
-    width: 100%;
+    width: 100% !important;
   }
 }
 
 .sm-and-up {
-  .payment-method {
-    .payment-method-fields {
-      padding: 2rem;
-    }
+  .payment-method-fields {
+    padding: 2rem 2rem 1rem;
+    // margin-bottom: 1rem;
   }
 }
 </style>

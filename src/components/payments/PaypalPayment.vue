@@ -2,7 +2,7 @@
   <div class="payment-method">
     <v-radio
       :label="inputLabel('paypal')"
-      :value="payment_method"
+      :value="payment_method.id"
       color="primary"
       @change="setPaymentMethod"
       id="paypal_payments_radio"

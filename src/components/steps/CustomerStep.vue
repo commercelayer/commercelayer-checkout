@@ -1,6 +1,6 @@
 <template>
   <div class="step-wrapper">
-    <v-stepper-step :step="step" :complete="complete" :editable="complete" :edit-icon="editIcon">
+    <v-stepper-step :step="step" :complete="complete" :editable="complete" edit-icon="done">
       <div>
         {{ $t('steps.customer.title') | capitalize }}
         <span v-if="complete">
@@ -12,9 +12,11 @@
     </v-stepper-step>
 
     <v-stepper-content :step="step">
-      <CustomerFields />
-      <BillingAddressFields />
-      <ShippingAddressFields />
+      <v-container>
+        <CustomerFields />
+        <BillingAddressFields />
+        <ShippingAddressFields />
+      </v-container>
       <v-btn
         id="customer-step-submit"
         color="primary"
@@ -26,20 +28,22 @@
     </v-stepper-content>
 
     <div class="step-summary" v-if="complete">
-      <v-layout row wrap>
-        <v-flex xs12 md6>
-          <div class="header">{{ order.customer_email }}</div>
-          <div class="billing-address">
-            <AddressSummary :address="order.billing_address" />
-          </div>
-        </v-flex>
-        <v-flex xs12 md4>
-          <div class="header">{{ $t('generic.ship_to') | capitalize }}:</div>
-          <div class="shipping-address">
-            <AddressSummary :address="order.shipping_address" />
-          </div>
-        </v-flex>
-      </v-layout>
+      <v-container>
+        <v-layout row wrap>
+          <v-flex xs12 sm6>
+            <div class="header">{{ order.customer_email }}</div>
+            <div class="billing-address">
+              <AddressSummary :address="order.billing_address" />
+            </div>
+          </v-flex>
+          <v-flex xs12 sm6>
+            <div class="header">{{ $t('generic.ship_to') | capitalize }}:</div>
+            <div class="shipping-address">
+              <AddressSummary :address="order.shipping_address" />
+            </div>
+          </v-flex>
+        </v-layout>
+      </v-container>
     </div>
   </div>
 </template>
@@ -63,7 +67,7 @@ export default {
   },
   mixins: [stepMixin],
   computed: {
-    disabled() {
+    disabled () {
       return (
         this.validations.invalid_customer ||
         this.validations.invalid_billing_address ||
@@ -74,7 +78,7 @@ export default {
     ...mapFields(['buttons.loading_customer'])
   },
   methods: {
-    submit() {
+    submit () {
       this.loading_customer = true
       this.$store.dispatch('setOrderAddresses').then(() => {
         this.loading_customer = false

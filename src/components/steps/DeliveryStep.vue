@@ -4,7 +4,7 @@
       :step="step"
       :complete="complete"
       :editable="complete"
-      :edit-icon="editIcon"
+      edit-icon="done"
       :rules="rules"
     >
       <div>
@@ -80,5 +80,10 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.shipment-summary {
+  &:last-child {
+    margin-bottom: 1.5rem;
+  }
+}
 </style>

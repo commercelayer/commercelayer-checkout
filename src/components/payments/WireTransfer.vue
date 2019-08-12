@@ -2,7 +2,7 @@
   <div class="payment-method">
     <v-radio
       :label="inputLabel('wire_transfer')"
-      :value="payment_method"
+      :value="payment_method.id"
       color="primary"
       @change="setPaymentMethod"
       id="wire_transfers_radio"

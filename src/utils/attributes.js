@@ -126,29 +126,14 @@ export const shipmentAttributes = [
 ]
 
 export const paymentSourceAttributesMap = {
-  stripe_payments: [
-    'id',
-    'client_secret'
-  ],
-  adyen_payments: [
-    'id',
-    'payment_methods',
-    'payment_response'
-  ],
-  braintree_payments: [
-    'id',
-    'client_token'
-  ],
-  paypal_payments: [
-    'id',
-    'approval_url'
-  ],
-  wire_transfers: [
-    'id'
-  ]
+  stripe_payments: ['id', 'client_secret'],
+  adyen_payments: ['id', 'payment_methods', 'payment_response'],
+  braintree_payments: ['id', 'client_token'],
+  paypal_payments: ['id', 'approval_url'],
+  wire_transfers: ['id']
 }
 
-export const addressDefaults = (order) => {
+export const addressDefaults = order => {
   return {
     first_name: '',
     last_name: '',
@@ -162,12 +147,13 @@ export const addressDefaults = (order) => {
   }
 }
 
-export const orderDefaults = (order) => {
+export const orderDefaults = order => {
   return {
     billing_address: addressDefaults(order),
     shipping_address: addressDefaults(order),
     ship_to_different_address: order.ship_to_different_address || false,
-    ship_to_different_address_required: order.ship_to_different_address_required || false,
+    ship_to_different_address_required:
+      order.ship_to_different_address_required || false,
     shipments: [],
     payment_method: {},
     payment_source: {}

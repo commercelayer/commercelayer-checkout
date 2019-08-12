@@ -1,8 +1,8 @@
 <template>
   <v-stepper v-model="current_step" vertical>
-    <CustomerStep :step=1 />
-    <DeliveryStep :step=2 />
-    <PaymentStep :step=3 />
+    <CustomerStep :step="1" />
+    <DeliveryStep :step="2" />
+    <PaymentStep :step="3" />
   </v-stepper>
 </template>
 
@@ -19,53 +19,60 @@ export default {
     PaymentStep
   },
   computed: {
-    ...mapFields([
-      'current_step',
-      'order'
-    ])
+    ...mapFields(['current_step', 'order'])
   }
 }
 </script>
 
 <style lang="scss">
-  .v-subheader {
-    padding: 0;
+.v-subheader {
+  padding: 0;
+}
+
+.step-summary {
+  padding: 0 24px;
+  border-bottom: 1px solid $v-border;
+}
+
+.step-wrapper {
+  .v-stepper__label {
+    small {
+      margin-top: 0.5rem;
+    }
   }
 
+  .v-stepper__content {
+    margin-left: -1px;
+  }
+}
+
+.sm-and-up {
   .step-summary {
-    padding: 0 2rem;
+    margin-top: 16px;
+    margin-left: 36px;
+    padding-left: 24px;
+    padding-bottom: 16px;
+    border-left: 1px solid $v-border;
+    border-bottom: 0;
   }
 
   .step-wrapper {
     .v-stepper__content {
-      margin-left: 0;
+      margin: 0px -36px -16px 36px;
+      padding: 16px 60px 16px 23px;
     }
-  }
-  .sm-and-up {
-    .step-summary {
-      margin-top: 16px;
-      margin-left: 36px;
-      padding-left: 24px;
-      padding-bottom: 16px;
+    &:not(:last-child) > .v-stepper__content {
       border-left: 1px solid $v-border;
     }
-
-    .step-wrapper {
-      .v-stepper__content {
-        margin: 0px -36px -16px 36px;
-        padding: 16px 60px 16px 23px;
-      }
-      &:not(:last-child) > .v-stepper__content {
-        border-left: 1px solid $v-border;
-      }
-      button {
-        margin: 1rem 0 0;
+    button {
+      &.v-size--default {
         min-width: 50%;
-
-        &#place-order-button {
-          margin-top: 0;
-        }
+        margin-bottom: 1rem;
+      }
+      &#place-order-button {
+        margin-bottom: 0;
       }
     }
   }
+}
 </style>

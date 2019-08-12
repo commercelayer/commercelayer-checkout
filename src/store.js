@@ -27,22 +27,25 @@ export default new Vuex.Store({
     getField
   },
   mutations: {
-    updateOrder (state, order) {
+    updateOrder(state, order) {
       state.order = order
     },
-    updateOrderPaymentSource (state, paymentSource) {
+    updateOrderPaymentSource(state, paymentSource) {
       state.order.payment_source = paymentSource
+    },
+    updateButtonLoadingDelivery(state, value) {
+      state.buttons.loading_delivery = value
     },
     updateField
   },
   actions: {
-    setOrder ({ commit }, orderId) {
+    setOrder({ commit }, orderId) {
       return APIService.getOrder(orderId).then(order => {
         commit('updateOrder', order)
         return order
       })
     },
-    setOrderCustomerEmail ({ commit, state }) {
+    setOrderCustomerEmail({ commit, state }) {
       NProgress.start()
       return APIService.updateOrderCustomerEmail(state.order)
         .then(order => {
@@ -53,85 +56,57 @@ export default new Vuex.Store({
           NProgress.done()
         })
     },
-    setOrderAddresses ({ commit, state }) {
-      NProgress.start()
-      return APIService.updateOrderAddresses(state.order)
-        .then(order => {
-          commit('updateOrder', order)
-          return order
-        })
-        .finally(() => {
-          NProgress.done()
-        })
+    setOrderAddresses({ commit, state }) {
+      return APIService.updateOrderAddresses(state.order).then(order => {
+        commit('updateOrder', order)
+        return order
+      })
     },
-    setShipmentShippingMethod ({ dispatch }, payload) {
-      NProgress.start()
+    setShipmentShippingMethod({ commit, dispatch }, payload) {
+      commit('updateButtonLoadingDelivery', true)
       return APIService.updateShipmentShippingMethod(
         payload.shipment,
         payload.shippingMethod
-      )
-        .then(() => {
-          return dispatch('setOrder', payload.order.id).then(order => {
-            return order
-          })
+      ).then(() => {
+        return dispatch('setOrder', payload.order.id).then(order => {
+          commit('updateButtonLoadingDelivery', false)
+          return order
         })
-        .finally(() => {
-          NProgress.done()
-        })
+      })
     },
-    setOrderPaymentMethod ({ commit }, payload) {
-      NProgress.start()
+    setOrderPaymentMethod({ commit }, payload) {
       return APIService.updateOrderPaymentMethod(
         payload.order,
         payload.paymentMethod
-      )
-        .then(order => {
-          commit('updateOrder', order)
-          return order
-        })
-        .finally(() => {
-          NProgress.done()
-        })
+      ).then(order => {
+        commit('updateOrder', order)
+        return order
+      })
     },
-    setOrderPaymentSource ({ commit }, payload) {
-      NProgress.start()
+    setOrderPaymentSource({ commit }, payload) {
       return APIService.createOrderPaymentSource(
         payload.order,
         payload.paymentMethod,
         payload.paymentSourceAttributes
-      )
-        .then(paymentSource => {
-          commit('updateOrderPaymentSource', paymentSource)
-          return paymentSource
-        })
-        .finally(() => {
-          NProgress.done()
-        })
+      ).then(paymentSource => {
+        commit('updateOrderPaymentSource', paymentSource)
+        return paymentSource
+      })
     },
-    updateOrderPaymentSource ({ commit, state }, paymentSourceAttributes) {
-      NProgress.start()
+    updateOrderPaymentSource({ commit, state }, paymentSourceAttributes) {
       return APIService.updateOrderPaymentSource(
         state.order,
         paymentSourceAttributes
-      )
-        .then(paymentSource => {
-          commit('updateOrderPaymentSource', paymentSource)
-          return paymentSource
-        })
-        .finally(() => {
-          NProgress.done()
-        })
+      ).then(paymentSource => {
+        commit('updateOrderPaymentSource', paymentSource)
+        return paymentSource
+      })
     },
-    placeOrder ({ commit, state }) {
-      NProgress.start()
-      return APIService.placeOrder(state.order)
-        .then(order => {
-          commit('updateOrder', order)
-          return order
-        })
-        .finally(() => {
-          NProgress.done()
-        })
+    placeOrder({ commit, state }) {
+      return APIService.placeOrder(state.order).then(order => {
+        commit('updateOrder', order)
+        return order
+      })
     }
   }
 })

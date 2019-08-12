@@ -1,6 +1,6 @@
 <template>
   <v-layout row wrap>
-    <v-flex xs6 px-2 py-1>
+    <v-flex xs6 px-2>
       <v-text-field
         id="billing-address-first-name"
         :label="inputLabel('first_name')"
@@ -10,7 +10,7 @@
         @blur="handleBlur('first_name')"
       ></v-text-field>
     </v-flex>
-    <v-flex xs6 px-2 py-1>
+    <v-flex xs6 px-2>
       <v-text-field
         id="billing-address-last-name"
         :label="inputLabel('last_name')"
@@ -20,7 +20,7 @@
         @blur="handleBlur('last_name')"
       ></v-text-field>
     </v-flex>
-    <v-flex xs12 sm6 px-2 py-1>
+    <v-flex xs12 sm6 px-2>
       <v-text-field
         id="billing-address-line_1"
         :label="inputLabel('line_1')"
@@ -30,7 +30,7 @@
         @blur="handleBlur('line_1')"
       ></v-text-field>
     </v-flex>
-    <v-flex xs6 px-2 py-1>
+    <v-flex xs6 px-2>
       <v-text-field
         id="billing-address-city"
         :label="inputLabel('city')"
@@ -40,8 +40,8 @@
         @blur="handleBlur('city')"
       ></v-text-field>
     </v-flex>
-    <v-flex xs6 px-2 py-1>
-      <v-select
+    <v-flex xs6 px-2>
+      <v-autocomplete
         id="billing-address-country-code"
         :label="inputLabel('country_code')"
         :items="countries"
@@ -52,9 +52,9 @@
         @input="handleInput()"
         @blur="handleBlur('country_code')"
         @change="updateShipToDifferentAddressRequired"
-      ></v-select>
+      ></v-autocomplete>
     </v-flex>
-    <v-flex xs6 px-2 py-1>
+    <v-flex xs6 px-2>
       <v-text-field
         id="billing-address-state-code"
         :label="inputLabel('state_code')"
@@ -64,7 +64,7 @@
         @blur="handleBlur('state_code')"
       ></v-text-field>
     </v-flex>
-    <v-flex xs6 px-2 py-1>
+    <v-flex xs6 px-2>
       <v-text-field
         id="billing-address-zip-code"
         :label="inputLabel('zip_code')"
@@ -74,7 +74,7 @@
         @blur="handleBlur('zip_code')"
       ></v-text-field>
     </v-flex>
-    <v-flex xs12 sm6 px-2 py-1>
+    <v-flex xs12 sm6 px-2>
       <v-text-field
         id="billing-address-phone"
         :label="inputLabel('phone')"

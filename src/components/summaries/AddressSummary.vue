@@ -1,16 +1,26 @@
 <template>
-  <p>
-    {{ address.first_name }} {{ address.last_name }}
-    <br />
-    {{ address.line_1 }}
-    <br />
-    {{ address.zip_code }} {{ address.city }} ({{ address.state_code }})
-    <br />
-    {{ countryName }}
-    <br />
-    <v-icon :small="true">phone</v-icon>
-    {{ address.phone }}
-  </p>
+  <v-layout wrap class="address body-2">
+    <v-flex xs12>
+      <v-layout>
+        <v-flex shrink>
+          <v-icon :small="true">place</v-icon>
+        </v-flex>
+        <v-flex>
+          <p class="px-2">
+            {{ address.first_name }} {{ address.last_name }}
+            <br />
+            {{ address.line_1 }}
+            <br />
+            {{ address.zip_code }} {{ address.city }} ({{ address.state_code }})
+            <br />
+            {{ countryName }}
+            <br />
+            {{ address.phone }}
+          </p>
+        </v-flex>
+      </v-layout>
+    </v-flex>
+  </v-layout>
 </template>
 
 <script>
@@ -35,5 +45,14 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+// .address {
+//   margin-bottom: 2rem;
+// }
+
+// .sm-and-up {
+//   .address {
+//     margin-bottom: 0;
+//   }
+// }
 </style>

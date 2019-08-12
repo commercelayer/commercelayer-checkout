@@ -2,7 +2,7 @@
   <div class="payment-method">
     <v-radio
       :label="inputLabel('stripe')"
-      :value="payment_method"
+      :value="payment_method.id"
       color="primary"
       @change="setPaymentMethod"
       id="stripe_payments_radio"
@@ -104,15 +104,7 @@ export default {
 
 <style lang="scss" scoped>
 .StripeElement {
-  box-sizing: border-box;
-  height: 40px;
-  padding: 10px 12px;
-  border: 1px solid $v-border;
-  border-radius: 4px;
-  background-color: white;
-  box-shadow: 0 1px 3px 0 #e6ebf1;
-  -webkit-transition: box-shadow 150ms ease;
-  transition: box-shadow 150ms ease;
+  @include hosted-field;
 }
 .StripeElement--focus {
   box-shadow: 0 1px 3px 0 #cfd7df;

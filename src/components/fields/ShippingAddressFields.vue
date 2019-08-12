@@ -1,6 +1,6 @@
 <template>
   <v-layout row wrap>
-    <v-flex xs12 pa-2>
+    <v-flex xs12 px-2>
       <v-checkbox
         :label="$t('generic.ship_to_different_address') | capitalize"
         v-model="ship_to_different_address"
@@ -10,7 +10,7 @@
       ></v-checkbox>
     </v-flex>
     <template v-if="ship_to_different_address">
-      <v-flex xs6 px-2 py-1>
+      <v-flex xs6 px-2>
         <v-text-field
           :label="inputLabel('first_name')"
           v-model="first_name"
@@ -19,7 +19,7 @@
           @blur="handleBlur('first_name')"
         ></v-text-field>
       </v-flex>
-      <v-flex xs6 px-2 py-1>
+      <v-flex xs6 px-2>
         <v-text-field
           :label="inputLabel('last_name')"
           v-model="last_name"
@@ -28,7 +28,7 @@
           @blur="handleBlur('last_name')"
         ></v-text-field>
       </v-flex>
-      <v-flex xs12 sm6 px-2 py-1>
+      <v-flex xs12 sm6 px-2>
         <v-text-field
           :label="inputLabel('line_1')"
           v-model="line_1"
@@ -37,7 +37,7 @@
           @blur="handleBlur('line_1')"
         ></v-text-field>
       </v-flex>
-      <v-flex xs6 px-2 py-1>
+      <v-flex xs6 px-2>
         <v-text-field
           :label="inputLabel('city')"
           v-model="city"
@@ -46,8 +46,8 @@
           @blur="handleBlur('city')"
         ></v-text-field>
       </v-flex>
-      <v-flex xs6 px-2 py-1>
-        <v-select
+      <v-flex xs6 px-2>
+        <v-autocomplete
           :label="inputLabel('country_code')"
           :items="countries"
           item-text="name"
@@ -57,9 +57,9 @@
           @input="handleInput()"
           @blur="handleBlur('country_code')"
           :disabled="shippingCountryCodeLocked"
-        ></v-select>
+        ></v-autocomplete>
       </v-flex>
-      <v-flex xs6 px-2 py-1>
+      <v-flex xs6 px-2>
         <v-text-field
           :label="inputLabel('state_code')"
           v-model="state_code"
@@ -68,7 +68,7 @@
           @blur="handleBlur('state_code')"
         ></v-text-field>
       </v-flex>
-      <v-flex xs6 px-2 py-1>
+      <v-flex xs6 px-2>
         <v-text-field
           :label="inputLabel('zip_code')"
           v-model="zip_code"
@@ -77,7 +77,7 @@
           @blur="handleBlur('zip_code')"
         ></v-text-field>
       </v-flex>
-      <v-flex xs12 sm6 px-2 py-1>
+      <v-flex xs12 sm6 px-2>
         <v-text-field
           :label="inputLabel('phone')"
           v-model="phone"
@@ -130,7 +130,4 @@ export default {
 </script>
 
 <style>
-.shipping-address {
-  margin-bottom: 1rem;
-}
 </style>
