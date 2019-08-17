@@ -46,13 +46,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// .address {
-//   margin-bottom: 2rem;
-// }
-
-// .sm-and-up {
-//   .address {
-//     margin-bottom: 0;
-//   }
-// }
 </style>

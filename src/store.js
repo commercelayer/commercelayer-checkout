@@ -27,25 +27,25 @@ export default new Vuex.Store({
     getField
   },
   mutations: {
-    updateOrder(state, order) {
+    updateOrder (state, order) {
       state.order = order
     },
-    updateOrderPaymentSource(state, paymentSource) {
+    updateOrderPaymentSource (state, paymentSource) {
       state.order.payment_source = paymentSource
     },
-    updateButtonLoadingDelivery(state, value) {
+    updateButtonLoadingDelivery (state, value) {
       state.buttons.loading_delivery = value
     },
     updateField
   },
   actions: {
-    setOrder({ commit }, orderId) {
+    setOrder ({ commit }, orderId) {
       return APIService.getOrder(orderId).then(order => {
         commit('updateOrder', order)
         return order
       })
     },
-    setOrderCustomerEmail({ commit, state }) {
+    setOrderCustomerEmail ({ commit, state }) {
       NProgress.start()
       return APIService.updateOrderCustomerEmail(state.order)
         .then(order => {
@@ -56,13 +56,13 @@ export default new Vuex.Store({
           NProgress.done()
         })
     },
-    setOrderAddresses({ commit, state }) {
+    setOrderAddresses ({ commit, state }) {
       return APIService.updateOrderAddresses(state.order).then(order => {
         commit('updateOrder', order)
         return order
       })
     },
-    setShipmentShippingMethod({ commit, dispatch }, payload) {
+    setShipmentShippingMethod ({ commit, dispatch }, payload) {
       commit('updateButtonLoadingDelivery', true)
       return APIService.updateShipmentShippingMethod(
         payload.shipment,
@@ -74,7 +74,7 @@ export default new Vuex.Store({
         })
       })
     },
-    setOrderPaymentMethod({ commit }, payload) {
+    setOrderPaymentMethod ({ commit }, payload) {
       return APIService.updateOrderPaymentMethod(
         payload.order,
         payload.paymentMethod
@@ -83,7 +83,7 @@ export default new Vuex.Store({
         return order
       })
     },
-    setOrderPaymentSource({ commit }, payload) {
+    setOrderPaymentSource ({ commit }, payload) {
       return APIService.createOrderPaymentSource(
         payload.order,
         payload.paymentMethod,
@@ -93,7 +93,7 @@ export default new Vuex.Store({
         return paymentSource
       })
     },
-    updateOrderPaymentSource({ commit, state }, paymentSourceAttributes) {
+    updateOrderPaymentSource ({ commit, state }, paymentSourceAttributes) {
       return APIService.updateOrderPaymentSource(
         state.order,
         paymentSourceAttributes
@@ -102,7 +102,7 @@ export default new Vuex.Store({
         return paymentSource
       })
     },
-    placeOrder({ commit, state }) {
+    placeOrder ({ commit, state }) {
       return APIService.placeOrder(state.order).then(order => {
         commit('updateOrder', order)
         return order

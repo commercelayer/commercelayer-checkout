@@ -32,13 +32,13 @@
         <v-layout row wrap>
           <v-flex xs12 sm6>
             <div class="header">{{ order.customer_email }}</div>
-            <div class="billing-address">
+            <div class="billing-address-summary">
               <AddressSummary :address="order.billing_address" />
             </div>
           </v-flex>
           <v-flex xs12 sm6>
             <div class="header">{{ $t('generic.ship_to') | capitalize }}:</div>
-            <div class="shipping-address">
+            <div class="shipping-address-summary">
               <AddressSummary :address="order.shipping_address" />
             </div>
           </v-flex>

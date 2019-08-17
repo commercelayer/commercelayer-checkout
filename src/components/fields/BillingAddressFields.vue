@@ -22,7 +22,7 @@
     </v-flex>
     <v-flex xs12 sm6 px-2>
       <v-text-field
-        id="billing-address-line_1"
+        id="billing-address-line-1"
         :label="inputLabel('line_1')"
         v-model="line_1"
         :error-messages="errorMessages('line_1')"

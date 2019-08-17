@@ -3,6 +3,7 @@
     <v-flex xs12 px-2>
       <v-checkbox
         :label="$t('generic.ship_to_different_address') | capitalize"
+        id="ship-to-different-address-checkbox"
         v-model="ship_to_different_address"
         @change="handleChange()"
         color="primary"
@@ -12,6 +13,7 @@
     <template v-if="ship_to_different_address">
       <v-flex xs6 px-2>
         <v-text-field
+          id="shipping-address-first-name"
           :label="inputLabel('first_name')"
           v-model="first_name"
           :error-messages="errorMessages('first_name')"
@@ -21,6 +23,7 @@
       </v-flex>
       <v-flex xs6 px-2>
         <v-text-field
+          id="shipping-address-last-name"
           :label="inputLabel('last_name')"
           v-model="last_name"
           :error-messages="errorMessages('last_name')"
@@ -30,6 +33,7 @@
       </v-flex>
       <v-flex xs12 sm6 px-2>
         <v-text-field
+          id="shipping-address-line-1"
           :label="inputLabel('line_1')"
           v-model="line_1"
           :error-messages="errorMessages('line_1')"
@@ -39,6 +43,7 @@
       </v-flex>
       <v-flex xs6 px-2>
         <v-text-field
+          id="shipping-address-city"
           :label="inputLabel('city')"
           v-model="city"
           :error-messages="errorMessages('city')"
@@ -48,6 +53,7 @@
       </v-flex>
       <v-flex xs6 px-2>
         <v-autocomplete
+          id="shipping-address-country-code"
           :label="inputLabel('country_code')"
           :items="countries"
           item-text="name"
@@ -61,6 +67,7 @@
       </v-flex>
       <v-flex xs6 px-2>
         <v-text-field
+          id="shipping-address-state-code"
           :label="inputLabel('state_code')"
           v-model="state_code"
           :error-messages="errorMessages('state_code')"
@@ -70,6 +77,7 @@
       </v-flex>
       <v-flex xs6 px-2>
         <v-text-field
+          id="shipping-address-zip-code"
           :label="inputLabel('zip_code')"
           v-model="zip_code"
           :error-messages="errorMessages('zip_code')"
@@ -79,6 +87,7 @@
       </v-flex>
       <v-flex xs12 sm6 px-2>
         <v-text-field
+          id="shipping-address-phone"
           :label="inputLabel('phone')"
           v-model="phone"
           :error-messages="errorMessages('phone')"
