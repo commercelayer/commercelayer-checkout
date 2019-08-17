@@ -114,3 +114,11 @@ Cypress.Commands.add('fill_in_address', options => {
 Cypress.Commands.add('ship_to_different_address', options => {
   cy.get('#ship-to-different-address-checkbox').click({ force: true })
 })
+
+Cypress.Commands.add('submit_customer_step', options => {
+  cy.get('#customer-step-submit').click()
+})
+
+Cypress.Commands.add('submit_delivery_step', options => {
+  cy.get('#delivery-step-submit').click()
+})

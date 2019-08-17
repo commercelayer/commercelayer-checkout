@@ -16,7 +16,7 @@ describe('Customer step', () => {
     cy.get('#customer-step-submit').should('be.disabled')
   })
 
-  context('with valid customer email', () => {
+  context('when I fill in a valid customer email', () => {
     beforeEach(() => {
       cy.fill_in_customer_email({
         customer_email: 'filippo@example.com'
@@ -62,7 +62,7 @@ describe('Customer step', () => {
     })
   })
 
-  context('with valid customer email and billing address', () => {
+  context('when I fill in a valid customer email and billing address', () => {
     beforeEach(() => {
       cy.fill_in_customer_email({
         customer_email: 'filippo@example.com'
@@ -80,29 +80,32 @@ describe('Customer step', () => {
       })
     })
 
-    context('with shipping address same as billing (submit)', () => {
-      beforeEach(() => {
-        cy.get('#customer-step-submit').click()
-      })
+    context(
+      'when I submit the customer step (shipping address same as billing)',
+      () => {
+        beforeEach(() => {
+          cy.submit_customer_step()
+        })
 
-      it('displays the customer billing address summary', () => {
-        cy.get('.billing-address-summary').contains('Filippo Conforti')
-        cy.get('.billing-address-summary').contains('123 5th Avenue')
-        cy.get('.billing-address-summary').contains('10001 New York (NY)')
-        cy.get('.billing-address-summary').contains('United States')
-        cy.get('.billing-address-summary').contains('212 1234567890')
-      })
+        it('displays the customer billing address summary', () => {
+          cy.get('.billing-address-summary').contains('Filippo Conforti')
+          cy.get('.billing-address-summary').contains('123 5th Avenue')
+          cy.get('.billing-address-summary').contains('10001 New York (NY)')
+          cy.get('.billing-address-summary').contains('United States')
+          cy.get('.billing-address-summary').contains('212 1234567890')
+        })
 
-      it('displays the customer shipping address summary (same as billing)', () => {
-        cy.get('.shipping-address-summary').contains('Filippo Conforti')
-        cy.get('.shipping-address-summary').contains('123 5th Avenue')
-        cy.get('.shipping-address-summary').contains('10001 New York (NY)')
-        cy.get('.shipping-address-summary').contains('United States')
-        cy.get('.shipping-address-summary').contains('212 1234567890')
-      })
-    })
+        it('displays the customer shipping address summary (same as billing)', () => {
+          cy.get('.shipping-address-summary').contains('Filippo Conforti')
+          cy.get('.shipping-address-summary').contains('123 5th Avenue')
+          cy.get('.shipping-address-summary').contains('10001 New York (NY)')
+          cy.get('.shipping-address-summary').contains('United States')
+          cy.get('.shipping-address-summary').contains('212 1234567890')
+        })
+      }
+    )
 
-    context('with different shipping address', () => {
+    context('when I check the ship to different address checkbox', () => {
       beforeEach(() => {
         cy.ship_to_different_address()
       })
@@ -135,38 +138,41 @@ describe('Customer step', () => {
       })
     })
 
-    context('with different shipping address (submit', () => {
-      beforeEach(() => {
-        cy.ship_to_different_address()
-        cy.fill_in_address({
-          type: 'shipping',
-          first_name: 'Filippo',
-          last_name: 'Conforti',
-          line_1: '321 6th Avenue',
-          city: 'New York',
-          country: 'United States',
-          state_code: 'NY',
-          zip_code: '10001',
-          phone: '212 0987654321'
+    context(
+      'when I submit the customer step (different shipping address)',
+      () => {
+        beforeEach(() => {
+          cy.ship_to_different_address()
+          cy.fill_in_address({
+            type: 'shipping',
+            first_name: 'Filippo',
+            last_name: 'Conforti',
+            line_1: '321 6th Avenue',
+            city: 'New York',
+            country: 'United States',
+            state_code: 'NY',
+            zip_code: '10001',
+            phone: '212 0987654321'
+          })
+          cy.submit_customer_step()
         })
-        cy.get('#customer-step-submit').click()
-      })
 
-      it('displays the customer billing address summary', () => {
-        cy.get('.billing-address-summary').contains('Filippo Conforti')
-        cy.get('.billing-address-summary').contains('123 5th Avenue')
-        cy.get('.billing-address-summary').contains('10001 New York (NY)')
-        cy.get('.billing-address-summary').contains('United States')
-        cy.get('.billing-address-summary').contains('212 1234567890')
-      })
+        it('displays the customer billing address summary', () => {
+          cy.get('.billing-address-summary').contains('Filippo Conforti')
+          cy.get('.billing-address-summary').contains('123 5th Avenue')
+          cy.get('.billing-address-summary').contains('10001 New York (NY)')
+          cy.get('.billing-address-summary').contains('United States')
+          cy.get('.billing-address-summary').contains('212 1234567890')
+        })
 
-      it('displays the customer shipping address summary (different from billing)', () => {
-        cy.get('.shipping-address-summary').contains('Filippo Conforti')
-        cy.get('.shipping-address-summary').contains('321 6th Avenue')
-        cy.get('.shipping-address-summary').contains('10001 New York (NY)')
-        cy.get('.shipping-address-summary').contains('United States')
-        cy.get('.shipping-address-summary').contains('212 0987654321')
-      })
-    })
+        it('displays the customer shipping address summary (different from billing)', () => {
+          cy.get('.shipping-address-summary').contains('Filippo Conforti')
+          cy.get('.shipping-address-summary').contains('321 6th Avenue')
+          cy.get('.shipping-address-summary').contains('10001 New York (NY)')
+          cy.get('.shipping-address-summary').contains('United States')
+          cy.get('.shipping-address-summary').contains('212 0987654321')
+        })
+      }
+    )
   })
 })

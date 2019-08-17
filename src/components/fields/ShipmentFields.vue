@@ -11,6 +11,7 @@
     />
     <v-radio-group :value="shippingMethodId">
       <v-radio
+        class="available-shipping-method"
         v-for="shipping_method in sortedAvailableShippingMethods"
         :key="shipping_method.id"
         :label="shippingMethodLabel(shipping_method)"

@@ -4,7 +4,7 @@
       <v-layout row>
         <v-flex xs6 offset-xs3>{{ $t(`order_summary.${label}`) | capitalize }}</v-flex>
         <v-flex xs3>
-          <div class="amount">{{ amount }}</div>
+          <div class="amount" :id="amountId">{{ amount }}</div>
         </v-flex>
       </v-layout>
     </v-container>
@@ -25,6 +25,11 @@ export default {
     total: {
       type: Boolean,
       required: false
+    }
+  },
+  computed: {
+    amountId () {
+      return `order-summary-${this.label}-amount`
     }
   }
 }

@@ -26,6 +26,7 @@
         :total="shipments.length"
       />
       <v-btn
+        id="delivery-step-submit"
         color="primary"
         @click="nextStep"
         :block="isMobile"
@@ -61,7 +62,7 @@ export default {
   },
   mixins: [stepMixin],
   computed: {
-    rules () {
+    rules() {
       return [
         () => {
           _.forEach(this.$store.state.order.shipments, shipment => {
@@ -71,7 +72,7 @@ export default {
         }
       ]
     },
-    disabled () {
+    disabled() {
       return this.validations.invalid_shipments
     },
     ...mapState(['validations', 'buttons']),
