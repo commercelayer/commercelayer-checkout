@@ -31,7 +31,7 @@ export default {
 
 .step-summary {
   padding: 0 24px;
-  border-bottom: 1px solid $v-border;
+  // border-bottom: 1px solid $v-border;
 }
 
 .step-wrapper {
@@ -69,7 +69,7 @@ export default {
         min-width: 50%;
         margin-bottom: 1rem;
       }
-      &#place-order-button {
+      &#payment-step-submit {
         margin-bottom: 0;
       }
     }

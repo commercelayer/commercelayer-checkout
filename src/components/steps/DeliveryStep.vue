@@ -1,12 +1,6 @@
 <template>
   <div class="step-wrapper">
-    <v-stepper-step
-      :step="step"
-      :complete="complete"
-      :editable="complete"
-      edit-icon="done"
-      :rules="rules"
-    >
+    <v-stepper-step :step="step" :complete="complete" :editable="complete" edit-icon="done">
       <div>
         {{ $t('steps.delivery.title') | capitalize }}
         <span v-if="complete">
@@ -42,13 +36,13 @@
         :key="shipment.id"
         :count="index+1"
         :total="shipments.length"
+        :editable="false"
       />
     </div>
   </div>
 </template>
 
 <script>
-import _ from 'lodash'
 import { stepMixin } from '@/mixins/stepMixin'
 import { mapMultiRowFields } from 'vuex-map-fields'
 import { mapState } from 'vuex'
@@ -62,17 +56,7 @@ export default {
   },
   mixins: [stepMixin],
   computed: {
-    rules() {
-      return [
-        () => {
-          _.forEach(this.$store.state.order.shipments, shipment => {
-            if (_.isEmpty(shipment.available_shipping_methods)) return false
-          })
-          return true
-        }
-      ]
-    },
-    disabled() {
+    disabled () {
       return this.validations.invalid_shipments
     },
     ...mapState(['validations', 'buttons']),

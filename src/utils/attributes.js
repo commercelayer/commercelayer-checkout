@@ -88,7 +88,6 @@ export const addressAttributes = [
   'id',
   'first_name',
   'last_name',
-  'full_name',
   'line_1',
   'line_2',
   'city',

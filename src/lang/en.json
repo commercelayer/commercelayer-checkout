@@ -10,7 +10,8 @@
     "zip_code": "zip code"
   },
   "errors": {
-    "unauthorized_card": "your card was not authorized"
+    "unauthorized_card": "your card was not authorized",
+    "out_of_stock": "Some items have gone out of stock"
   },
   "generic": {
     "card_cvv": "CVC/CVV",
@@ -40,17 +41,17 @@
   },
   "payment_methods": {
     "adyen": {
-      "title": "credit card (powered by adyen)"
+      "title": "credit card"
     },
     "braintree": {
-      "title": "credit card (powered by braintree)"
+      "title": "credit card"
     },
     "paypal": {
       "title": "paypal",
       "hint": "by placing the order, you will be redirected to the PayPal website to sign in and authorize the payment"
     },
     "stripe": {
-      "title": "credit card (powered by stripe)"
+      "title": "credit card"
     },
     "wire_transfer": {
       "title": "wire transfer",

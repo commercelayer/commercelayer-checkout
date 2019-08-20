@@ -2,10 +2,10 @@
   <div class="payment-method">
     <v-radio
       :label="inputLabel('adyen')"
-      :value="payment_method.id"
+      :value="payment_option.component"
       color="primary"
       @change="setPaymentMethod"
-      id="adyen_payments_radio"
+      id="adyen-payments-radio"
     ></v-radio>
     <div class="payment-method-fields" v-show="selected">
       <div id="adyen-card"></div>
@@ -53,7 +53,7 @@ export default {
   mixins: [paymentMixin],
   methods: {
     setupPayment () {
-      let script = this.getScript()
+      let script = this.getScript(this.scriptSrc)
       script.addEventListener('load', () => {
         // eslint-disable-next-line
         let checkout = new AdyenCheckout(this.checkoutConfig)
@@ -64,7 +64,7 @@ export default {
           })
           .mount('#adyen-card')
 
-        let btn = document.getElementById('place-order-button')
+        let btn = document.getElementById('payment-step-submit')
         btn.onclick = () => {
           this.handlePayment(checkout)
         }
@@ -140,17 +140,6 @@ export default {
             break
         }
       }
-    },
-    getScript () {
-      let scripts = document.getElementsByTagName('script')
-      for (let i = 0; i < scripts.length; i++) {
-        if (scripts[i].src === this.scriptSrc) return scripts[i]
-      }
-      let script = document.createElement('script')
-      script.type = 'text/javascript'
-      script.src = this.scriptSrc
-      document.body.insertBefore(script, document.body.firstChild)
-      return script
     },
     checkStyle () {
       let links = document.getElementsByTagName('link')

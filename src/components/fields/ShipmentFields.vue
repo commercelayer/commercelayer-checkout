@@ -1,14 +1,6 @@
 <template>
   <div class="shipment">
-    <div
-      class="shipment-header"
-    >{{ $t('generic.shipment') | capitalize }} {{count}} {{ $t('generic.of') }} {{total}}</div>
-    <v-divider></v-divider>
-    <ShipmentLineItem
-      v-for="shipment_line_item in shipment.shipment_line_items"
-      :key="shipment_line_item.id"
-      :shipment_line_item="shipment_line_item"
-    />
+    <ShipmentSummary :shipment="shipment" :count="count" :total="total" :editable="true" />
     <v-radio-group :value="shippingMethodId">
       <v-radio
         class="available-shipping-method"
@@ -25,14 +17,14 @@
 
 <script>
 import _ from 'lodash'
-import ShipmentLineItem from '@/components/partials/ShipmentLineItem'
+import ShipmentSummary from '@/components/summaries/ShipmentSummary'
 
 import { mapState } from 'vuex'
 import { mapFields } from 'vuex-map-fields'
 
 export default {
   components: {
-    ShipmentLineItem
+    ShipmentSummary
   },
   props: {
     shipment: {
@@ -49,7 +41,7 @@ export default {
     }
   },
   methods: {
-    updateValidations () {
+    updateValidations() {
       this.invalid_shipments = !_.isEmpty(
         _.find(this.order.shipments, shipment => {
           return _.isEmpty(shipment.shipping_method)
@@ -59,7 +51,7 @@ export default {
     shippingMethodLabel: shippingMethod => {
       return `${shippingMethod.name} - ${shippingMethod.formatted_price_amount}`
     },
-    handleChange (shippingMethod) {
+    handleChange(shippingMethod) {
       let payload = {
         order: this.order,
         shipment: this.shipment,
@@ -71,12 +63,12 @@ export default {
     }
   },
   computed: {
-    sortedAvailableShippingMethods () {
+    sortedAvailableShippingMethods() {
       return _.sortBy(this.shipment.available_shipping_methods, [
         'price_amount_cents'
       ])
     },
-    shippingMethodId () {
+    shippingMethodId() {
       return this.shipment.shipping_method
         ? this.shipment.shipping_method.id
         : null
@@ -84,7 +76,7 @@ export default {
     ...mapState(['order']),
     ...mapFields(['validations.invalid_shipments'])
   },
-  mounted () {
+  mounted() {
     this.updateValidations()
   }
 }

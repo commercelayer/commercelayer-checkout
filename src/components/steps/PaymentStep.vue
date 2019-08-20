@@ -1,16 +1,16 @@
 <template>
   <div class="step-wrapper">
-    <v-stepper-step :step="step" :rules="rules">
+    <v-stepper-step :step="step">
       {{ $t('steps.payment.title') | capitalize }}
       <small>{{ $t('steps.payment.hint') | capitalize }}</small>
     </v-stepper-step>
     <v-stepper-content :step="step">
-      <v-radio-group :value="paymentMethodId" class="payment-methods">
+      <v-radio-group v-model="selected_payment_option_component">
         <component
-          v-for="available_payment_method in order.available_payment_methods"
-          :is="componentType(available_payment_method)"
-          :key="available_payment_method.id"
-          :payment_method="available_payment_method"
+          v-for="payment_option in availablePaymentOptions"
+          :is="payment_option.component"
+          :key="payment_option.component"
+          :payment_option="payment_option"
         />
       </v-radio-group>
 
@@ -19,7 +19,7 @@
         :block="isMobile"
         :disabled="disabled"
         min-width="50%"
-        id="place-order-button"
+        id="payment-step-submit"
         :loading="buttons.loading_payment"
       >{{ $t('steps.payment.button') }}</v-btn>
     </v-stepper-content>
@@ -32,51 +32,85 @@ import { stepMixin } from '@/mixins/stepMixin'
 import { mapFields } from 'vuex-map-fields'
 import { mapState } from 'vuex'
 
-import StripePayment from '@/components/payments/StripePayment'
-import BraintreePayment from '@/components/payments/BraintreePayment'
-import AdyenPayment from '@/components/payments/AdyenPayment'
+import AdyenCard from '@/components/payments/adyen/AdyenCard'
+import BraintreeCard from '@/components/payments/braintree/BraintreeCard'
+import StripeCard from '@/components/payments/stripe/StripeCard'
 import PaypalPayment from '@/components/payments/PaypalPayment'
 import WireTransfer from '@/components/payments/WireTransfer'
-import CreditCard from '@/components/payments/CreditCard'
 
 export default {
   components: {
-    StripePayment,
-    BraintreePayment,
-    AdyenPayment,
+    AdyenCard,
+    BraintreeCard,
+    StripeCard,
     PaypalPayment,
-    WireTransfer,
-    CreditCard
+    WireTransfer
   },
   mixins: [stepMixin],
   computed: {
-    rules () {
-      return [
-        () => {
-          return !_.isEmpty(this.order.available_payment_methods)
-        }
-      ]
-    },
     disabled () {
       return this.invalid_payment_method
     },
-    paymentMethodId () {
-      return this.order.payment_method ? this.order.payment_method.id : null
+    availablePaymentOptions () {
+      let paymentOptions = []
+      _.each(this.order.available_payment_methods, paymentMethod => {
+        switch (paymentMethod.payment_source_type) {
+          case 'adyen_payments':
+            if (
+              process.env.VUE_APP_ADYEN_ENV &&
+              process.env.VUE_APP_ADYEN_ORIGIN_KEY
+            ) {
+              paymentOptions.push({
+                payment_method: paymentMethod,
+                component: 'AdyenCard',
+                priority: 1
+              })
+              // More Adyen Payment Methods go here
+            }
+            break
+          case 'braintree_payments':
+            paymentOptions.push({
+              payment_method: paymentMethod,
+              component: 'BraintreeCard',
+              priority: 1
+            })
+            // More Braintree Payment Methods go here
+            break
+          case 'stripe_payments':
+            if (process.env.VUE_APP_STRIPE_PUBLIC_KEY) {
+              paymentOptions.push({
+                payment_method: paymentMethod,
+                component: 'StripeCard',
+                priority: 1
+              })
+              // More Stripe Payment Methods go here
+            }
+            break
+          case 'paypal_payments':
+            paymentOptions.push({
+              payment_method: paymentMethod,
+              component: 'PaypalPayment',
+              priority: 2
+            })
+            break
+          case 'wire_transfers':
+            paymentOptions.push({
+              payment_method: paymentMethod,
+              component: 'WireTransfer',
+              priority: 3
+            })
+            break
+        }
+      })
+      return _.sortBy(paymentOptions, ['priority'])
     },
     ...mapState(['buttons']),
     ...mapFields([
       'validations.invalid_payment_method',
       'order',
-      'order.payment_method'
+      'order.payment_method',
+      'selected_payment_option_component'
     ])
-  },
-  methods: {
-    componentType (paymentMethod) {
-      let result = _.startCase(paymentMethod.payment_source_type)
-      result = _.replace(result, ' ', '')
-      result = _.trimEnd(result, 's')
-      return result
-    }
   }
 }
 </script>
@@ -108,7 +142,6 @@ export default {
 .sm-and-up {
   .payment-method-fields {
     padding: 2rem 2rem 1rem;
-    // margin-bottom: 1rem;
   }
 }
 </style>

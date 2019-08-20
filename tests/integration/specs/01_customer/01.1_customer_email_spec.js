@@ -1,4 +1,4 @@
-describe('[01.1] customer step / customer email', () => {
+describe('[01.1] customer / customer email', () => {
   var orderId
 
   before(() => {

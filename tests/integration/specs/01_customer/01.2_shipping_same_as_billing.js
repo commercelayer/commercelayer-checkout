@@ -1,6 +1,6 @@
 import { euAddress } from '../../support/utils'
 
-describe('[01.2] customer step / shipping same as billing', () => {
+describe('[01.2] customer / shipping same as billing', () => {
   before(() => {
     cy.create_order({
       market_id: Cypress.env('EU_MARKET_ID')

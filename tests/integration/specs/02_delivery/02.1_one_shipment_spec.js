@@ -1,6 +1,6 @@
 import { euAddress } from '../../support/utils'
 
-describe('[02.1] delivery step / one shipment', () => {
+describe('[02.1] delivery / one shipment', () => {
   before(() => {
     cy.create_order({
       market_id: Cypress.env('EU_MARKET_ID')
@@ -12,7 +12,7 @@ describe('[02.1] delivery step / one shipment', () => {
 
       cy.update_stock_item({
         stock_item_id: Cypress.env('EU_STOCK_ITEM_ID'),
-        quantity: 1
+        quantity: 10
       })
 
       cy.create_line_item({

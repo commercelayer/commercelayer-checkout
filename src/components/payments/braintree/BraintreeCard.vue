@@ -2,10 +2,10 @@
   <div class="payment-method">
     <v-radio
       :label="inputLabel('braintree')"
-      :value="payment_method.id"
+      :value="payment_option.component"
       color="primary"
       @change="setPaymentMethod"
-      id="braintree_payments_radio"
+      id="braintree-payments-radio"
     ></v-radio>
     <div class="payment-method-fields" v-show="selected">
       <div class="braintree-hosted-fields">
@@ -69,9 +69,6 @@ export default {
                   'input.invalid': {
                     color: process.env.VUE_APP_ERROR_COLOR
                   },
-                  // 'input.valid': {
-                  //   'color': 'green'
-                  // },
                   '::-webkit-input-placeholder': {
                     color: '#CCC'
                   },
@@ -110,7 +107,7 @@ export default {
                   return
                 }
 
-                let btn = document.getElementById('place-order-button')
+                let btn = document.getElementById('payment-step-submit')
                 btn.onclick = () => {
                   that.handlePayment(
                     hostedFieldsInstance,
@@ -223,17 +220,6 @@ export default {
           })
         }
       )
-    },
-    getScript (scriptSrc) {
-      let scripts = document.getElementsByTagName('script')
-      for (let i = 0; i < scripts.length; i++) {
-        if (scripts[i].src === scriptSrc) return scripts[i]
-      }
-      let script = document.createElement('script')
-      script.type = 'text/javascript'
-      script.src = scriptSrc
-      document.head.appendChild(script)
-      return script
     }
   }
 }

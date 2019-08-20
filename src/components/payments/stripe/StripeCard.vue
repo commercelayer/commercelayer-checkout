@@ -2,10 +2,10 @@
   <div class="payment-method">
     <v-radio
       :label="inputLabel('stripe')"
-      :value="payment_method.id"
+      :value="payment_option.component"
       color="primary"
       @change="setPaymentMethod"
-      id="stripe_payments_radio"
+      id="stripe-payments-radio"
     ></v-radio>
     <div class="payment-method-fields" v-show="selected">
       <div id="stripe-card"></div>
@@ -26,7 +26,7 @@ export default {
   mixins: [paymentMixin],
   methods: {
     setupPayment () {
-      let script = this.getScript()
+      let script = this.getScript(this.scriptSrc)
       let i18n = this.$i18n
 
       // Init card element
@@ -44,7 +44,7 @@ export default {
         })
         cardElement.mount('#stripe-card')
 
-        let btn = document.getElementById('place-order-button')
+        let btn = document.getElementById('payment-step-submit')
         btn.onclick = () => {
           this.handlePayment(stripe, cardElement)
         }
@@ -61,8 +61,7 @@ export default {
           {
             payment_method_data: {
               billing_details: {
-                email: that.order.customer_email,
-                name: that.order.billing_address.full_name,
+                name: `${that.order.billing_address.first_name} ${that.order.billing_address.last_name}`,
                 phone: that.order.billing_address.phone,
                 address: {
                   city: that.order.billing_address.city,
@@ -86,17 +85,6 @@ export default {
             })
           }
         })
-    },
-    getScript () {
-      let scripts = document.getElementsByTagName('script')
-      for (let i = 0; i < scripts.length; i++) {
-        if (scripts[i].src === this.scriptSrc) return scripts[i]
-      }
-      let script = document.createElement('script')
-      script.type = 'text/javascript'
-      script.src = this.scriptSrc
-      document.head.appendChild(script)
-      return script
     }
   }
 }

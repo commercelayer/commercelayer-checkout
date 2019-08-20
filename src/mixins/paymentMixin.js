@@ -4,7 +4,7 @@ import { mapFields } from 'vuex-map-fields'
 
 export const paymentMixin = {
   props: {
-    payment_method: {
+    payment_option: {
       type: Object,
       required: true
     }
@@ -24,7 +24,7 @@ export const paymentMixin = {
     setPaymentMethod () {
       let payload = {
         order: this.order,
-        paymentMethod: this.payment_method
+        paymentMethod: this.payment_option.payment_method
       }
       this.loading_payment = true
       this.$store.dispatch('setOrderPaymentMethod', payload).then(() => {
@@ -45,24 +45,35 @@ export const paymentMixin = {
     setPaymentSource () {
       let payload = {
         order: this.order,
-        paymentMethod: this.payment_method,
+        paymentMethod: this.payment_option.payment_method,
         paymentSourceAttributes: this.paymentSourceAttributes()
       }
       return this.$store.dispatch('setOrderPaymentSource', payload)
+    },
+    getScript (scriptSrc) {
+      let scripts = document.getElementsByTagName('script')
+      for (let i = 0; i < scripts.length; i++) {
+        if (scripts[i].src === scriptSrc) return scripts[i]
+      }
+      let script = document.createElement('script')
+      script.type = 'text/javascript'
+      script.src = scriptSrc
+      document.body.insertBefore(script, document.body.firstChild)
+      return script
     }
   },
   computed: {
     selected () {
-      return _.isEqual(this.payment_method, this.order.payment_method)
+      return _.isEqual(
+        this.payment_option.component,
+        this.selected_payment_option_component
+      )
     },
     ...mapState(['order']),
     ...mapFields([
       'validations.invalid_payment_method',
-      'buttons.loading_payment'
+      'buttons.loading_payment',
+      'selected_payment_option_component'
     ])
-  },
-  mounted () {
-    this.updateValidations()
-    if (this.selected) this.setPaymentMethod()
   }
 }

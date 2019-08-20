@@ -1,6 +1,6 @@
 import { euAddress } from '../../support/utils'
 
-describe('[02.2] delivery step / two shipments', () => {
+describe('[02.2] delivery / two shipments', () => {
   before(() => {
     cy.create_order({
       market_id: Cypress.env('EU_MARKET_ID')
@@ -146,9 +146,11 @@ describe('[02.2] delivery step / two shipments', () => {
         it('displays two shipment summaries', () => {
           cy.get('.shipment-summary')
             .first()
+            .get('.shipping-method-details')
             .should('contain', 'Standard Shipping')
           cy.get('.shipment-summary')
             .last()
+            .get('.shipping-method-details')
             .should('contain', 'Express Delivery')
         })
       })

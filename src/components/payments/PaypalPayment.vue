@@ -2,10 +2,10 @@
   <div class="payment-method">
     <v-radio
       :label="inputLabel('paypal')"
-      :value="payment_method.id"
+      :value="payment_option.component"
       color="primary"
       @change="setPaymentMethod"
-      id="paypal_payments_radio"
+      id="paypal-payments-radio"
     ></v-radio>
     <div class="payment-method-fields" v-show="selected">
       <div>{{ $t('payment_methods.paypal.hint') | capitalize }}</div>
@@ -26,7 +26,7 @@ export default {
       }
     },
     setupPayment () {
-      let btn = document.getElementById('place-order-button')
+      let btn = document.getElementById('payment-step-submit')
       btn.onclick = () => {
         this.handlePayment()
       }

@@ -21,6 +21,7 @@ export default new Vuex.Store({
       loading_delivery: false,
       loading_payment: false
     },
+    selected_payment_option_component: null,
     order: {}
   },
   getters: {

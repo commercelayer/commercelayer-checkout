@@ -1,6 +1,6 @@
 import { euAddress } from '../../support/utils'
 
-describe('[01.3] customer step / ship to different address', () => {
+describe('[01.3] customer / ship to different address', () => {
   var orderId
 
   before(() => {
