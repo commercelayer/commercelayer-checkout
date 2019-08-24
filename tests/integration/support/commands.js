@@ -1,4 +1,4 @@
-import { apiRequestHeaders } from './utils'
+import { apiRequestHeaders, euAddress } from './utils'
 import _ from 'lodash'
 
 Cypress.Commands.add('get_access_token', () => {
@@ -200,6 +200,64 @@ Cypress.Commands.add('get_available_payment_methods', options => {
       include: 'available_payment_methods'
     }).then(order => {
       return _.filter(JSON.parse(order).included, { type: 'payment_methods' })
+    })
+  })
+})
+
+Cypress.Commands.add('setup_payment_step', () => {
+  cy.create_order({
+    market_id: Cypress.env('EU_MARKET_ID')
+  }).then(order => {
+    cy.update_stock_item({
+      stock_item_id: Cypress.env('EU_STOCK_ITEM_ID'),
+      quantity: 10
+    })
+
+    cy.create_line_item({
+      order_id: order.id,
+      sku_code: Cypress.env('SKU_CODE'),
+      quantity: 1
+    })
+
+    cy.create_address({
+      attributes: {
+        first_name: euAddress.first_name,
+        last_name: euAddress.last_name,
+        line_1: euAddress.line_1,
+        city: euAddress.city,
+        country_code: euAddress.country_code,
+        state_code: euAddress.state_code,
+        zip_code: euAddress.zip_code,
+        phone: euAddress.phone
+      }
+    }).then(address => {
+      cy.update_order({
+        order_id: order.id,
+        attributes: {
+          customer_email: 'filippo@example.com',
+          _shipping_address_same_as_billing: 1
+        },
+        relationships: {
+          billing_address: {
+            data: {
+              type: 'addresses',
+              id: address.id
+            }
+          }
+        }
+      })
+
+      cy.set_default_shipping_methods({
+        order_id: order.id
+      })
+
+      cy.visit(`${Cypress.env('BASE_URL')}/${order.id}`)
+      cy.get('#customer-step-submit').click()
+      cy.get('#delivery-step-submit').click()
+    })
+
+    cy.then(() => {
+      return order
     })
   })
 })

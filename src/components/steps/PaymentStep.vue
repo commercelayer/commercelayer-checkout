@@ -22,6 +22,12 @@
         id="payment-step-submit"
         :loading="buttons.loading_payment"
       >{{ $t('steps.payment.button') }}</v-btn>
+
+      <div
+        class="place-order-error"
+        id="place-order-error"
+        v-show="errors.place_order"
+      >{{ errors.place_order }}</div>
     </v-stepper-content>
   </div>
 </template>
@@ -104,7 +110,7 @@ export default {
       })
       return _.sortBy(paymentOptions, ['priority'])
     },
-    ...mapState(['buttons']),
+    ...mapState(['buttons', 'errors']),
     ...mapFields([
       'validations.invalid_payment_method',
       'order',
@@ -137,6 +143,11 @@ export default {
   .v-input__control {
     width: 100% !important;
   }
+}
+
+.place-order-error {
+  color: $ERROR_COLOR;
+  margin-top: 1rem;
 }
 
 .sm-and-up {

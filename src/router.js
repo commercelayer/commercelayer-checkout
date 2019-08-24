@@ -23,7 +23,7 @@ const router = new Router({
       component: Layout,
       props: true,
       beforeEnter (routeTo, routeFrom, next) {
-        store.dispatch('setOrder', routeTo.params.order_id).then((order) => {
+        store.dispatch('setOrder', routeTo.params.order_id).then(order => {
           i18n.locale = _.lowerCase(order.language_code)
           next()
         })
@@ -37,16 +37,20 @@ const router = new Router({
         {
           path: 'paypal',
           beforeEnter (routeTo, routeFrom, next) {
-            let paymentSourceAttributes = { paypal_payer_id: routeTo.query.PayerID }
-            store.dispatch('updateOrderPaymentSource', paymentSourceAttributes)
+            let paymentSourceAttributes = {
+              paypal_payer_id: routeTo.query.PayerID
+            }
+            store
+              .dispatch('updateOrderPaymentSource', paymentSourceAttributes)
               .then(() => {
                 store.dispatch('placeOrder')
-                  .then(order => {
-                    next({ name: 'confirmation', params: { order_id: order.id } })
-                  })
               })
               .catch(error => {
                 console.log(error)
+
+                next({
+                  name: 'checkout'
+                })
               })
           }
         },

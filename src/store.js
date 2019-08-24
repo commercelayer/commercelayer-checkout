@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 import { getField, updateField } from 'vuex-map-fields'
 import APIService from '@/services/APIService'
 import NProgress from 'nprogress'
+import router from '@/router'
+import i18n from '@/plugins/i18n'
 
 Vue.use(Vuex)
 
@@ -20,6 +22,9 @@ export default new Vuex.Store({
       loading_customer: false,
       loading_delivery: false,
       loading_payment: false
+    },
+    errors: {
+      place_order: null
     },
     selected_payment_option_component: null,
     order: {}
@@ -104,10 +109,27 @@ export default new Vuex.Store({
       })
     },
     placeOrder ({ commit, state }) {
-      return APIService.placeOrder(state.order).then(order => {
-        commit('updateOrder', order)
-        return order
-      })
+      state.errors.place_order = null
+      state.buttons.loading_payment = true
+
+      return APIService.placeOrder(state.order)
+        .then(order => {
+          commit('updateOrder', order)
+          router.push({
+            name: 'confirmation',
+            params: {
+              order_id: order.id
+            }
+          })
+        })
+        .catch(response => {
+          state.errors.place_order = i18n.t(
+            'errors.' + response.data.errors[0].meta.error
+          )
+        })
+        .finally(() => {
+          state.buttons.loading_payment = false
+        })
     }
   }
 })

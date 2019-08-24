@@ -8,7 +8,7 @@
       id="paypal-payments-radio"
     ></v-radio>
     <div class="payment-method-fields" v-show="selected">
-      <div>{{ $t('payment_methods.paypal.hint') | capitalize }}</div>
+      <div id="paypal-payment-hint">{{ $t('payment_methods.paypal.hint') | capitalize }}</div>
       <div class="payment-error" id="paypal-payment-error"></div>
     </div>
   </div>

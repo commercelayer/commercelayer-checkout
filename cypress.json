@@ -1,3 +1,4 @@
 {
-  "pluginsFile": "tests/integration/plugins/index.js"
+  "pluginsFile": "tests/integration/plugins/index.js",
+  "chromeWebSecurity": false
 }

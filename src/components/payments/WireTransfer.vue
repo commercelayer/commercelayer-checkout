@@ -11,7 +11,6 @@
       <div
         id="wire-transfer-payment-hint"
       >{{ $t('payment_methods.wire_transfer.hint') | capitalize }}</div>
-      <div class="payment-error" id="wire-transfer-payment-error"></div>
     </div>
   </div>
 </template>
@@ -28,21 +27,7 @@ export default {
       }
     },
     handlePayment () {
-      this.loading_payment = true
-      this.$store
-        .dispatch('placeOrder')
-        .then(order => {
-          this.$router.push({ name: 'confirmation' })
-        })
-        .catch(response => {
-          let errorElement = document.getElementById(
-            'wire-transfer-payment-error'
-          )
-          errorElement.innerHTML = this.$t(
-            'errors.' + response.data.errors[0].meta.error
-          )
-          this.loading_payment = false
-        })
+      this.$store.dispatch('placeOrder')
     }
   }
 }

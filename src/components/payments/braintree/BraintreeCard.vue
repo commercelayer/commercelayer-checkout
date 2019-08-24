@@ -24,6 +24,7 @@
           </v-flex>
         </v-layout>
       </div>
+      <div class="payment-error" id="braintree-card-error"></div>
     </div>
   </div>
 </template>
