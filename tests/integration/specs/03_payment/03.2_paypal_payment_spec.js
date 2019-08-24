@@ -1,5 +1,3 @@
-import _ from 'lodash'
-
 describe('[03.2] payment / paypal payment', () => {
   var orderId
 
@@ -12,15 +10,9 @@ describe('[03.2] payment / paypal payment', () => {
 
   context('if paypal payment is an available payment method', () => {
     before(() => {
-      cy.get_available_payment_methods({
-        order_id: orderId
-      }).then(paymentMethods => {
-        let paymentMethodAvailable = _.find(paymentMethods, paymentMethod => {
-          return (
-            paymentMethod.attributes.payment_source_type === 'paypal_payments'
-          )
-        })
-        if (!paymentMethodAvailable) Cypress.stop()
+      cy.check_payment_method({
+        order_id: orderId,
+        payment_source_type: 'paypal_payments'
       })
     })
 

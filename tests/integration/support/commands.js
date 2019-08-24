@@ -262,6 +262,50 @@ Cypress.Commands.add('setup_payment_step', () => {
   })
 })
 
+Cypress.Commands.add('check_payment_method', options => {
+  cy.get_available_payment_methods({
+    order_id: options.order_id
+  }).then(paymentMethods => {
+    let paymentMethodAvailable = _.find(paymentMethods, paymentMethod => {
+      return (
+        paymentMethod.attributes.payment_source_type ===
+        options.payment_source_type
+      )
+    })
+    if (!paymentMethodAvailable) Cypress.stop()
+  })
+})
+
+Cypress.Commands.add('check_stripe_card_element', () => {
+  cy.get('.__PrivateStripeElement > iframe').should(
+    $iframe =>
+      expect($iframe.contents().find("input[name='cardnumber'")).to.exist
+  )
+})
+
+Cypress.Commands.add('enter_stripe_card', options => {
+  cy.get('.__PrivateStripeElement > iframe').then($iframe => {
+    const $body = $iframe.contents().find('body')
+    cy.wrap($body)
+      .find("input[name='cardnumber']")
+      .type(options.card_number)
+    cy.wrap($body)
+      .find("input[name='exp-date']")
+      .type(options.exp_date)
+    cy.wrap($body)
+      .find("input[name='cvc']")
+      .type(options.cvc)
+  })
+})
+
+Cypress.Commands.add('check_stripe_challenge_frame', () => {
+  cy.get('iframe[name="__privateStripeFrame7"]').should(
+    $iframe =>
+      expect($iframe.contents().find('iframe[name="stripe-challenge-frame"]'))
+        .to.exist
+  )
+})
+
 Cypress.Commands.add('get_order', options => {
   let url = Cypress.env('API_BASE_URL') + '/api/orders/' + options.order_id
   if (options.include) url = url + '?include=' + options.include

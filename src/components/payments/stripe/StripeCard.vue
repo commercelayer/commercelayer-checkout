@@ -5,7 +5,7 @@
       :value="payment_option.component"
       color="primary"
       @change="setPaymentMethod"
-      id="stripe-payments-radio"
+      id="stripe-card-radio"
     ></v-radio>
     <div class="payment-method-fields" v-show="selected">
       <div id="stripe-card"></div>
@@ -80,9 +80,7 @@ export default {
             cardError.innerHTML = result.error.message
             that.loading_payment = false
           } else {
-            that.$store.dispatch('placeOrder').then(() => {
-              that.$router.push({ name: 'confirmation' })
-            })
+            that.$store.dispatch('placeOrder')
           }
         })
     }
