@@ -12,6 +12,7 @@ export default new Vuetify({
     themes: {
       light: {
         primary: process.env.VUE_APP_BRAND_COLOR,
+        success: process.env.VUE_APP_SUCCESS_COLOR,
         error: process.env.VUE_APP_ERROR_COLOR
       }
     }

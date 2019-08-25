@@ -31,7 +31,6 @@ export default {
 
 .step-summary {
   padding: 0 24px;
-  // border-bottom: 1px solid $v-border;
 }
 
 .step-wrapper {
@@ -47,6 +46,10 @@ export default {
 }
 
 .sm-and-up {
+  .v-stepper {
+    padding: 2rem 1rem;
+  }
+
   .step-summary {
     margin-top: 16px;
     margin-left: 36px;

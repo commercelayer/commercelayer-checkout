@@ -8,6 +8,7 @@ module.exports = {
       sass: {
         data: `
           $PRIMARY_COLOR: ${process.env.VUE_APP_BRAND_COLOR};
+          $SUCCESS_COLOR: ${process.env.VUE_APP_SUCCESS_COLOR};
           $ERROR_COLOR: ${process.env.VUE_APP_ERROR_COLOR};
           @import "@/scss/_global.scss";
         `

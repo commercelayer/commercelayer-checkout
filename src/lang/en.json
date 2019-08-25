@@ -17,6 +17,7 @@
     "card_cvv": "CVC/CVV",
     "card_exp_date": "expiry date",
     "card_number": "card number",
+    "continue_shopping": "continue shopping",
     "edit": "edit",
     "item": "item | items",
     "of": "of",
@@ -25,7 +26,8 @@
     "shipment": "shipment",
     "ship_to": "ship to",
     "ship_to_different_address": "ship to different address",
-    "terms_of_service": "terms of service"
+    "terms_of_service": "terms of service",
+    "thankyou": "Thank you"
   },
   "order_summary": {
     "discount": "discount",

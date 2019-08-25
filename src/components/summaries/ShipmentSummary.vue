@@ -9,10 +9,7 @@
       :key="shipment_line_item.id"
       :shipment_line_item="shipment_line_item"
     />
-    <div class="shipping-method-details" v-if="!editable">
-      {{ shipment.shipping_method.name }} &mdash;
-      {{ shipment.shipping_method.formatted_price_amount }}
-    </div>
+    <div class="shipping-method-details" v-if="!editable">{{ shipment.shipping_method.name }}</div>
   </div>
 </template>
 

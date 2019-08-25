@@ -25,6 +25,13 @@ Cypress.Commands.add('create_order', options => {
       body: {
         data: {
           type: 'orders',
+          attributes: {
+            language_code: options.language_code,
+            terms_url: 'https://example.com/terms',
+            privacy_url: 'https://example.com/privacy',
+            cart_url: 'https://example.com/cart',
+            return_url: 'https://example.com/return'
+          },
           relationships: {
             market: {
               data: {

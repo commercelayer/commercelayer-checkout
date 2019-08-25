@@ -17,6 +17,7 @@
     "card_cvv": "CVC/CVV",
     "card_exp_date": "scadenza",
     "card_number": "numero carta",
+    "continue_shopping": "continua lo shopping",
     "edit": "modifica",
     "item": "articolo | articoli",
     "of": "di",
@@ -25,7 +26,9 @@
     "shipment": "spedizione",
     "ship_to": "spedisci a",
     "ship_to_different_address": "spedisci ad un altro indirizzo",
-    "terms_of_service": "condizioni di vendita"
+    "terms_of_service": "condizioni di vendita",
+    "thankyou": "Grazie",
+    "thankyou_message": "Il tuo ordine è confermato e verrà preparato per la spedizione"
   },
   "order_summary": {
     "discount": "sconto",
@@ -41,17 +44,17 @@
   },
   "payment_methods": {
     "adyen": {
-      "title": "carta di credito (powered by adyen)"
+      "title": "carta di credito"
     },
     "braintree": {
-      "title": "carta di credito (powered by braintree)"
+      "title": "carta di credito"
     },
     "paypal": {
       "title": "paypal",
       "hint": "confermando l'ordine, verrai rimandato sul sito di PayPal per effettuare l'accesso e autorizzare il pagamento"
     },
     "stripe": {
-      "title": "carta di credito (powered by stripe)"
+      "title": "carta di credito"
     },
     "wire_transfer": {
       "title": "bonifico bancario",

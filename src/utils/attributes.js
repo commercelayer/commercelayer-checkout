@@ -17,6 +17,7 @@ export const orderAttributes = [
   'skus_count',
   'customer_email',
   'coupon_code',
+  'editable',
   'shipping_country_code_lock',
   'formatted_subtotal_amount',
   'formatted_shipping_amount',
@@ -81,7 +82,8 @@ export const orderAttributes = [
   'payment_source.id',
   'cart_url',
   'privacy_url',
-  'terms_url'
+  'terms_url',
+  'return_url'
 ]
 
 export const addressAttributes = [

@@ -14,7 +14,7 @@
       <div class="order-summary-header">
         {{ $t('order_summary.number') | capitalize }}: #{{ order.number }}
         <span
-          v-if="order.cart_url"
+          v-if="editCartLink"
           class="edit-cart"
         >
           &mdash;
@@ -54,6 +54,13 @@ import OrderSummarySubtotal from '@/components/summaries/OrderSummarySubtotal'
 import { mapState } from 'vuex'
 
 export default {
+  props: {
+    editable: {
+      type: Boolean,
+      required: false,
+      default: true
+    }
+  },
   data () {
     return {
       viewCart: false
@@ -66,6 +73,9 @@ export default {
   computed: {
     viewCartLink () {
       return this.$vuetify.breakpoint.smAndDown
+    },
+    editCartLink () {
+      return !_.isEmpty(this.order.cart_url) && this.order.editable
     },
     viewCartLabel () {
       return this.viewCart

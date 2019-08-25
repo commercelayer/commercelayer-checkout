@@ -6,7 +6,7 @@
           <v-icon :small="true">place</v-icon>
         </v-flex>
         <v-flex>
-          <p class="px-2">
+          <div class="px-2">
             {{ address.first_name }} {{ address.last_name }}
             <br />
             {{ address.line_1 }}
@@ -16,7 +16,7 @@
             {{ countryName }}
             <br />
             {{ address.phone }}
-          </p>
+          </div>
         </v-flex>
       </v-layout>
     </v-flex>
