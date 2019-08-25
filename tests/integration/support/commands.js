@@ -40,6 +40,18 @@ Cypress.Commands.add('create_order', options => {
   })
 })
 
+Cypress.Commands.add('get_order', options => {
+  let url = Cypress.env('API_BASE_URL') + '/api/orders/' + options.order_id
+  if (options.include) url = url + '?include=' + options.include
+  cy.get_access_token().then(accessToken => {
+    cy.request({
+      url: url,
+      method: 'GET',
+      headers: apiRequestHeaders(accessToken)
+    }).its('body')
+  })
+})
+
 Cypress.Commands.add('create_line_item', options => {
   cy.get_access_token().then(accessToken => {
     cy.request({
@@ -369,14 +381,54 @@ Cypress.Commands.add('cancel_braintree_challenge_frame', () => {
   })
 })
 
-Cypress.Commands.add('get_order', options => {
-  let url = Cypress.env('API_BASE_URL') + '/api/orders/' + options.order_id
-  if (options.include) url = url + '?include=' + options.include
-  cy.get_access_token().then(accessToken => {
-    cy.request({
-      url: url,
-      method: 'GET',
-      headers: apiRequestHeaders(accessToken)
-    }).its('body')
+Cypress.Commands.add('check_adyen_card_component', () => {
+  cy.get('iframe.js-iframe').should(
+    $iframe => expect($iframe.contents().find('#encryptedCardNumber')).to.exist
+  )
+})
+
+Cypress.Commands.add('enter_adyen_card', options => {
+  cy.get('iframe.js-iframe')
+    .eq(0)
+    .then($iframe => {
+      const $body = $iframe.contents().find('body')
+      cy.wrap($body)
+        .find('#encryptedCardNumber')
+        .type(options.card_number)
+    })
+  cy.get('iframe.js-iframe')
+    .eq(1)
+    .then($iframe => {
+      const $body = $iframe.contents().find('body')
+      cy.wrap($body)
+        .find('#encryptedExpiryDate')
+        .type(options.exp_date)
+    })
+  cy.get('iframe.js-iframe')
+    .eq(2)
+    .then($iframe => {
+      const $body = $iframe.contents().find('body')
+      cy.wrap($body)
+        .find('#encryptedSecurityCode')
+        .type(options.cvc)
+    })
+})
+
+Cypress.Commands.add('check_adyen_challenge_frame', () => {
+  cy.get('iframe[name=threeDSIframe]').should(
+    $iframe => expect($iframe.contents().find('input[name=answer]')).to.exist
+  )
+})
+
+Cypress.Commands.add('authorize_adyen_challenge_frame', () => {
+  cy.get('iframe[name=threeDSIframe]').then($iframe => {
+    const $body = $iframe.contents().find('body')
+    cy.wrap($body)
+      .find('input[name=answer]')
+      .type('password')
+
+    cy.wrap($body)
+      .find('input[value=Submit]')
+      .click()
   })
 })

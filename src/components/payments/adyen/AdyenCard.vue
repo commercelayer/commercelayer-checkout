@@ -5,13 +5,13 @@
       :value="payment_option.component"
       color="primary"
       @change="setPaymentMethod"
-      id="adyen-payments-radio"
+      id="adyen-card-radio"
     ></v-radio>
     <div class="payment-method-fields" v-show="selected">
       <div id="adyen-card"></div>
       <div class="payment-error" id="adyen-card-error"></div>
-      <div id="adyen-action"></div>
     </div>
+    <div id="adyen-action"></div>
   </div>
 </template>
 
@@ -126,16 +126,12 @@ export default {
           case 'Authorised':
           case 'Pending':
           case 'Received':
-            this.$store.dispatch('placeOrder').then(order => {
-              this.$router.push({ name: 'confirmation' })
-            })
+            this.$store.dispatch('placeOrder')
             break
           case 'Error':
           case 'Refused':
             let cardError = document.getElementById('adyen-card-error')
-            cardError.innerHTML =
-              _.capitalize(this.$t('errors.not_authorized')) +
-              ` (${paymentResponse.refusalReason})`
+            cardError.innerHTML = this.$t('errors.not_authorized')
             this.loading_payment = false
             break
         }
@@ -168,5 +164,13 @@ export default {
 }
 .adyen-checkout__input {
   @include hosted-field;
+}
+#adyen-action {
+  .adyen-checkout__threeds2__challenge {
+    border: 1px solid $v-border;
+  }
+  iframe[name='threeDSIframe'] {
+    padding: 2rem;
+  }
 }
 </style>

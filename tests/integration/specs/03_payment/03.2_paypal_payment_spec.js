@@ -20,7 +20,7 @@ describe('[03.2] payment / paypal payment', () => {
         cy.get('#paypal-payments-radio').click({ force: true })
       })
 
-      it('displays the paypal paymìent message', () => {
+      it('displays the paypal payment message', () => {
         cy.get('#paypal-payment-hint')
       })
 
@@ -35,6 +35,9 @@ describe('[03.2] payment / paypal payment', () => {
 
         it('displays the paypal payment page', () => {
           cy.location().should(loc => {
+            // Proceeding from here is an anti-pattern:
+            // https://docs.cypress.io/guides/references/best-practices.html#Visiting-external-sites
+            // Alternatives?
             expect(loc.host).to.eq('www.sandbox.paypal.com')
           })
         })

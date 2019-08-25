@@ -41,6 +41,7 @@ describe('[03.3.3] payment / stripe card (3ds2)', () => {
           it('presents the customer with a challenge frame', () => {
             cy.check_stripe_challenge_frame()
           })
+          // TODO: authorize the 3ds2 challenge
         })
       })
     })
