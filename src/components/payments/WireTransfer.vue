@@ -11,6 +11,7 @@
       <div
         id="wire-transfer-payment-hint"
       >{{ $t('payment_methods.wire_transfer.hint') | capitalize }}</div>
+      <div class="payment-error" id="wire-transfer-error"></div>
     </div>
   </div>
 </template>

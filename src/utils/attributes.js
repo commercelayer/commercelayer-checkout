@@ -67,12 +67,12 @@ export const orderAttributes = [
   'shipments.shipment_line_items.quantity',
   'shipments.available_shipping_methods.id',
   'shipments.available_shipping_methods.name',
-  'shipments.available_shipping_methods.formatted_price_amount',
-  'shipments.available_shipping_methods.price_amount_cents',
+  'shipments.available_shipping_methods.formatted_price_amount_for_shipment',
+  'shipments.available_shipping_methods.price_amount_for_shipment_cents',
   'shipments.shipping_method.id',
   'shipments.shipping_method.name',
-  'shipments.shipping_method.formatted_price_amount',
-  'shipments.shipping_method.price_amount_cents',
+  'shipments.shipping_method.formatted_price_amount_for_shipment',
+  'shipments.shipping_method.price_amount_for_shipment_cents',
   'available_payment_methods.id',
   'available_payment_methods.name',
   'available_payment_methods.payment_source_type',
@@ -118,12 +118,12 @@ export const shipmentAttributes = [
   'shipment_line_items.quantity',
   'available_shipping_methods.id',
   'available_shipping_methods.name',
-  'available_shipping_methods.formatted_price_amount',
-  'available_shipping_methods.price_amount_cents',
+  'available_shipping_methods.formatted_price_amount_for_shipment',
+  'available_shipping_methods.price_amount_for_shipment_cents',
   'shipping_method.id',
   'shipping_method.name',
-  'shipping_method.formatted_price_amount',
-  'shipping_method.price_amount_cents'
+  'shipping_method.formatted_price_amount_for_shipment',
+  'shipping_method.price_amount_for_shipment_cents'
 ]
 
 export const paymentSourceAttributesMap = {

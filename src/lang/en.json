@@ -19,6 +19,7 @@
     "card_number": "card number",
     "continue_shopping": "continue shopping",
     "edit": "edit",
+    "free_over": "free over",
     "item": "item | items",
     "of": "of",
     "privacy_policy": "privacy policy",
@@ -27,7 +28,8 @@
     "ship_to": "ship to",
     "ship_to_different_address": "ship to different address",
     "terms_of_service": "terms of service",
-    "thankyou": "Thank you"
+    "thankyou": "Thank you",
+    "thankyou_message": "Your order is confirmed and we'e getting it ready for shipment"
   },
   "order_summary": {
     "discount": "discount",

@@ -41,7 +41,7 @@ export default {
     }
   },
   methods: {
-    updateValidations() {
+    updateValidations () {
       this.invalid_shipments = !_.isEmpty(
         _.find(this.order.shipments, shipment => {
           return _.isEmpty(shipment.shipping_method)
@@ -49,9 +49,9 @@ export default {
       )
     },
     shippingMethodLabel: shippingMethod => {
-      return `${shippingMethod.name} - ${shippingMethod.formatted_price_amount}`
+      return `${shippingMethod.name} - ${shippingMethod.formatted_price_amount_for_shipment}`
     },
-    handleChange(shippingMethod) {
+    handleChange (shippingMethod) {
       let payload = {
         order: this.order,
         shipment: this.shipment,
@@ -63,12 +63,12 @@ export default {
     }
   },
   computed: {
-    sortedAvailableShippingMethods() {
+    sortedAvailableShippingMethods () {
       return _.sortBy(this.shipment.available_shipping_methods, [
-        'price_amount_cents'
+        'price_amount_for_shipment_cents'
       ])
     },
-    shippingMethodId() {
+    shippingMethodId () {
       return this.shipment.shipping_method
         ? this.shipment.shipping_method.id
         : null
@@ -76,7 +76,7 @@ export default {
     ...mapState(['order']),
     ...mapFields(['validations.invalid_shipments'])
   },
-  mounted() {
+  mounted () {
     this.updateValidations()
   }
 }

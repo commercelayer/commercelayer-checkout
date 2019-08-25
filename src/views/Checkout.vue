@@ -47,7 +47,7 @@ export default {
 
 .sm-and-up {
   .v-stepper {
-    padding: 2rem 1rem;
+    padding: 2rem;
   }
 
   .step-summary {
