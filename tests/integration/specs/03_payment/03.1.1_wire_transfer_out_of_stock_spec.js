@@ -3,7 +3,6 @@ describe('[03.1.1] payment / wire transfer (out of stock)', () => {
 
   before(() => {
     cy.setup_payment_step().then(order => {
-      cy.log(order)
       orderId = order.id
     })
   })

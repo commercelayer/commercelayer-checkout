@@ -134,7 +134,7 @@ export default {
           case 'Refused':
             let cardError = document.getElementById('adyen-card-error')
             cardError.innerHTML =
-              _.capitalize(this.$t('errors.unauthorized_card')) +
+              _.capitalize(this.$t('errors.not_authorized')) +
               ` (${paymentResponse.refusalReason})`
             this.loading_payment = false
             break

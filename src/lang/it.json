@@ -10,8 +10,8 @@
     "zip_code": "cap"
   },
   "errors": {
-    "unauthorized_card": "la tua carta non è stata autorizzata",
-    "out_of_stock": "alcuni articoli non sono più disponibili"
+    "not_authorized": "La tua carta non è stata autorizzata",
+    "out_of_stock": "Alcuni articoli non sono più disponibili"
   },
   "generic": {
     "card_cvv": "CVC/CVV",

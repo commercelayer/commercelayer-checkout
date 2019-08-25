@@ -5,7 +5,7 @@
       :value="payment_option.component"
       color="primary"
       @change="setPaymentMethod"
-      id="braintree-payments-radio"
+      id="braintree-card-radio"
     ></v-radio>
     <div class="payment-method-fields" v-show="selected">
       <div class="braintree-hosted-fields">
@@ -121,11 +121,6 @@ export default {
         )
       })
     },
-    handleError (message) {
-      let cardError = document.getElementById('braintree-card-error')
-      // eslint-disable-next-line
-      cardError.innerHTML = _.capitalize(message)
-    },
     handlePayment (hostedFieldsInstance, clientToken) {
       this.loading_payment = true
 
@@ -191,7 +186,11 @@ export default {
                       },
                       function (err, response) {
                         if (err) {
-                          console.log(err)
+                          let cardError = document.getElementById(
+                            'braintree-card-error'
+                          )
+                          // eslint-disable-next-line
+                          cardError.innerHTML = this.$t(err.message)
                           that.loading_payment = false
                           return
                         }
@@ -201,16 +200,7 @@ export default {
                             payment_method_nonce: response.nonce
                           })
                           .then(paymentSource => {
-                            that.$store
-                              .dispatch('placeOrder')
-                              .then(() => {
-                                that.$router.push({ name: 'confirmation' })
-                              })
-                              .catch(error => {
-                                console.log(error)
-                                that.handleError('unauthorized')
-                                that.loading_payment = false
-                              })
+                            that.$store.dispatch('placeOrder')
                           })
                       }
                     )

@@ -1,33 +1,37 @@
-describe('[03.3.2] payment / stripe payment (out of stock)', () => {
+describe('[03.4.2] payment / braintree card (out of stock)', () => {
   var orderId
 
   before(() => {
+    cy.update_price({
+      price_id: Cypress.env('EU_PRICE_ID'),
+      amount_cents: 5000
+    })
+
     cy.setup_payment_step().then(order => {
-      cy.log(order)
       orderId = order.id
     })
   })
 
-  context('if stripe payment is an available payment method', () => {
+  context('if braintree payment is an available payment method', () => {
     before(() => {
       cy.check_payment_method({
         order_id: orderId,
-        payment_source_type: 'stripe_payments'
+        payment_source_type: 'braintree_payments'
       })
     })
 
-    context('when the customer selects stripe card payment option', () => {
+    context('when the customer selects braintree card payment option', () => {
       before(() => {
-        cy.get('#stripe-card-radio').click({ force: true })
+        cy.get('#braintree-card-radio').click({ force: true })
       })
 
-      it('displays the stripe card element', () => {
-        cy.check_stripe_card_element()
+      it('displays the braintree card hosted fields', () => {
+        cy.check_braintree_card_hosted_fields()
       })
 
       context('when the customer enters a valid card', () => {
         before(() => {
-          cy.enter_stripe_card({
+          cy.enter_braintree_card({
             card_number: '4242424242424242',
             exp_date: '1223',
             cvc: '123'
@@ -42,9 +46,10 @@ describe('[03.3.2] payment / stripe payment (out of stock)', () => {
             })
 
             cy.get('#payment-step-submit').click()
+            cy.wait(5000) // better way?
           })
 
-          it('displays an out of stock message', () => {
+          it('displays a payment error message', () => {
             cy.contains('Some items have gone out of stock')
           })
         })

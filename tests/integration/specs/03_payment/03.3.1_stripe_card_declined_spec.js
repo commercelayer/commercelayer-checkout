@@ -1,9 +1,8 @@
-describe('[03.3] payment / stripe payment', () => {
+describe('[03.3.1] payment / stripe card (declined)', () => {
   var orderId
 
   before(() => {
     cy.setup_payment_step().then(order => {
-      cy.log(order)
       orderId = order.id
     })
   })
@@ -28,7 +27,7 @@ describe('[03.3] payment / stripe payment', () => {
       context('when the customer enters a valid card', () => {
         before(() => {
           cy.enter_stripe_card({
-            card_number: '4242424242424242',
+            card_number: '4000000000000002',
             exp_date: '1223',
             cvc: '123'
           })
@@ -39,10 +38,8 @@ describe('[03.3] payment / stripe payment', () => {
             cy.get('#payment-step-submit').click()
           })
 
-          it('displays the order confirmation page', () => {
-            cy.location().should(loc => {
-              expect(loc.pathname).to.eq(`/${orderId}/confirmation`)
-            })
+          it('displays a payment error message', () => {
+            cy.contains('Your card was declined')
           })
         })
       })

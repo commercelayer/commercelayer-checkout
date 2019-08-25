@@ -3,7 +3,6 @@ describe('[03.2] payment / paypal payment', () => {
 
   before(() => {
     cy.setup_payment_step().then(order => {
-      cy.log(order)
       orderId = order.id
     })
   })

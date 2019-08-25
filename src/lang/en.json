@@ -10,7 +10,7 @@
     "zip_code": "zip code"
   },
   "errors": {
-    "unauthorized_card": "your card was not authorized",
+    "not_authorized": "Your card was not authorized",
     "out_of_stock": "Some items have gone out of stock"
   },
   "generic": {

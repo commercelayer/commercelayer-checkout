@@ -278,8 +278,7 @@ Cypress.Commands.add('check_payment_method', options => {
 
 Cypress.Commands.add('check_stripe_card_element', () => {
   cy.get('.__PrivateStripeElement > iframe').should(
-    $iframe =>
-      expect($iframe.contents().find("input[name='cardnumber'")).to.exist
+    $iframe => expect($iframe.contents().find('input[name=cardnumber')).to.exist
   )
 })
 
@@ -287,23 +286,87 @@ Cypress.Commands.add('enter_stripe_card', options => {
   cy.get('.__PrivateStripeElement > iframe').then($iframe => {
     const $body = $iframe.contents().find('body')
     cy.wrap($body)
-      .find("input[name='cardnumber']")
+      .find('input[name=cardnumber]')
       .type(options.card_number)
     cy.wrap($body)
-      .find("input[name='exp-date']")
+      .find('input[name=exp-date]')
       .type(options.exp_date)
     cy.wrap($body)
-      .find("input[name='cvc']")
+      .find('input[name=cvc]')
       .type(options.cvc)
   })
 })
 
 Cypress.Commands.add('check_stripe_challenge_frame', () => {
-  cy.get('iframe[name="__privateStripeFrame7"]').should(
+  cy.get('iframe[name=__privateStripeFrame7]').should(
     $iframe =>
-      expect($iframe.contents().find('iframe[name="stripe-challenge-frame"]'))
-        .to.exist
+      expect($iframe.contents().find('iframe[name=stripe-challenge-frame]')).to
+        .exist
   )
+})
+
+Cypress.Commands.add('check_braintree_card_hosted_fields', () => {
+  cy.get('iframe[name=braintree-hosted-field-number]').should(
+    $iframe =>
+      expect($iframe.contents().find('input[name=credit-card-number]')).to.exist
+  )
+  cy.get('iframe[name=braintree-hosted-field-expirationDate]').should(
+    $iframe =>
+      expect($iframe.contents().find('input[name=expiration]')).to.exist
+  )
+  cy.get('iframe[name=braintree-hosted-field-cvv]').should(
+    $iframe => expect($iframe.contents().find('input[name=cvv]')).to.exist
+  )
+})
+
+Cypress.Commands.add('enter_braintree_card', options => {
+  cy.get('iframe[name=braintree-hosted-field-number]').then($iframe => {
+    const $body = $iframe.contents().find('body')
+    cy.wrap($body)
+      .find('input[name=credit-card-number]')
+      .type(options.card_number)
+  })
+
+  cy.get('iframe[name=braintree-hosted-field-expirationDate]').then($iframe => {
+    const $body = $iframe.contents().find('body')
+    cy.wrap($body)
+      .find('input[name=expiration]')
+      .type(options.exp_date)
+  })
+
+  cy.get('iframe[name=braintree-hosted-field-cvv]').then($iframe => {
+    const $body = $iframe.contents().find('body')
+    cy.wrap($body)
+      .find('input[name=cvv]')
+      .type(options.cvc)
+  })
+})
+
+Cypress.Commands.add('check_braintree_challenge_frame', () => {
+  cy.get('iframe#Cardinal-CCA-IFrame')
+})
+
+Cypress.Commands.add('authorize_braintree_challenge_frame', () => {
+  cy.get('iframe#Cardinal-CCA-IFrame').then($iframe => {
+    const $body = $iframe.contents().find('body')
+    cy.wrap($body)
+      .find('input[name=challengeDataEntry]')
+      .type('1234')
+
+    cy.wrap($body)
+      .find('input[value=SUBMIT]')
+      .click()
+  })
+})
+
+Cypress.Commands.add('cancel_braintree_challenge_frame', () => {
+  cy.get('iframe#Cardinal-CCA-IFrame').then($iframe => {
+    const $body = $iframe.contents().find('body')
+
+    cy.wrap($body)
+      .find('input[value=CANCEL]')
+      .click()
+  })
 })
 
 Cypress.Commands.add('get_order', options => {

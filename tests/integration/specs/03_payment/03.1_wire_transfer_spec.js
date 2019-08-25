@@ -3,7 +3,6 @@ describe('[03.1] payment / wire transfer', () => {
 
   before(() => {
     cy.setup_payment_step().then(order => {
-      cy.log(order)
       orderId = order.id
     })
   })
