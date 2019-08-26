@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 export const collectBrowserInfo = () => {
   const screenWidth = window && window.screen ? window.screen.width : ''
   const screenHeight = window && window.screen ? window.screen.height : ''
@@ -27,4 +29,22 @@ export const collectBrowserInfo = () => {
   }
 
   return browserInfo
+}
+
+export const getCurrentStep = order => {
+  let step = 3
+
+  if (
+    _.isEmpty(order.customer_email) ||
+    _.isEmpty(order.billing_address.first_name) ||
+    _.isEmpty(order.shipping_address.first_name)
+  ) {
+    step = 1
+  } else {
+    _.each(order.shipments, shipment => {
+      if (_.isEmpty(shipment.shipping_method)) step = 2
+    })
+  }
+
+  return step
 }

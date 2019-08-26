@@ -51,7 +51,6 @@ describe('[02.1] delivery / one shipment', () => {
           }
         })
         cy.visit(`${Cypress.env('BASE_URL')}/${order.id}`)
-        cy.get('#customer-step-submit').click()
       })
     })
   })
@@ -122,12 +121,6 @@ describe('[02.1] delivery / one shipment', () => {
 
       it('enables the delivery step submit button', () => {
         cy.get('#delivery-step-submit').should('not.be.disabled')
-      })
-    })
-
-    context('when I submit the delivery step', () => {
-      before(() => {
-        cy.get('#delivery-step-submit').click()
       })
 
       it('displays the shipment summary', () => {

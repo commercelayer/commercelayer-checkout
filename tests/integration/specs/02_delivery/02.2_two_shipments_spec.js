@@ -56,7 +56,6 @@ describe('[02.2] delivery / two shipments', () => {
           }
         })
         cy.visit(`${Cypress.env('BASE_URL')}/${order.id}`)
-        cy.get('#customer-step-submit').click()
       })
     })
   })
@@ -137,25 +136,19 @@ describe('[02.2] delivery / two shipments', () => {
           it('enables the delivery step submit button', () => {
             cy.get('#delivery-step-submit').should('not.be.disabled')
           })
+
+          it('displays two shipment summaries', () => {
+            cy.get('.shipment-summary')
+              .first()
+              .get('.shipping-method-details')
+              .should('contain', 'Standard Shipping')
+            cy.get('.shipment-summary')
+              .last()
+              .get('.shipping-method-details')
+              .should('contain', 'Express Delivery')
+          })
         }
       )
-
-      context('when I submit the delivery step', () => {
-        before(() => {
-          cy.get('#delivery-step-submit').click()
-        })
-
-        it('displays two shipment summaries', () => {
-          cy.get('.shipment-summary')
-            .first()
-            .get('.shipping-method-details')
-            .should('contain', 'Standard Shipping')
-          cy.get('.shipment-summary')
-            .last()
-            .get('.shipping-method-details')
-            .should('contain', 'Express Delivery')
-        })
-      })
     }
   )
 })

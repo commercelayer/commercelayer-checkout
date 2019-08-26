@@ -323,8 +323,6 @@ Cypress.Commands.add('setup_payment_step', () => {
       })
 
       cy.visit(`${Cypress.env('BASE_URL')}/${order.id}`)
-      cy.get('#customer-step-submit').click()
-      cy.get('#delivery-step-submit').click()
     })
 
     cy.then(() => {

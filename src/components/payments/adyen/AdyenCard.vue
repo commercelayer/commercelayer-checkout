@@ -16,9 +16,8 @@
 </template>
 
 <script>
-import _ from 'lodash'
 import { paymentMixin } from '@/mixins/paymentMixin'
-import { collectBrowserInfo } from '@/utils/browserInfo'
+import { collectBrowserInfo } from '@/utils/functions'
 
 export default {
   computed: {

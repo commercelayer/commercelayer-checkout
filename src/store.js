@@ -5,6 +5,7 @@ import APIService from '@/services/APIService'
 import NProgress from 'nprogress'
 import router from '@/router'
 import i18n from '@/plugins/i18n'
+import { getCurrentStep } from '@/utils/functions'
 
 Vue.use(Vuex)
 
@@ -36,11 +37,20 @@ export default new Vuex.Store({
     updateOrder (state, order) {
       state.order = order
     },
+    updateCurrentStep (state, value) {
+      state.current_step = value
+    },
     updateOrderPaymentSource (state, paymentSource) {
       state.order.payment_source = paymentSource
     },
     updateButtonLoadingDelivery (state, value) {
       state.buttons.loading_delivery = value
+    },
+    updateButtonLoadingPayment (state, value) {
+      state.buttons.loading_payment = value
+    },
+    updatePlaceOrderError (state, value) {
+      state.errors.place_order = value
     },
     updateField
   },
@@ -48,6 +58,7 @@ export default new Vuex.Store({
     setOrder ({ commit }, orderId) {
       return APIService.getOrder(orderId).then(order => {
         commit('updateOrder', order)
+        commit('updateCurrentStep', getCurrentStep(order))
         return order
       })
     },
@@ -109,8 +120,8 @@ export default new Vuex.Store({
       })
     },
     placeOrder ({ commit, state }) {
-      state.errors.place_order = null
-      state.buttons.loading_payment = true
+      commit('updatePlaceOrderError', null)
+      commit('updateButtonLoadingDelivery', true)
 
       return APIService.placeOrder(state.order)
         .then(order => {
@@ -123,12 +134,13 @@ export default new Vuex.Store({
           })
         })
         .catch(response => {
-          state.errors.place_order = i18n.t(
-            'errors.' + response.data.errors[0].meta.error
+          commit(
+            'updatePlaceOrderError',
+            i18n.t('errors.' + response.data.errors[0].meta.error)
           )
         })
         .finally(() => {
-          state.buttons.loading_payment = false
+          commit('updateButtonLoadingDelivery', false)
         })
     }
   }
