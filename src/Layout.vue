@@ -49,6 +49,10 @@ export default {
   components: {
     OrderSummary,
     Footer
+  },
+  metaInfo: {
+    titleTemplate: `%s | ${process.env.VUE_APP_BRAND_NAME}`,
+    link: [{ rel: 'icon', href: process.env.VUE_APP_FAVICON_URL, once: true }]
   }
 }
 </script>

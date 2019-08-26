@@ -55,6 +55,9 @@ export default {
   },
   computed: {
     ...mapState(['order'])
+  },
+  metaInfo: {
+    title: 'Order confirmation'
   }
 }
 </script>

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Meta from 'vue-meta'
 
 import Layout from '@/Layout.vue'
 import Checkout from '@/views/Checkout.vue'
@@ -13,6 +14,7 @@ import i18n from '@/plugins/i18n'
 import _ from 'lodash'
 
 Vue.use(Router)
+Vue.use(Meta)
 
 const router = new Router({
   mode: 'history',
