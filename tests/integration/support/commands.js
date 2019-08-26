@@ -223,7 +223,59 @@ Cypress.Commands.add('get_available_payment_methods', options => {
   })
 })
 
+Cypress.Commands.add('get_billing_info_validation_rules', options => {
+  cy.get_access_token().then(accessToken => {
+    cy.request({
+      url: Cypress.env('API_BASE_URL') + '/api/billing_info_validation_rules',
+      method: 'GET',
+      headers: apiRequestHeaders(accessToken)
+    }).its('body')
+  })
+})
+
+Cypress.Commands.add('delete_billing_info_validation_rules', options => {
+  cy.get_billing_info_validation_rules().then(response => {
+    _.each(JSON.parse(response).data, resource => {
+      cy.get_access_token().then(accessToken => {
+        cy.request({
+          url:
+            Cypress.env('API_BASE_URL') +
+            '/api/billing_info_validation_rules/' +
+            resource.id,
+          method: 'DELETE',
+          headers: apiRequestHeaders(accessToken)
+        })
+      })
+    })
+  })
+})
+
+Cypress.Commands.add('create_billing_info_validation_rule', options => {
+  cy.get_access_token().then(accessToken => {
+    cy.request({
+      url: Cypress.env('API_BASE_URL') + '/api/billing_info_validation_rules',
+      method: 'POST',
+      body: {
+        data: {
+          type: 'billing_info_validation_rules',
+          relationships: {
+            market: {
+              data: {
+                type: 'markets',
+                id: options.market_id
+              }
+            }
+          }
+        }
+      },
+      headers: apiRequestHeaders(accessToken)
+    }).its('body.data')
+  })
+})
+
 Cypress.Commands.add('setup_payment_step', () => {
+  cy.delete_billing_info_validation_rules()
+
   cy.create_order({
     market_id: Cypress.env('EU_MARKET_ID')
   }).then(order => {

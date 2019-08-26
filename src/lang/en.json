@@ -1,5 +1,6 @@
 {
   "addresses": {
+    "billing_info": "billing info",
     "city": "city",
     "country_code": "country",
     "first_name": "first name",

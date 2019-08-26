@@ -84,6 +84,16 @@
         @blur="handleBlur('phone')"
       ></v-text-field>
     </v-flex>
+    <v-flex xs12 px-2 v-if="order.requires_billing_info">
+      <v-text-field
+        id="billing-address-billing-info"
+        :label="inputLabel('billing_info')"
+        v-model="billing_info"
+        :error-messages="errorMessages('billing_info')"
+        @input="handleInput()"
+        @blur="handleBlur('billing_info')"
+      ></v-text-field>
+    </v-flex>
   </v-layout>
 </template>
 
@@ -107,7 +117,8 @@ export default {
       'order.billing_address.country_code',
       'order.billing_address.state_code',
       'order.billing_address.zip_code',
-      'order.billing_address.phone'
+      'order.billing_address.phone',
+      'order.billing_address.billing_info'
     ])
   },
   methods: {

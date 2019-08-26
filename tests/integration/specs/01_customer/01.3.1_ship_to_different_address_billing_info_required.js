@@ -1,10 +1,13 @@
 import { euAddress } from '../../support/utils'
 
-describe('[01.3] customer / ship to different address', () => {
+describe('[01.3.1] customer / ship to different address (billing info required)', () => {
   var orderId
 
   before(() => {
     cy.delete_billing_info_validation_rules()
+    cy.create_billing_info_validation_rule({
+      market_id: Cypress.env('EU_MARKET_ID')
+    })
 
     cy.create_order({
       market_id: Cypress.env('EU_MARKET_ID')
@@ -31,7 +34,8 @@ describe('[01.3] customer / ship to different address', () => {
           country_code: euAddress.country_code,
           state_code: euAddress.state_code,
           zip_code: euAddress.zip_code,
-          phone: euAddress.phone
+          phone: euAddress.phone,
+          billing_info: euAddress.billing_info
         }
       }).then(address => {
         cy.update_order({
@@ -108,6 +112,7 @@ describe('[01.3] customer / ship to different address', () => {
         )
         cy.get('.billing-address-summary').contains(euAddress.country)
         cy.get('.billing-address-summary').contains(euAddress.phone)
+        cy.get('.billing-address-summary').contains(euAddress.billing_info)
       })
 
       it('displays the customer shipping address summary (different from billing)', () => {

@@ -1,12 +1,22 @@
 import _ from 'lodash'
 import countries from '@/data/countries'
-import { required } from 'vuelidate/lib/validators'
+import { required, requiredIf } from 'vuelidate/lib/validators'
+import { mapState } from 'vuex'
 
 export const addressMixin = {
+  data () {
+    return {
+      billing: true
+    }
+  },
   computed: {
     countries () {
       return countries
-    }
+    },
+    requiresBillingInfo () {
+      return this.billing && this.order.requires_billing_info
+    },
+    ...mapState(['order'])
   },
   validations: {
     first_name: { required },
@@ -16,7 +26,12 @@ export const addressMixin = {
     country_code: { required },
     state_code: { required },
     zip_code: { required },
-    phone: { required }
+    phone: { required },
+    billing_info: {
+      required: requiredIf(function (model) {
+        return this.requiresBillingInfo
+      })
+    }
   },
   methods: {
     handleBlur (fieldName) {

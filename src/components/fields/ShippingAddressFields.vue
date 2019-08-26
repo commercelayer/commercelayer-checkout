@@ -107,6 +107,11 @@ import { mapFields } from 'vuex-map-fields'
 
 export default {
   mixins: [addressMixin],
+  data () {
+    return {
+      billing: false
+    }
+  },
   computed: {
     shippingCountryCodeLocked () {
       return !_.isEmpty(this.shipping_country_code_lock)

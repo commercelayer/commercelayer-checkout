@@ -18,6 +18,7 @@ export const orderAttributes = [
   'customer_email',
   'coupon_code',
   'editable',
+  'requires_billing_info',
   'shipping_country_code_lock',
   'formatted_subtotal_amount',
   'formatted_shipping_amount',
@@ -56,6 +57,7 @@ export const orderAttributes = [
   'shipping_address.state_code',
   'shipping_address.country_code',
   'shipping_address.phone',
+  'shipping_address.billing_info',
   'shipping_address.notes',
   'shipments.id',
   'shipments.number',
@@ -144,12 +146,14 @@ export const addressDefaults = order => {
     zip_code: '',
     state_code: '',
     country_code: order.shipping_country_code_lock || '',
-    phone: ''
+    phone: '',
+    billing_info: ''
   }
 }
 
 export const orderDefaults = order => {
   return {
+    requires_billing_info: false,
     billing_address: addressDefaults(order),
     shipping_address: addressDefaults(order),
     ship_to_different_address: order.ship_to_different_address || false,

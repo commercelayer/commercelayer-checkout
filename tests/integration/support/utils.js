@@ -16,5 +16,6 @@ export const euAddress = {
   country: 'Italy',
   country_code: 'IT',
   phone: '+39 055 1234567890',
-  other_phone: '+39 055 0987654321'
+  other_phone: '+39 055 0987654321',
+  billing_info: 'ABCDEFGHIJKLMNOPQRSTUVWYXZ'
 }

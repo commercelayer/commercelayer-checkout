@@ -1,8 +1,11 @@
 import { euAddress } from '../../support/utils'
 
-describe('[01.2] customer / shipping same as billing', () => {
+describe('[01.2.1] customer / shipping same as billing (billing info required)', () => {
   before(() => {
     cy.delete_billing_info_validation_rules()
+    cy.create_billing_info_validation_rule({
+      market_id: Cypress.env('EU_MARKET_ID')
+    })
 
     cy.create_order({
       market_id: Cypress.env('EU_MARKET_ID')
@@ -53,6 +56,9 @@ describe('[01.2] customer / shipping same as billing', () => {
     cy.get('#customer-step-submit').should('be.disabled')
 
     cy.get('#billing-address-phone').type(euAddress.phone)
+    cy.get('#customer-step-submit').should('be.disabled')
+
+    cy.get('#billing-address-billing-info').type(euAddress.billing_info)
     cy.get('#customer-step-submit').should('not.be.disabled')
   })
 
@@ -71,6 +77,7 @@ describe('[01.2] customer / shipping same as billing', () => {
       )
       cy.get('.billing-address-summary').contains(euAddress.country)
       cy.get('.billing-address-summary').contains(euAddress.phone)
+      cy.get('.billing-address-summary').contains(euAddress.billing_info)
     })
 
     it('displays the customer shipping address summary (same as billing)', () => {

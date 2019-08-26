@@ -1,5 +1,6 @@
 {
   "addresses": {
+    "billing_info": "codice fiscale",
     "city": "città",
     "country_code": "paese",
     "first_name": "nome",

@@ -2,6 +2,8 @@ import { euAddress } from '../../support/utils'
 
 describe('[02.1] delivery / one shipment', () => {
   before(() => {
+    cy.delete_billing_info_validation_rules()
+
     cy.create_order({
       market_id: Cypress.env('EU_MARKET_ID')
     }).then(order => {

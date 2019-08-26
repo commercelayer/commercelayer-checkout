@@ -39,7 +39,7 @@
           <v-flex xs12 sm6>
             <div class="header">{{ $t('generic.ship_to') | capitalize }}:</div>
             <div class="shipping-address-summary">
-              <AddressSummary :address="order.shipping_address" />
+              <AddressSummary :address="order.shipping_address" :billing="false" />
             </div>
           </v-flex>
         </v-layout>

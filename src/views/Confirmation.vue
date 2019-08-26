@@ -16,7 +16,7 @@
               </v-flex>
               <v-flex xs12 sm6>
                 <div class="header ship-to-header">{{ $t('generic.ship_to') | capitalize }}:</div>
-                <AddressSummary :address="order.shipping_address" />
+                <AddressSummary :address="order.shipping_address" :billing="false" />
               </v-flex>
             </v-layout>
           </v-container>

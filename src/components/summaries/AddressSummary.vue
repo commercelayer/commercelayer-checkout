@@ -16,6 +16,10 @@
             {{ countryName }}
             <br />
             {{ address.phone }}
+            <span v-if="billing">
+              <br />
+              {{ address.billing_info }}
+            </span>
           </div>
         </v-flex>
       </v-layout>
@@ -32,6 +36,11 @@ export default {
     address: {
       type: Object,
       required: true
+    },
+    billing: {
+      type: Boolean,
+      required: false,
+      default: true
     }
   },
   computed: {
