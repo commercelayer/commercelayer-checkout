@@ -21,10 +21,10 @@ You can customize your look and feel and public credentials by setting the follo
 | VUE_APP_FAVICON_URL       | Your favicon public URL                                           | https://yourbucket.s3-eu-west-1.amazonaws.com/favicon.ico |
 | VUE_APP_API_BASE_URL      | Your organization endpoint                                        | https://acme.commercelayer.io                             |
 | VUE_APP_API_CLIENT_ID     | Your sales channel application client ID                          | xxxxxxxxxxxxxxxxxxxx                                      |
-| VUE_APP_STRIPE_PUBLIC_KEY | Your Stripe public key (required by Stripe )                      | pk_live_XXXXXXXXXX                                        |
-| VUE_APP_ADYEN_ENV         | Your Adyen environment (required by Adyen )                       | live                                                      |
-| VUE_APP_ADYEN_ORIGIN_KEY  | Your Adyen origin key (required by Adyen )                        | pub.v2.XXXXX.YYYYY.ZZZZZ                                  |
+| VUE_APP_STRIPE_PUBLIC_KEY | Your Stripe public key (required by Stripe)                       | pk_live_XXXXXXXXXX                                        |
+| VUE_APP_ADYEN_ENV         | Your Adyen environment (required by Adyen)                        | live                                                      |
+| VUE_APP_ADYEN_ORIGIN_KEY  | Your Adyen origin key (required by Adyen)                         | pub.v2.XXXXX.YYYYY.ZZZZZ                                  |
 
-## Getting started
+## Deploy
 
-Documentation is coming soon.
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/commercelayer/commercelayer-checkout-vue)

@@ -1,0 +1,10 @@
+[build]
+  command="npm run build"
+  publish="dist"
+
+[context.branch-deploy.environment]
+  NODE_ENV = "production"  
+
+[template.environment]
+  VUE_APP_API_BASE_URL="Your organization base endpoint"
+  VUE_APP_API_CLIENT_ID="Your sales channel client ID"
