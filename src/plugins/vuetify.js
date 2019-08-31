@@ -11,9 +11,9 @@ export default new Vuetify({
   theme: {
     themes: {
       light: {
-        primary: process.env.VUE_APP_BRAND_COLOR,
-        success: process.env.VUE_APP_SUCCESS_COLOR,
-        error: process.env.VUE_APP_ERROR_COLOR
+        primary: process.env.VUE_APP_BRAND_COLOR || '#000000',
+        success: process.env.VUE_APP_SUCCESS_COLOR || '#000000',
+        error: process.env.VUE_APP_ERROR_COLOR || '#000000'
       }
     }
   }
