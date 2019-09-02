@@ -8,14 +8,18 @@
           <p>{{ $t('generic.thankyou_message')}}</p>
         </header>
         <section>
+          <div class="header">{{ $t('generic.customer') }}:</div>
+          {{ order.customer_email }}
+        </section>
+        <section class="addresses">
           <v-container>
             <v-layout row wrap>
               <v-flex xs12 sm6>
-                <div class="header">{{ order.customer_email }}</div>
+                <div class="header">{{ $t('generic.billing_address') }}:</div>
                 <AddressSummary :address="order.billing_address" />
               </v-flex>
               <v-flex xs12 sm6>
-                <div class="header ship-to-header">{{ $t('generic.ship_to') | capitalize }}:</div>
+                <div class="header ship-to-header">{{ $t('generic.shipping_address') }}:</div>
                 <AddressSummary :address="order.shipping_address" :billing="false" />
               </v-flex>
             </v-layout>

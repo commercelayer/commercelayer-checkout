@@ -2,9 +2,15 @@
   <div :class="{subtotal: true, total: total}">
     <v-container>
       <v-layout row>
-        <v-flex xs6 offset-xs3>{{ $t(`order_summary.${label}`) | capitalize }}</v-flex>
+        <v-flex xs6 offset-xs3>
+          <div class="label">{{ $t(`order_summary.${label}`) | capitalize }}</div>
+          <div class="hint" v-show="showHint">{{ hint }}</div>
+        </v-flex>
         <v-flex xs3>
-          <div class="amount" :id="amountId">{{ amount }}</div>
+          <div
+            :class="{amount: true, discounted: isDiscounted}"
+            :id="amountId"
+          >{{ formattedAmount }}</div>
         </v-flex>
       </v-layout>
     </v-container>
@@ -18,8 +24,21 @@ export default {
       type: String,
       required: true
     },
-    amount: {
+    hint: {
       type: String,
+      required: false
+    },
+    showHint: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    formattedAmount: {
+      type: String,
+      required: true
+    },
+    amountFloat: {
+      type: Number,
       required: true
     },
     total: {
@@ -30,12 +49,22 @@ export default {
   computed: {
     amountId () {
       return `order-summary-${this.label}-amount`
+    },
+    isDiscounted () {
+      return this.amountFloat < 0
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.hint {
+  font-size: 0.8rem;
+  color: #999;
+}
+.discounted {
+  color: $SUCCESS_COLOR;
+}
 .subtotal {
   border-top: 1px solid $v-border;
 }

@@ -48,3 +48,7 @@ export const getCurrentStep = order => {
 
   return step
 }
+
+export const getCouponApplied = order => {
+  return !_.isEmpty(order.coupon_code)
+}

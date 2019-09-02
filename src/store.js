@@ -5,13 +5,16 @@ import APIService from '@/services/APIService'
 import NProgress from 'nprogress'
 import router from '@/router'
 import i18n from '@/plugins/i18n'
-import { getCurrentStep } from '@/utils/functions'
+import { getCurrentStep, getCouponApplied } from '@/utils/functions'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     current_step: 1,
+    notifications: {
+      coupon_applied: false
+    },
     validations: {
       invalid_customer: false,
       invalid_billing_address: false,
@@ -25,6 +28,7 @@ export default new Vuex.Store({
       loading_payment: false
     },
     errors: {
+      apply_coupon: null,
       place_order: null
     },
     selected_payment_option_component: null,
@@ -49,6 +53,12 @@ export default new Vuex.Store({
     updateButtonLoadingPayment (state, value) {
       state.buttons.loading_payment = value
     },
+    updateApplyCouponError (state, value) {
+      state.errors.apply_coupon = value
+    },
+    updateCouponAppliedNotification (state, value) {
+      state.notifications.coupon_applied = value
+    },
     updatePlaceOrderError (state, value) {
       state.errors.place_order = value
     },
@@ -59,6 +69,7 @@ export default new Vuex.Store({
       return APIService.getOrder(orderId).then(order => {
         commit('updateOrder', order)
         commit('updateCurrentStep', getCurrentStep(order))
+        commit('updateCouponAppliedNotification', getCouponApplied(order))
         return order
       })
     },
@@ -68,6 +79,25 @@ export default new Vuex.Store({
         .then(order => {
           commit('updateOrder', order)
           return order
+        })
+        .finally(() => {
+          NProgress.done()
+        })
+    },
+    setOrderCouponCode ({ commit, state }) {
+      NProgress.start()
+      return APIService.updateOrderCouponCode(state.order)
+        .then(order => {
+          commit('updateOrder', order)
+          commit('updateApplyCouponError', null)
+          commit('updateCouponAppliedNotification', true)
+          return order
+        })
+        .catch(response => {
+          commit(
+            'updateApplyCouponError',
+            i18n.t('errors.' + response.data.errors[0].meta.error)
+          )
         })
         .finally(() => {
           NProgress.done()

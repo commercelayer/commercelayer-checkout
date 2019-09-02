@@ -11,14 +11,17 @@
     "zip_code": "cap"
   },
   "errors": {
+    "invalid_coupon": "Questo codice coupon non è valido",
     "not_authorized": "La tua carta non è stata autorizzata",
     "out_of_stock": "Alcuni articoli non sono più disponibili"
   },
   "generic": {
+    "billing_address": "Indirizzo di fatturazione",
     "card_cvv": "CVC/CVV",
     "card_exp_date": "scadenza",
     "card_number": "numero carta",
     "continue_shopping": "continua lo shopping",
+    "customer": "Cliente",
     "edit": "modifica",
     "free_over": "gratuita sopra",
     "item": "articolo | articoli",
@@ -26,13 +29,14 @@
     "privacy_policy": "privacy policy",
     "quantity": "quantità",
     "shipment": "spedizione",
-    "ship_to": "spedisci a",
     "ship_to_different_address": "spedisci ad un altro indirizzo",
+    "shipping_address": "Indirizzo di consegna",
     "terms_of_service": "condizioni di vendita",
     "thankyou": "Grazie",
     "thankyou_message": "Il tuo ordine è confermato e verrà preparato per la spedizione"
   },
   "order_summary": {
+    "coupon_code": "Hai un codice coupon?",
     "discount": "sconto",
     "hide": "nascondi riepilogo ordine",
     "number": "numero ordine",

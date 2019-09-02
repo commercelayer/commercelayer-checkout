@@ -94,6 +94,25 @@ const updateOrderCustomerEmail = order => {
     })
 }
 
+const updateOrderCouponCode = order => {
+  return apiClient
+    .patch('/orders/' + order.id + '?include=' + orderIncludes.join(','), {
+      data: {
+        type: 'orders',
+        id: order.id,
+        attributes: {
+          coupon_code: order.coupon_code
+        }
+      }
+    })
+    .then(response => {
+      return normalizedOrder(order, response)
+    })
+    .catch(error => {
+      return Promise.reject(error.response)
+    })
+}
+
 const createAddress = address => {
   return apiClient
     .post(`/addresses`, {
@@ -308,6 +327,7 @@ const placeOrder = order => {
 export default {
   getOrder,
   updateOrderCustomerEmail,
+  updateOrderCouponCode,
   updateOrderAddresses,
   updateShipmentShippingMethod,
   updateOrderPaymentMethod,

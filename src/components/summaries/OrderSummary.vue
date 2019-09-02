@@ -28,18 +28,41 @@
           :key="line_item.id"
         />
       </div>
+      <div class="coupon" v-if="order.editable">
+        <OrderSummaryCoupon />
+      </div>
       <div class="subtotals">
-        <OrderSummarySubtotal label="subtotal" :amount="order.formatted_subtotal_amount" />
-        <OrderSummarySubtotal label="discount" :amount="order.formatted_discount_amount" />
-        <OrderSummarySubtotal label="shipping" :amount="order.formatted_shipping_amount" />
+        <OrderSummarySubtotal
+          label="subtotal"
+          :formattedAmount="order.formatted_subtotal_amount"
+          :amountFloat="order.subtotal_amount_float"
+        />
+        <OrderSummarySubtotal
+          label="discount"
+          :formattedAmount="order.formatted_discount_amount"
+          :amountFloat="order.discount_amount_float"
+          :showHint="notifications.coupon_applied"
+          :hint="order.coupon_code"
+        />
+        <OrderSummarySubtotal
+          label="shipping"
+          :formattedAmount="order.formatted_shipping_amount"
+          :amountFloat="order.shipping_amount_float"
+        />
         <OrderSummarySubtotal
           label="payment_method"
-          :amount="order.formatted_payment_method_amount"
+          :formattedAmount="order.formatted_payment_method_amount"
+          :amountFloat="order.payment_method_amount_float"
         />
-        <OrderSummarySubtotal label="taxes" :amount="order.formatted_total_tax_amount" />
+        <OrderSummarySubtotal
+          label="taxes"
+          :formattedAmount="order.formatted_total_tax_amount"
+          :amountFloat="order.total_tax_amount_float"
+        />
         <OrderSummarySubtotal
           label="total"
-          :amount="order.formatted_total_amount_with_taxes"
+          :formattedAmount="order.formatted_total_amount_with_taxes"
+          :amountFloat="order.total_amount_with_taxes_float"
           :total="true"
         />
       </div>
@@ -50,6 +73,7 @@
 <script>
 import _ from 'lodash'
 import OrderSummaryLineItem from '@/components/summaries/OrderSummaryLineItem'
+import OrderSummaryCoupon from '@/components/summaries/OrderSummaryCoupon'
 import OrderSummarySubtotal from '@/components/summaries/OrderSummarySubtotal'
 import { mapState } from 'vuex'
 
@@ -68,6 +92,7 @@ export default {
   },
   components: {
     OrderSummaryLineItem,
+    OrderSummaryCoupon,
     OrderSummarySubtotal
   },
   computed: {
@@ -85,7 +110,7 @@ export default {
     skuLineItems () {
       return _.filter(this.order.line_items, { item_type: 'skus' })
     },
-    ...mapState(['order'])
+    ...mapState(['order', 'notifications'])
   },
   methods: {
     toggleCart () {
@@ -118,9 +143,6 @@ export default {
 
   .order-summary-header {
     margin: 1rem 0 2rem;
-  }
-  .line-items {
-    margin: 1rem 0;
   }
 }
 .md-and-up {
