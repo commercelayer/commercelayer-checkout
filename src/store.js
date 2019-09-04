@@ -12,9 +12,17 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    auth: {
+      has_customer: false
+    },
     current_step: 1,
     notifications: {
       coupon_applied: false
+    },
+    buttons: {
+      loading_customer: false,
+      loading_delivery: false,
+      loading_payment: false
     },
     validations: {
       invalid_customer: false,
@@ -23,17 +31,16 @@ export default new Vuex.Store({
       invalid_shipments: false,
       invalid_payment_method: false
     },
-    buttons: {
-      loading_customer: false,
-      loading_delivery: false,
-      loading_payment: false
-    },
     errors: {
       apply_coupon: null,
       place_order: null
     },
     selected_payment_option_component: null,
-    order: {}
+    order: {},
+    customer: {
+      addresses: [],
+      payment_sources: []
+    }
   },
   getters: {
     getField
@@ -63,6 +70,9 @@ export default new Vuex.Store({
     updatePlaceOrderError (state, value) {
       state.errors.place_order = value
     },
+    updateAuthHasCustomer (state, value) {
+      state.auth.has_customer = value
+    },
     updateField
   },
   actions: {
@@ -73,6 +83,19 @@ export default new Vuex.Store({
         commit('updateCouponAppliedNotification', getCouponApplied(order))
         return order
       })
+    },
+    setCustomer ({ commit }) {
+      APIService.getCustomerAddresses()
+        .then(customerAddresses => {
+          console.log(customerAddresses)
+        })
+        .catch(response => console.log(response))
+
+      APIService.getCustomerPaymentSources()
+        .then(customerPaymentSources => {
+          console.log(customerPaymentSources)
+        })
+        .catch(response => console.log(response))
     },
     setOrderCustomerEmail ({ commit, state }) {
       NProgress.start()

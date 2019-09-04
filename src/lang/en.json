@@ -31,6 +31,7 @@
     "shipment": "shipment",
     "ship_to_different_address": "ship to different address",
     "shipping_address": "Shipping address",
+    "ship_to": "Ship to",
     "terms_of_service": "terms of service",
     "thankyou": "Thank you",
     "thankyou_message": "Your order is confirmed and we'e getting it ready for shipment"

@@ -11,9 +11,7 @@
             <br />
             {{ address.line_1 }}
             <br />
-            {{ address.zip_code }} {{ address.city }} ({{ address.state_code }})
-            <br />
-            {{ countryName }}
+            {{ address.zip_code }} {{ address.city }} ({{ address.state_code }}) {{ countryName }}
             <br />
             {{ address.phone }}
             <span v-if="billing">
