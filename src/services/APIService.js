@@ -37,11 +37,52 @@ apiClient.interceptors.request.use(
   }
 )
 
+apiClient.interceptors.response.use(
+  response => {
+    return response
+  },
+  error => {
+    if (
+      error.response.status === 401 &&
+      error.response.data.errors &&
+      error.response.data.errors[0].code === 'INVALID_TOKEN'
+    ) {
+      return AuthService.updateAccessToken().then(accessToken => {
+        error.config.headers['Authorization'] = `Bearer ${accessToken}`
+        return apiClient.request(error.config)
+      })
+    }
+    return Promise.reject(error)
+  }
+)
+
 const getOrder = orderId => {
   return apiClient
     .get('/orders/' + orderId + '?include=' + orderIncludes.join(','))
     .then(response => {
       return normalizedOrder(response.data, response)
+    })
+    .catch(error => {
+      return Promise.reject(error.response)
+    })
+}
+
+const getCustomerAddresses = () => {
+  return apiClient
+    .get('/customer_addresses?include=address')
+    .then(response => {
+      console.log(response)
+    })
+    .catch(error => {
+      return Promise.reject(error.response)
+    })
+}
+
+const getCustomerPaymentSources = () => {
+  return apiClient
+    .get('/customer_payment_sources?include=payment_source')
+    .then(response => {
+      console.log(response)
     })
     .catch(error => {
       return Promise.reject(error.response)
@@ -326,6 +367,8 @@ const placeOrder = order => {
 
 export default {
   getOrder,
+  getCustomerAddresses,
+  getCustomerPaymentSources,
   updateOrderCustomerEmail,
   updateOrderCouponCode,
   updateOrderAddresses,
