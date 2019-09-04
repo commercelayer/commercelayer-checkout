@@ -25,9 +25,22 @@ const router = new Router({
       component: Layout,
       props: true,
       beforeEnter (routeTo, routeFrom, next) {
+        if (routeTo.query.access_token) {
+          localStorage.setItem('accessToken', routeTo.query.access_token)
+        }
+        if (routeTo.query.refresh_token) {
+          localStorage.setItem('refreshToken', routeTo.query.refresh_token)
+        }
+
         store.dispatch('setOrder', routeTo.params.order_id).then(order => {
           i18n.locale = _.lowerCase(order.language_code)
-          next()
+          if (store.state.auth.has_customer) {
+            store.dispatch('setCustomer').then(() => {
+              next()
+            })
+          } else {
+            next()
+          }
         })
       },
       children: [
