@@ -60,6 +60,11 @@ import { mapState } from 'vuex'
 import { mapFields } from 'vuex-map-fields'
 
 export default {
+  data () {
+    return {
+      pippo: true
+    }
+  },
   components: {
     CustomerFields,
     BillingAddressFields,
@@ -71,12 +76,24 @@ export default {
     disabled () {
       return (
         this.validations.invalid_customer ||
-        this.validations.invalid_billing_address ||
-        this.validations.invalid_shipping_address
+        (!this._billing_address_clone_id &&
+          this.validations.invalid_billing_address) ||
+        (!this._shipping_address_clone_id &&
+          this.validations.invalid_shipping_address)
       )
     },
+<<<<<<< HEAD
     ...mapState(['order', 'validations']),
     ...mapFields(['buttons.loading_customer'])
+=======
+    ...mapState(['order']),
+    ...mapFields([
+      'buttons.loading_customer',
+      'customer.payment_sources',
+      'order._billing_address_clone_id',
+      'order._shipping_address_clone_id'
+    ])
+>>>>>>> Added customer address book management.
   },
   methods: {
     submit () {

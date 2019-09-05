@@ -2,8 +2,13 @@ import _ from 'lodash'
 import countries from '@/data/countries'
 import { required, requiredIf } from 'vuelidate/lib/validators'
 import { mapState } from 'vuex'
+import { mapFields } from 'vuex-map-fields'
+import CustomerAddressFields from '@/components/fields/CustomerAddressFields'
 
 export const addressMixin = {
+  components: {
+    CustomerAddressFields
+  },
   data () {
     return {
       billing: true
@@ -16,7 +21,21 @@ export const addressMixin = {
     requiresBillingInfo () {
       return this.billing && this.order.requires_billing_info
     },
-    ...mapState(['order'])
+    showAddressBook () {
+      return !_.isEmpty(this.addresses)
+    },
+    showBillingAddress () {
+      return !this._billing_address_clone_id
+    },
+    showShippingAddress () {
+      return !this._shipping_address_clone_id
+    },
+    ...mapState(['order']),
+    ...mapFields([
+      'customer.addresses',
+      'order._billing_address_clone_id',
+      'order._shipping_address_clone_id'
+    ])
   },
   validations: {
     first_name: { required },
