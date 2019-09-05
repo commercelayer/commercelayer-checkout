@@ -111,6 +111,22 @@ export const addressAttributes = [
   'notes'
 ]
 
+export const customerAddressAttributes = [
+  'id',
+  'address.id',
+  'address.first_name',
+  'address.last_name',
+  'address.line_1',
+  'address.line_2',
+  'address.city',
+  'address.zip_code',
+  'address.state_code',
+  'address.country_code',
+  'address.phone',
+  'address.billing_info',
+  'address.notes'
+]
+
 export const shipmentIncludes = [
   'shipment_line_items.line_item',
   'available_shipping_methods',
@@ -161,6 +177,12 @@ export const addressDefaults = order => {
 
 export const orderDefaults = order => {
   return {
+    _billing_address_clone_id: order._billing_address_clone_id || false,
+    _shipping_address_clone_id: order._shipping_address_clone_id || false,
+    _save_billing_address_to_customer_address_book:
+      order._save_billing_address_to_customer_address_book || false,
+    _save_shipping_address_to_customer_address_book:
+      order._save_shipping_address_to_customer_address_book || false,
     requires_billing_info: false,
     billing_address: addressDefaults(order),
     shipping_address: addressDefaults(order),

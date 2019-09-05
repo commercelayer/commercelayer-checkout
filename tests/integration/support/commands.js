@@ -17,6 +17,24 @@ Cypress.Commands.add('get_access_token', () => {
   }).its('body.access_token')
 })
 
+Cypress.Commands.add('get_customer_access_token', credentials => {
+  cy.request({
+    url: Cypress.env('API_BASE_URL') + '/oauth/token',
+    method: 'POST',
+    body: {
+      grant_type: 'password',
+      client_id: Cypress.env('API_CLIENT_ID'),
+      client_secret: Cypress.env('API_CLIENT_SECRET'),
+      username: credentials.username,
+      password: credentials.password
+    },
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    }
+  }).its('body')
+})
+
 Cypress.Commands.add('create_order', options => {
   cy.get_access_token().then(accessToken => {
     cy.request({
@@ -271,6 +289,29 @@ Cypress.Commands.add('create_billing_info_validation_rule', options => {
         }
       },
       headers: apiRequestHeaders(accessToken)
+    }).its('body.data')
+  })
+})
+
+Cypress.Commands.add('create_customer_address', options => {
+  cy.create_address({ attributes: options.addressAttrbutes }).then(address => {
+    cy.request({
+      url: Cypress.env('API_BASE_URL') + '/api/customer_addresses',
+      method: 'POST',
+      body: {
+        data: {
+          type: 'customer_addresses',
+          relationships: {
+            address: {
+              data: {
+                type: 'addresses',
+                id: address.id
+              }
+            }
+          }
+        }
+      },
+      headers: apiRequestHeaders(options.accessToken)
     }).its('body.data')
   })
 })

@@ -9,7 +9,8 @@ import {
   shipmentIncludes,
   shipmentAttributes,
   paymentSourceAttributesMap,
-  orderDefaults
+  orderDefaults,
+  customerAddressAttributes
 } from '@/utils/attributes'
 
 const normalizedOrder = (order, response) => {
@@ -71,7 +72,7 @@ const getCustomerAddresses = () => {
   return apiClient
     .get('/customer_addresses?include=address')
     .then(response => {
-      console.log(response)
+      return normalize(response.data).get(customerAddressAttributes)
     })
     .catch(error => {
       return Promise.reject(error.response)
@@ -81,9 +82,7 @@ const getCustomerAddresses = () => {
 const getCustomerPaymentSources = () => {
   return apiClient
     .get('/customer_payment_sources?include=payment_source')
-    .then(response => {
-      console.log(response)
-    })
+    .then(response => {})
     .catch(error => {
       return Promise.reject(error.response)
     })
@@ -116,15 +115,14 @@ const updateShipmentShippingMethod = (shipment, shippingMethod) => {
     })
 }
 
-const updateOrderCustomerEmail = order => {
+const updateOrder = (order, attributes) => {
+  console.log(attributes)
   return apiClient
     .patch('/orders/' + order.id + '?include=' + orderIncludes.join(','), {
       data: {
         type: 'orders',
         id: order.id,
-        attributes: {
-          customer_email: order.customer_email
-        }
+        attributes: attributes
       }
     })
     .then(response => {
@@ -135,31 +133,12 @@ const updateOrderCustomerEmail = order => {
     })
 }
 
-const updateOrderCouponCode = order => {
-  return apiClient
-    .patch('/orders/' + order.id + '?include=' + orderIncludes.join(','), {
-      data: {
-        type: 'orders',
-        id: order.id,
-        attributes: {
-          coupon_code: order.coupon_code
-        }
-      }
-    })
-    .then(response => {
-      return normalizedOrder(order, response)
-    })
-    .catch(error => {
-      return Promise.reject(error.response)
-    })
-}
-
-const createAddress = address => {
+const createAddress = attributes => {
   return apiClient
     .post(`/addresses`, {
       data: {
         type: 'addresses',
-        attributes: _.omit(address, ['id'])
+        attributes: _.omit(attributes, ['id'])
       }
     })
     .then(response => {
@@ -170,13 +149,13 @@ const createAddress = address => {
     })
 }
 
-const updateAddress = address => {
+const updateAddress = attributes => {
   return apiClient
-    .patch(`/addresses/${address.id}`, {
+    .patch(`/addresses/${attributes.id}`, {
       data: {
         type: 'addresses',
-        id: address.id,
-        attributes: _.omit(address, ['id'])
+        id: attributes.id,
+        attributes: _.omit(attributes, ['id'])
       }
     })
     .then(response => {
@@ -187,8 +166,62 @@ const updateAddress = address => {
     })
 }
 
-const updateOrCreateAddress = address => {
-  return address.id ? updateAddress(address) : createAddress(address)
+const saveBillingAddress = order => {
+  return order._save_billing_address_to_customer_address_book
+    ? updateOrder(order, {
+      _save_billing_address_to_customer_address_book:
+          order._save_billing_address_to_customer_address_book
+    })
+    : order
+}
+
+const saveShippingAddress = order => {
+  return order._save_shipping_address_to_customer_address_book
+    ? updateOrder(order, {
+      _save_shipping_address_to_customer_address_book:
+          order._save_shipping_address_to_customer_address_book
+    })
+    : order
+}
+
+const updateOrCreateBillingAddress = order => {
+  if (order._billing_address_clone_id) {
+    return updateOrder(order, {
+      _billing_address_clone_id: order._billing_address_clone_id
+    }).then(order => {
+      return order.billing_address
+    })
+  } else {
+    return order.billing_address.id
+      ? updateAddress(order.billing_address).then(address => {
+        saveBillingAddress(order)
+        return address
+      })
+      : createAddress(order.billing_address).then(address => {
+        saveBillingAddress(order)
+        return address
+      })
+  }
+}
+
+const updateOrCreateShippingAddress = order => {
+  if (order._shipping_address_clone_id) {
+    return updateOrder(order, {
+      _shipping_address_clone_id: order._shipping_address_clone_id
+    }).then(order => {
+      return order.shipping_address
+    })
+  } else {
+    return order.shipping_address.id
+      ? updateAddress(order.shipping_address).then(address => {
+        saveShippingAddress(order)
+        return address
+      })
+      : createAddress(order.shipping_address).then(address => {
+        saveShippingAddress(order)
+        return address
+      })
+  }
 }
 
 const updateBillingAddressFields = (order, billingAddress) => {
@@ -243,12 +276,12 @@ const updateShippingAddressFields = (order, shippingAddress) => {
 }
 
 const updateOrderAddresses = order => {
-  return updateOrCreateAddress(order.billing_address)
+  return updateOrCreateBillingAddress(order)
     .then(billingAddress => {
       return updateBillingAddressFields(order, billingAddress).then(
         updatedOrder => {
           if (order.ship_to_different_address) {
-            return updateOrCreateAddress(order.shipping_address).then(
+            return updateOrCreateShippingAddress(order).then(
               shippingAddress => {
                 return updateShippingAddressFields(order, shippingAddress).then(
                   updatedOrder => {
@@ -369,8 +402,7 @@ export default {
   getOrder,
   getCustomerAddresses,
   getCustomerPaymentSources,
-  updateOrderCustomerEmail,
-  updateOrderCouponCode,
+  updateOrder,
   updateOrderAddresses,
   updateShipmentShippingMethod,
   updateOrderPaymentMethod,

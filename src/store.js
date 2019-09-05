@@ -73,6 +73,9 @@ export default new Vuex.Store({
     updateAuthHasCustomer (state, value) {
       state.auth.has_customer = value
     },
+    updateCustomerAddresses (state, value) {
+      state.customer.addresses = value
+    },
     updateField
   },
   actions: {
@@ -87,19 +90,21 @@ export default new Vuex.Store({
     setCustomer ({ commit }) {
       APIService.getCustomerAddresses()
         .then(customerAddresses => {
-          console.log(customerAddresses)
+          commit('updateCustomerAddresses', customerAddresses)
+          return customerAddresses
         })
         .catch(response => console.log(response))
 
       APIService.getCustomerPaymentSources()
-        .then(customerPaymentSources => {
-          console.log(customerPaymentSources)
-        })
+        .then(customerPaymentSources => {})
         .catch(response => console.log(response))
     },
     setOrderCustomerEmail ({ commit, state }) {
       NProgress.start()
-      return APIService.updateOrderCustomerEmail(state.order)
+      console.log(state.order.customer_email)
+      return APIService.updateOrder(state.order, {
+        customer_email: state.order.customer_email
+      })
         .then(order => {
           commit('updateOrder', order)
           return order
@@ -110,7 +115,9 @@ export default new Vuex.Store({
     },
     setOrderCouponCode ({ commit, state }) {
       NProgress.start()
-      return APIService.updateOrderCouponCode(state.order)
+      return APIService.updateOrder(state.order, {
+        coupon_code: state.order.coupon_code
+      })
         .then(order => {
           commit('updateOrder', order)
           commit('updateApplyCouponError', null)
