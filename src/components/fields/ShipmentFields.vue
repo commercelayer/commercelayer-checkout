@@ -21,11 +21,13 @@ import ShipmentSummary from '@/components/summaries/ShipmentSummary'
 
 import { mapState } from 'vuex'
 import { mapFields } from 'vuex-map-fields'
+import { gtmMixin } from '@/mixins/gtmMixin'
 
 export default {
   components: {
     ShipmentSummary
   },
+  mixins: [gtmMixin],
   props: {
     shipment: {
       type: Object,
@@ -58,6 +60,7 @@ export default {
         shippingMethod: shippingMethod
       }
       this.$store.dispatch('setShipmentShippingMethod', payload).then(() => {
+        this.trackDeliveryOption(shippingMethod.name)
         this.updateValidations()
       })
     }

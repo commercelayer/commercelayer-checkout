@@ -1,5 +1,6 @@
 import { mapFields } from 'vuex-map-fields'
 import { mapState } from 'vuex'
+import { gtmMixin } from '@/mixins/gtmMixin'
 
 export const stepMixin = {
   props: {
@@ -8,6 +9,7 @@ export const stepMixin = {
       required: true
     }
   },
+  mixins: [gtmMixin],
   computed: {
     complete () {
       return this.current_step > this.step
@@ -21,6 +23,7 @@ export const stepMixin = {
   methods: {
     nextStep () {
       this.current_step = this.step + 1
+      this.trackCheckoutStep()
     }
   }
 }

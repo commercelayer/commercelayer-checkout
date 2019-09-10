@@ -50,6 +50,8 @@
 
 <script>
 import { stepMixin } from '@/mixins/stepMixin'
+import { gtmMixin } from '@/mixins/gtmMixin'
+
 import CustomerFields from '@/components/fields/CustomerFields'
 import BillingAddressFields from '@/components/fields/BillingAddressFields'
 import ShippingAddressFields from '@/components/fields/ShippingAddressFields'
@@ -65,7 +67,7 @@ export default {
     ShippingAddressFields,
     AddressSummary
   },
-  mixins: [stepMixin],
+  mixins: [stepMixin, gtmMixin],
   computed: {
     disabled () {
       return (
@@ -85,6 +87,9 @@ export default {
         this.nextStep()
       })
     }
+  },
+  mounted () {
+    this.trackCheckoutStep('1')
   }
 }
 </script>

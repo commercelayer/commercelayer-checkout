@@ -156,6 +156,9 @@ export default new Vuex.Store({
       return APIService.placeOrder(state.order)
         .then(order => {
           commit('updateOrder', order)
+
+          // track purchase
+
           router.push({
             name: 'confirmation',
             params: {
@@ -164,6 +167,7 @@ export default new Vuex.Store({
           })
         })
         .catch(response => {
+          console.log(response)
           commit(
             'updatePlaceOrderError',
             i18n.t('errors.' + response.data.errors[0].meta.error)

@@ -44,6 +44,7 @@
 
 <script>
 import { stepMixin } from '@/mixins/stepMixin'
+import { gtmMixin } from '@/mixins/gtmMixin'
 import { mapMultiRowFields } from 'vuex-map-fields'
 import { mapState } from 'vuex'
 import ShipmentFields from '@/components/fields/ShipmentFields'
@@ -54,7 +55,7 @@ export default {
     ShipmentFields,
     ShipmentSummary
   },
-  mixins: [stepMixin],
+  mixins: [stepMixin, gtmMixin],
   computed: {
     disabled () {
       return this.validations.invalid_shipments

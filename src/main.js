@@ -6,6 +6,7 @@ import store from '@/store'
 
 import vuetify from '@/plugins/vuetify'
 import i18n from '@/plugins/i18n'
+import gtm from '@/plugins/gtm'
 
 import 'nprogress/nprogress.css'
 import '@/scss/nprogress.scss'
@@ -23,7 +24,8 @@ Vue.filter('capitalize', value => {
 new Vue({
   router,
   store,
-  i18n,
   vuetify,
+  i18n,
+  gtm,
   render: h => h(App)
 }).$mount('#app')

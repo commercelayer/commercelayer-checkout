@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import { mapState } from 'vuex'
 import { mapFields } from 'vuex-map-fields'
+import { gtmMixin } from '@/mixins/gtmMixin'
 
 export const paymentMixin = {
   props: {
@@ -9,6 +10,7 @@ export const paymentMixin = {
       required: true
     }
   },
+  mixins: [gtmMixin],
   methods: {
     inputLabel (paymentSourceType) {
       return _.capitalize(this.$t(`payment_methods.${paymentSourceType}.title`))
@@ -28,6 +30,7 @@ export const paymentMixin = {
       }
       this.loading_payment = true
       this.$store.dispatch('setOrderPaymentMethod', payload).then(() => {
+        this.trackPaymentOption()
         this.setPaymentSource()
           .then(() => {
             this.updateValidations()

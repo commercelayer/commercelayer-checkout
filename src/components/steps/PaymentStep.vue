@@ -35,6 +35,7 @@
 <script>
 import _ from 'lodash'
 import { stepMixin } from '@/mixins/stepMixin'
+import { gtmMixin } from '@/mixins/gtmMixin'
 import { mapFields } from 'vuex-map-fields'
 import { mapState } from 'vuex'
 
@@ -52,7 +53,7 @@ export default {
     PaypalPayment,
     WireTransfer
   },
-  mixins: [stepMixin],
+  mixins: [stepMixin, gtmMixin],
   computed: {
     disabled () {
       return this.invalid_payment_method
