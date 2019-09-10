@@ -52,3 +52,7 @@ export const getCurrentStep = order => {
 export const getCouponApplied = order => {
   return !_.isEmpty(order.coupon_code)
 }
+
+export const skuLineItems = order => {
+  return _.filter(order.line_items, { item_type: 'skus' })
+}

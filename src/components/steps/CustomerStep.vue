@@ -50,6 +50,7 @@
 
 <script>
 import { stepMixin } from '@/mixins/stepMixin'
+
 import CustomerFields from '@/components/fields/CustomerFields'
 import BillingAddressFields from '@/components/fields/BillingAddressFields'
 import ShippingAddressFields from '@/components/fields/ShippingAddressFields'
@@ -74,7 +75,7 @@ export default {
         this.validations.invalid_shipping_address
       )
     },
-    ...mapState(['order']),
+    ...mapState(['order', 'validations']),
     ...mapFields(['buttons.loading_customer'])
   },
   methods: {
@@ -85,6 +86,9 @@ export default {
         this.nextStep()
       })
     }
+  },
+  mounted () {
+    this.trackCheckoutStep('1')
   }
 }
 </script>

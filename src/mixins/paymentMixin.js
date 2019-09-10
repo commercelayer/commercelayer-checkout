@@ -28,6 +28,7 @@ export const paymentMixin = {
       }
       this.loading_payment = true
       this.$store.dispatch('setOrderPaymentMethod', payload).then(() => {
+        this.trackPaymentOption()
         this.setPaymentSource()
           .then(() => {
             this.updateValidations()
@@ -60,6 +61,20 @@ export const paymentMixin = {
       script.src = scriptSrc
       document.body.insertBefore(script, document.body.firstChild)
       return script
+    },
+    trackPaymentOption () {
+      this.$gtm.trackEvent({
+        event: 'checkout_option',
+        ecommerce: {
+          currencyCode: this.order.currency_code,
+          checkout_option: {
+            actionField: {
+              step: this.current_step,
+              option: this.order.payment_method.payment_source_type
+            }
+          }
+        }
+      })
     }
   },
   computed: {

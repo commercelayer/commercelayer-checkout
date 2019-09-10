@@ -6,6 +6,7 @@ import NProgress from 'nprogress'
 import router from '@/router'
 import i18n from '@/plugins/i18n'
 import { getCurrentStep, getCouponApplied } from '@/utils/functions'
+import { trackPurchase } from '@/utils/gtm'
 
 Vue.use(Vuex)
 
@@ -156,6 +157,8 @@ export default new Vuex.Store({
       return APIService.placeOrder(state.order)
         .then(order => {
           commit('updateOrder', order)
+          trackPurchase(order)
+
           router.push({
             name: 'confirmation',
             params: {
@@ -164,6 +167,7 @@ export default new Vuex.Store({
           })
         })
         .catch(response => {
+          console.log(response)
           commit(
             'updatePlaceOrderError',
             i18n.t('errors.' + response.data.errors[0].meta.error)
