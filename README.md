@@ -1,6 +1,6 @@
-# Commercelayer Checkout
+# Commerce Layer Checkout
 
-This application provides you with a **PCI-compliant**, **PSD2-compliant**, and **production-ready** checkout flow that lets you easily place orders through the [Commercelayer](https://commercelayer.io/) API. It supports [Stripe](https://stripe.com), [Braintree](https://www.braintreepayments.com), [Adyen](https://www.adyen.com/), and [PayPal](https://www.paypal.com) payment methods out of the box and can be used as is or as a reference to build your own checkout experience.
+This application provides you with a **PCI-compliant**, **PSD2-compliant**, and **production-ready** checkout flow that lets you easily place orders through the [Commerce Layer](https://commercelayer.io/) API. It supports [Stripe](https://stripe.com), [Braintree](https://www.braintreepayments.com), [Adyen](https://www.adyen.com/), and [PayPal](https://www.paypal.com) payment methods out of the box and can be used as is or as a reference to build your own checkout experience.
 
 ## Overview
 
@@ -12,7 +12,7 @@ You can get your checkout application up and running in 4 simple steps:
 
 ### 1. Get your credentials
 
-Create a **sales channel** application on [Commercelayer](https://commercelayer.io) and take note of your API credentials (base endpoint, client ID)
+Create a **sales channel** application on [Commerce Layer](https://commercelayer.io) and take note of your API credentials (base endpoint, client ID)
 
 ### 2. Deploy
 
@@ -53,4 +53,4 @@ Checkout any order by visiting `https://your-checkout-url/{{order-id}}`
 
 ## License
 
-Commercelayer Checkout is an open-sourced software licensed under the [MIT license](LICENSE.txt).
+Commerce Layer Checkout is an open-sourced software licensed under the [MIT license](LICENSE.txt).
