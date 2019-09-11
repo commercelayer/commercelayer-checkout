@@ -1,7 +1,7 @@
 {
-  "name": "commercelayer-checkout-vue",
+  "name": "commercelayer-checkout",
   "version": "1.0.0",
-  "private": true,
+  "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
