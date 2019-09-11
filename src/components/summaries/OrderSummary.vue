@@ -28,7 +28,7 @@
           :key="line_item.id"
         />
       </div>
-      <div class="coupon" v-if="order.editable">
+      <div class="coupon" v-if="showCoupon">
         <OrderSummaryCoupon />
       </div>
       <div class="subtotals">
@@ -106,6 +106,9 @@ export default {
       return this.viewCart
         ? this.$t('order_summary.hide')
         : this.$t('order_summary.show')
+    },
+    showCoupon () {
+      return this.order.editable && process.env.VUE_APP_HIDE_COUPON !== 'TRUE'
     },
     skuLineItems () {
       return _.filter(this.order.line_items, { item_type: 'skus' })

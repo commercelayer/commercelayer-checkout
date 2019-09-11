@@ -3,7 +3,20 @@
     <v-card>
       <div>
         <header>
-          <v-icon>mdi-check</v-icon>
+          <svg
+            version="1.1"
+            id="animated-tick"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            x="0px"
+            y="0px"
+            viewBox="0 0 110 110"
+            style="enable-background:new 0 0 110 110;"
+            xml:space="preserve"
+          >
+            <polyline class="tick" points="85,30 51,80 25,61.3 " />
+            <circle class="tick" cx="55" cy="55" r="50" />
+          </svg>
           <h2>{{ $t('generic.thankyou')}}, {{ order.billing_address.first_name }}!</h2>
           <p>{{ $t('generic.thankyou_message')}}</p>
         </header>
@@ -67,6 +80,38 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+svg {
+  max-height: 80px;
+  margin: 20px 0;
+}
+polyline {
+  stroke-dasharray: 100;
+  stroke-dashoffset: -100;
+  animation: draw-tick 0.3s ease-in-out forwards;
+  animation-delay: 0.7s;
+}
+circle {
+  stroke-dasharray: 400;
+  stroke-dashoffset: -400;
+  animation: draw-circle 1s ease-in-out forwards;
+}
+@keyframes draw-tick {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes draw-circle {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.tick {
+  fill: none;
+  stroke: $SUCCESS_COLOR;
+  stroke-width: 5;
+  stroke-miterlimit: 10;
+}
+
 .v-card {
   padding: 2rem;
 
