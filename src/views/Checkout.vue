@@ -21,8 +21,10 @@ export default {
   computed: {
     ...mapFields(['current_step', 'order'])
   },
-  metaInfo: {
-    title: 'Checkout'
+  metaInfo () {
+    return {
+      title: `Checkout #${this.order.number}`
+    }
   }
 }
 </script>
