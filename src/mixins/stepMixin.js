@@ -16,7 +16,7 @@ export const stepMixin = {
     isMobile () {
       return this.$vuetify.breakpoint.xs
     },
-    ...mapState(['ordrr, validations']),
+    ...mapState(['order', 'validations']),
     ...mapFields(['current_step'])
   },
   methods: {
