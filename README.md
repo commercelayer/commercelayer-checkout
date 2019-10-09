@@ -59,7 +59,7 @@ Go to *Settings → Markets* in Commerce Layer and add the Checkout URL template
 
 This way, you'll to get the actual URL (i.e. with the real order id) returned by the orders API in the `checkout_url` order attribute:
 
-![Checkout URL API response](docs/checkout-url-api-response.png?raw=true 'Checkout URL API response')
+![Checkout URL API response](docs/checkout-url-api-response-snippet.png?raw=true 'Checkout URL API response')
 
 
 ## License
