@@ -4,7 +4,7 @@ This application provides you with a **PCI-compliant**, **PSD2-compliant**, and 
 
 ## Overview
 
-![Demo](demo.gif?raw=true 'Demo')
+![Demo](docs/demo.gif?raw=true 'Demo')
 
 ## Getting started
 
@@ -49,7 +49,18 @@ Configure your API credentials and customize the look and feel by setting the fo
 
 ### 4. Checkout
 
-Checkout any order by visiting `https://your-checkout-url/{{order-id}}`
+Checkout any order by visiting `https://checkout.yourdomain.com/:order_id`, where `checkout.yourdomain.com` is the domain associated with your checkout application.
+
+## Configure your markets
+
+Add the Checkout URL template to your market(s), making sure to include the `:order_id` param placeholder:
+
+![Checkout URL configuration](docs/checkout-url-configuration.png)
+
+This way, you'll to get the actual URL (i.e. with the real order id) returned by the orders API in the `checkout_url` order attribute:
+
+![Checkout URL configuration](docs/checkout-url-id-api-response-snippet.png)
+
 
 ## License
 
