@@ -51,9 +51,9 @@ Configure your API credentials and customize the look and feel by setting the fo
 
 Checkout any order by visiting `https://checkout.yourdomain.com/:order_id`, where `checkout.yourdomain.com` is the domain associated with your checkout application.
 
-## Configure your markets
+## Configure your market(s)
 
-Add the Checkout URL template to your market(s), making sure to include the `:order_id` param placeholder:
+Go to *Settings → Markets* in Commerce Layer and add the Checkout URL template to your market(s), making sure to include the `:order_id` param placeholder:
 
 ![Checkout URL configuration](docs/checkout-url-configuration.png)
 
