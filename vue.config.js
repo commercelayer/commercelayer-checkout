@@ -25,5 +25,6 @@ module.exports = {
           Object.assign(opt, { data: `@import '~@/scss/_global.scss'` })
         )
     })
-  }
+  },
+  transpileDependencies: ['vuetify']
 }

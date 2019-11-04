@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "@mdi/font": "^3.9.97",
+    "@vue/babel-preset-app": "^4.0.5",
     "@vue/cli-plugin-babel": "^3.9.2",
     "@vue/cli-plugin-e2e-cypress": "^3.9.0",
     "@vue/cli-plugin-eslint": "^3.9.2",
