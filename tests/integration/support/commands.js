@@ -191,8 +191,10 @@ Cypress.Commands.add('set_default_shipping_methods', options => {
       method: 'GET',
       headers: apiRequestHeaders(accessToken)
     }).then(response => {
-      let shipments = JSON.parse(response.body)
-      _.each(shipments.data, shipment => {
+      console.log(response)
+
+      let shipments = response.body.data
+      _.each(shipments, shipment => {
         let shippingMethod = _.first(
           shipment.relationships.available_shipping_methods.data
         )
@@ -218,7 +220,7 @@ Cypress.Commands.add('get_available_payment_methods', options => {
       order_id: options.order_id,
       include: 'available_payment_methods'
     }).then(order => {
-      return _.filter(JSON.parse(order).included, { type: 'payment_methods' })
+      return _.filter(order.included, { type: 'payment_methods' })
     })
   })
 })
@@ -235,7 +237,7 @@ Cypress.Commands.add('get_billing_info_validation_rules', options => {
 
 Cypress.Commands.add('delete_billing_info_validation_rules', options => {
   cy.get_billing_info_validation_rules().then(response => {
-    _.each(JSON.parse(response).data, resource => {
+    _.each(response.data, resource => {
       cy.get_access_token().then(accessToken => {
         cy.request({
           url:
@@ -375,35 +377,35 @@ Cypress.Commands.add('check_stripe_challenge_frame', () => {
 })
 
 Cypress.Commands.add('check_braintree_card_hosted_fields', () => {
-  cy.get('iframe[name=braintree-hosted-field-number]').should(
+  cy.get('iframe#braintree-hosted-field-number').should(
     $iframe =>
       expect($iframe.contents().find('input[name=credit-card-number]')).to.exist
   )
-  cy.get('iframe[name=braintree-hosted-field-expirationDate]').should(
+  cy.get('iframe#braintree-hosted-field-expirationDate').should(
     $iframe =>
       expect($iframe.contents().find('input[name=expiration]')).to.exist
   )
-  cy.get('iframe[name=braintree-hosted-field-cvv]').should(
+  cy.get('iframe#braintree-hosted-field-cvv').should(
     $iframe => expect($iframe.contents().find('input[name=cvv]')).to.exist
   )
 })
 
 Cypress.Commands.add('enter_braintree_card', options => {
-  cy.get('iframe[name=braintree-hosted-field-number]').then($iframe => {
+  cy.get('iframe#braintree-hosted-field-number').then($iframe => {
     const $body = $iframe.contents().find('body')
     cy.wrap($body)
       .find('input[name=credit-card-number]')
       .type(options.card_number)
   })
 
-  cy.get('iframe[name=braintree-hosted-field-expirationDate]').then($iframe => {
+  cy.get('iframe#braintree-hosted-field-expirationDate').then($iframe => {
     const $body = $iframe.contents().find('body')
     cy.wrap($body)
       .find('input[name=expiration]')
       .type(options.exp_date)
   })
 
-  cy.get('iframe[name=braintree-hosted-field-cvv]').then($iframe => {
+  cy.get('iframe#braintree-hosted-field-cvv').then($iframe => {
     const $body = $iframe.contents().find('body')
     cy.wrap($body)
       .find('input[name=cvv]')
