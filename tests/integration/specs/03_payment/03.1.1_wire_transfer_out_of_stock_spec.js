@@ -27,11 +27,11 @@ describe('[03.1.1] payment / wire transfer (out of stock)', () => {
             quantity: 0
           })
 
-          cy.get('#payment-step-submit').click()
+          cy.place_order()
         })
 
         it('displays an out of stock message', () => {
-          cy.contains('Some items have gone out of stock')
+          cy.check_out_of_stock_message()
         })
       })
     })

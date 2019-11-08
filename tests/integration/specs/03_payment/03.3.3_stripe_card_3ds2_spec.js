@@ -35,7 +35,7 @@ describe('[03.3.3] payment / stripe card (3ds2)', () => {
 
         context('when the customer places the order', () => {
           before(() => {
-            cy.get('#payment-step-submit').click()
+            cy.place_order()
           })
 
           it('presents the customer with a challenge frame', () => {

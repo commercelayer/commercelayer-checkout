@@ -12,7 +12,7 @@
   },
   "errors": {
     "invalid_coupon": "This coupon code is not valid",
-    "not_authorized": "Your card was not authorized",
+    "not_authorized": "Your card was declined",
     "out_of_stock": "Some items have gone out of stock"
   },
   "generic": {

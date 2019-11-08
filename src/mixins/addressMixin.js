@@ -30,7 +30,7 @@ export const addressMixin = {
     showShippingAddress () {
       return !this._shipping_address_clone_id
     },
-    ...mapState(['order']),
+    ...mapState(['order', 'validations']),
     ...mapFields([
       'customer.addresses',
       'order._billing_address_clone_id',

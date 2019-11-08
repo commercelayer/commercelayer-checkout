@@ -40,12 +40,11 @@ describe('[03.4.1] payment / braintree card (declined)', () => {
 
         context('when the customer places the order', () => {
           before(() => {
-            cy.get('#payment-step-submit').click()
-            cy.wait(5000) // better way?
+            cy.place_order()
           })
 
           it('displays a payment error message', () => {
-            cy.contains('Your card was not authorized')
+            cy.check_card_declined_message()
           })
         })
       })

@@ -56,3 +56,11 @@ export const getCouponApplied = order => {
 export const skuLineItems = order => {
   return _.filter(order.line_items, { item_type: 'skus' })
 }
+
+// not used
+export const clearPaymentScripts = () => {
+  let scripts = document.getElementsByClassName('payment-script')
+  _.each(scripts, el => {
+    el.parentNode.removeChild(el)
+  })
+}
