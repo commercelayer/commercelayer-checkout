@@ -26,13 +26,11 @@ describe('[03.1] payment / wire transfer', () => {
 
       context('when the customer places the order', () => {
         before(() => {
-          cy.get('#payment-step-submit').click()
+          cy.place_order()
         })
 
         it('displays the order confirmation page', () => {
-          cy.location().should(loc => {
-            expect(loc.pathname).to.eq(`/${orderId}/confirmation`)
-          })
+          cy.check_order_confirmation_page(orderId)
         })
       })
     })

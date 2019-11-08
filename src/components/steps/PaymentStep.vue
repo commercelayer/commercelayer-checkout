@@ -21,13 +21,16 @@
         min-width="50%"
         id="payment-step-submit"
         :loading="buttons.loading_payment"
-      >{{ $t('steps.payment.button') }}</v-btn>
+        >{{ $t('steps.payment.button') }}</v-btn
+      >
 
       <div
         class="place-order-error"
         id="place-order-error"
         v-show="errors.place_order"
-      >{{ errors.place_order }}</div>
+      >
+        {{ errors.place_order }}
+      </div>
     </v-stepper-content>
   </div>
 </template>

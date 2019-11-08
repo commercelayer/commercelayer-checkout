@@ -40,14 +40,11 @@ describe('[03.4] payment / braintree card', () => {
 
         context('when the customer places the order', () => {
           before(() => {
-            cy.get('#payment-step-submit').click()
-            cy.wait(5000) // better way?
+            cy.place_order()
           })
 
           it('displays the order confirmation page', () => {
-            cy.location().should(loc => {
-              expect(loc.pathname).to.eq(`/${orderId}/confirmation`)
-            })
+            cy.check_order_confirmation_page(orderId)
           })
         })
       })

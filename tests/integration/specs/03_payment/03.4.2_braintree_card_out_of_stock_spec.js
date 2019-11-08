@@ -45,12 +45,11 @@ describe('[03.4.2] payment / braintree card (out of stock)', () => {
               quantity: 0
             })
 
-            cy.get('#payment-step-submit').click()
-            cy.wait(5000) // better way?
+            cy.place_order()
           })
 
           it('displays a payment error message', () => {
-            cy.contains('Some items have gone out of stock')
+            cy.check_out_of_stock_message()
           })
         })
       })

@@ -82,10 +82,6 @@ export default {
           this.validations.invalid_shipping_address)
       )
     },
-<<<<<<< HEAD
-    ...mapState(['order', 'validations']),
-    ...mapFields(['buttons.loading_customer'])
-=======
     ...mapState(['order']),
     ...mapFields([
       'buttons.loading_customer',
@@ -93,7 +89,6 @@ export default {
       'order._billing_address_clone_id',
       'order._shipping_address_clone_id'
     ])
->>>>>>> Added customer address book management.
   },
   methods: {
     submit () {

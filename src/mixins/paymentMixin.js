@@ -59,6 +59,7 @@ export const paymentMixin = {
       let script = document.createElement('script')
       script.type = 'text/javascript'
       script.src = scriptSrc
+      script.className = 'payment-script'
       document.body.insertBefore(script, document.body.firstChild)
       return script
     },

@@ -22,10 +22,10 @@ import { collectBrowserInfo } from '@/utils/functions'
 export default {
   computed: {
     scriptSrc () {
-      return `https://checkoutshopper-${process.env.VUE_APP_ADYEN_ENV}.adyen.com/checkoutshopper/sdk/3.1.0/adyen.js`
+      return `https://checkoutshopper-${process.env.VUE_APP_ADYEN_ENV}.adyen.com/checkoutshopper/sdk/3.3.0/adyen.js`
     },
     styleHref () {
-      return `https://checkoutshopper-${process.env.VUE_APP_ADYEN_ENV}.adyen.com/checkoutshopper/sdk/3.1.0/adyen.css`
+      return `https://checkoutshopper-${process.env.VUE_APP_ADYEN_ENV}.adyen.com/checkoutshopper/sdk/3.3.0/adyen.css`
     },
     styleObj () {
       return {
@@ -156,7 +156,7 @@ export default {
 }
 </script>
 
-<style lang='scss'>
+<style lang="scss">
 .adyen-checkout__label__text {
   font-size: 1rem !important;
   margin-bottom: 0.5rem;

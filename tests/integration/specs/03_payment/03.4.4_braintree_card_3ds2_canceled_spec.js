@@ -40,22 +40,17 @@ describe('[03.4.4] payment / braintree card (3ds2 canceled)', () => {
 
         context('when the customer places the order', () => {
           before(() => {
-            cy.get('#payment-step-submit').click()
-            cy.wait(5000) // better way?
+            cy.place_order()
           })
 
           it('presents the customer with a challenge frame', () => {
             cy.check_braintree_challenge_frame()
           })
 
-          context('when the customer cancels the challege', () => {
+          // Braintree removed the possibility to cancel in test mode
+          context('displays the authorization cancel link', () => {
             before(() => {
-              cy.cancel_braintree_challenge_frame()
-              cy.wait(5000) // better way?
-            })
-
-            it('displays a payment error message', () => {
-              cy.contains('Your card was not authorized')
+              cy.check_braintree_challenge_frame_cancel()
             })
           })
         })
