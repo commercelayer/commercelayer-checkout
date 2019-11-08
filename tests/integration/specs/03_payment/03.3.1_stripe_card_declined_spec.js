@@ -35,11 +35,11 @@ describe('[03.3.1] payment / stripe card (declined)', () => {
 
         context('when the customer places the order', () => {
           before(() => {
-            cy.get('#payment-step-submit').click()
+            cy.place_order()
           })
 
           it('displays a payment error message', () => {
-            cy.contains('Your card was declined')
+            cy.check_card_declined_message()
           })
         })
       })

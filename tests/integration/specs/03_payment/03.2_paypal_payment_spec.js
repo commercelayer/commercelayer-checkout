@@ -29,7 +29,7 @@ describe('[03.2] payment / paypal payment', () => {
           cy.server()
           cy.route('POST', '/api/paypal_payments').as('createPaypalPayment')
           cy.wait('@createPaypalPayment').then(() => {
-            cy.get('#payment-step-submit').click()
+            cy.place_order()
           })
         })
 

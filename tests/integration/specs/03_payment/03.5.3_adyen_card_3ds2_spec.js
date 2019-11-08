@@ -35,7 +35,7 @@ describe('[03.5.3] payment / adyen card (3ds2)', () => {
 
         context('when the customer places the order', () => {
           before(() => {
-            cy.get('#payment-step-submit').click()
+            cy.place_order()
           })
 
           it('presents the customer with a challenge frame', () => {
@@ -45,13 +45,10 @@ describe('[03.5.3] payment / adyen card (3ds2)', () => {
           context('when the customer authorizes the challege', () => {
             before(() => {
               cy.authorize_adyen_challenge_frame()
-              cy.wait(5000) // better way?
             })
 
             it('displays the order confirmation page', () => {
-              cy.location().should(loc => {
-                expect(loc.pathname).to.eq(`/${orderId}/confirmation`)
-              })
+              cy.check_order_confirmation_page(orderId)
             })
           })
         })

@@ -17,8 +17,11 @@
             <polyline class="tick" points="85,30 51,80 25,61.3 " />
             <circle class="tick" cx="55" cy="55" r="50" />
           </svg>
-          <h2>{{ $t('generic.thankyou')}}, {{ order.billing_address.first_name }}!</h2>
-          <p>{{ $t('generic.thankyou_message')}}</p>
+          <h2>
+            {{ $t('generic.thankyou') }},
+            {{ order.billing_address.first_name }}!
+          </h2>
+          <p>{{ $t('generic.thankyou_message') }}</p>
         </header>
         <section>
           <div class="header">{{ $t('generic.customer') }}:</div>
@@ -32,8 +35,13 @@
                 <AddressSummary :address="order.billing_address" />
               </v-flex>
               <v-flex xs12 sm6>
-                <div class="header ship-to-header">{{ $t('generic.shipping_address') }}:</div>
-                <AddressSummary :address="order.shipping_address" :billing="false" />
+                <div class="header ship-to-header">
+                  {{ $t('generic.shipping_address') }}:
+                </div>
+                <AddressSummary
+                  :address="order.shipping_address"
+                  :billing="false"
+                />
               </v-flex>
             </v-layout>
           </v-container>
@@ -43,7 +51,7 @@
             v-for="(shipment, index) in order.shipments"
             :shipment="shipment"
             :key="shipment.id"
-            :count="index+1"
+            :count="index + 1"
             :total="order.shipments.length"
             :editable="false"
           />
@@ -53,7 +61,8 @@
             color="primary"
             :href="order.return_url"
             v-if="order.return_url"
-          >{{ $t('generic.continue_shopping') }}</v-btn>
+            >{{ $t('generic.continue_shopping') }}</v-btn
+          >
         </section>
       </div>
     </v-card>
