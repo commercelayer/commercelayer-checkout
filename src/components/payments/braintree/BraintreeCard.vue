@@ -104,6 +104,7 @@ export default {
                 hostedFieldsInstance
               ) {
                 if (hostedFieldsErr) {
+                  // eslint-disable-next-line
                   console.log(hostedFieldsErr)
                   return
                 }
@@ -132,6 +133,7 @@ export default {
         },
         (tokenizeErr, payload) => {
           if (tokenizeErr) {
+            // eslint-disable-next-line
             console.error(tokenizeErr)
             that.loading_payment = false
             return
@@ -144,6 +146,7 @@ export default {
               { authorization: clientToken },
               (clientErr, clientInstance) => {
                 if (clientErr) {
+                  // eslint-disable-next-line
                   console.log(clientErr)
                   that.loading_payment = false
                   return
@@ -156,6 +159,7 @@ export default {
                   },
                   function (threeDSecureErr, threeDSecureInstance) {
                     if (threeDSecureErr) {
+                      // eslint-disable-next-line
                       console.log(threeDSecureErr)
                       that.loading_payment = false
                       return
