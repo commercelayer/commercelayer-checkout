@@ -11,6 +11,15 @@
         @blur="handleBlur()"
       ></v-text-field>
     </v-flex>
+    <v-flex xs12 px-2 v-if="showCustomerSubscription">
+      <v-checkbox
+        :label="$t('generic.customer_subscription')"
+        id="customer-subscription-checkbox"
+        v-model="customer_subscription.checked"
+        @change="handleCustomerSubscription"
+        color="primary"
+      ></v-checkbox>
+    </v-flex>
   </v-layout>
 </template>
 
@@ -24,6 +33,11 @@ export default {
     autofocusEmail () {
       return _.isEmpty(this.customer_email)
     },
+    showCustomerSubscription () {
+      return (
+        this.editable && process.env.VUE_APP_CUSTOMER_SUBSCRIPTION_REFERENCE
+      )
+    },
     errorMessages () {
       const errors = []
       if (!this.$v.customer_email.$dirty) return errors
@@ -31,7 +45,12 @@ export default {
       !this.$v.customer_email.required && errors.push("Can't be blank")
       return errors
     },
-    ...mapFields(['validations.invalid_customer', 'order.customer_email'])
+    ...mapFields([
+      'validations.invalid_customer',
+      'order.editable',
+      'order.customer_email',
+      'customer_subscription'
+    ])
   },
   validations: {
     customer_email: { required, email }
@@ -49,6 +68,10 @@ export default {
     },
     setCustomerEmail () {
       this.$store.dispatch('setOrderCustomerEmail')
+      this.handleCustomerSubscription()
+    },
+    handleCustomerSubscription () {
+      this.$store.dispatch('handleCustomerSubscription')
     }
   },
   mounted () {

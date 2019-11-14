@@ -57,6 +57,70 @@ apiClient.interceptors.response.use(
   }
 )
 
+const createCustomerSubscription = (customerEmail, customerSubscription) => {
+  return apiClient
+    .post('/customer_subscriptions', {
+      data: {
+        type: 'customer_subscriptions',
+        attributes: {
+          customer_email: customerEmail,
+          reference: process.env.VUE_APP_CUSTOMER_SUBSCRIPTION_REFERENCE
+        }
+      }
+    })
+    .then(response => {
+      return normalize(response.data).get(['id'])
+    })
+    .catch(error => {
+      return Promise.reject(error.response)
+    })
+}
+
+const updateCustomerSubscription = (customerEmail, customerSubscription) => {
+  return apiClient
+    .patch('/customer_subscriptions/' + customerSubscription.id, {
+      data: {
+        type: 'customer_subscriptions',
+        id: customerSubscription.id,
+        attributes: {
+          customer_email: customerEmail,
+          reference: process.env.VUE_APP_CUSTOMER_SUBSCRIPTION_REFERENCE
+        }
+      }
+    })
+    .then(response => {
+      return normalize(response.data).get(['id'])
+    })
+    .catch(error => {
+      return Promise.reject(error.response)
+    })
+}
+
+const deleteCustomerSubscription = customerSubscription => {
+  return apiClient
+    .delete('/customer_subscriptions/' + customerSubscription.id)
+    .then(_ => {
+      return Promise.resolve({})
+    })
+    .catch(error => {
+      return Promise.reject(error.response)
+    })
+}
+
+const handleCustomerSubscription = (customerEmail, customerSubscription) => {
+  if (customerSubscription.checked) {
+    if (customerSubscription.id) {
+      return updateCustomerSubscription(customerEmail, customerSubscription)
+    } else {
+      return createCustomerSubscription(customerEmail, customerSubscription)
+    }
+  } else if (customerSubscription.id) {
+    return deleteCustomerSubscription(customerSubscription)
+  } else {
+    return Promise.resolve({})
+  }
+}
+
 const getOrder = orderId => {
   return apiClient
     .get('/orders/' + orderId + '?include=' + orderIncludes.join(','))
@@ -169,18 +233,18 @@ const updateAddress = attributes => {
 const saveBillingAddress = order => {
   return order._save_billing_address_to_customer_address_book
     ? updateOrder(order, {
-      _save_billing_address_to_customer_address_book:
+        _save_billing_address_to_customer_address_book:
           order._save_billing_address_to_customer_address_book
-    })
+      })
     : order
 }
 
 const saveShippingAddress = order => {
   return order._save_shipping_address_to_customer_address_book
     ? updateOrder(order, {
-      _save_shipping_address_to_customer_address_book:
+        _save_shipping_address_to_customer_address_book:
           order._save_shipping_address_to_customer_address_book
-    })
+      })
     : order
 }
 
@@ -194,13 +258,13 @@ const updateOrCreateBillingAddress = order => {
   } else {
     return order.billing_address.id
       ? updateAddress(order.billing_address).then(address => {
-        saveBillingAddress(order)
-        return address
-      })
+          saveBillingAddress(order)
+          return address
+        })
       : createAddress(order.billing_address).then(address => {
-        saveBillingAddress(order)
-        return address
-      })
+          saveBillingAddress(order)
+          return address
+        })
   }
 }
 
@@ -214,13 +278,13 @@ const updateOrCreateShippingAddress = order => {
   } else {
     return order.shipping_address.id
       ? updateAddress(order.shipping_address).then(address => {
-        saveShippingAddress(order)
-        return address
-      })
+          saveShippingAddress(order)
+          return address
+        })
       : createAddress(order.shipping_address).then(address => {
-        saveShippingAddress(order)
-        return address
-      })
+          saveShippingAddress(order)
+          return address
+        })
   }
 }
 
@@ -399,6 +463,7 @@ const placeOrder = order => {
 }
 
 export default {
+  handleCustomerSubscription,
   getOrder,
   getCustomerAddresses,
   getCustomerPaymentSources,

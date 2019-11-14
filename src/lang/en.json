@@ -22,6 +22,8 @@
     "card_number": "card number",
     "continue_shopping": "continue shopping",
     "customer": "Customer",
+    "customer_subscription": "Subscribe to newsletter",
+    "customer_subscription_disabled": "You are already subscribed to the newsletter",
     "edit": "edit",
     "free_over": "free over",
     "item": "item | items",

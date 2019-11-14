@@ -3,7 +3,7 @@ import _ from 'lodash'
 
 Cypress.Commands.add('iframe', { prevSubject: 'element' }, $iframe => {
   return new Cypress.Promise(resolve => {
-    $iframe.ready(function() {
+    $iframe.ready(function () {
       resolve($iframe.contents().find('body'))
     })
   })
@@ -463,16 +463,16 @@ Cypress.Commands.add('check_braintree_challenge_frame', () => {
 Cypress.Commands.add('authorize_braintree_challenge_frame', () => {
   cy.get('iframe#Cardinal-CCA-IFrame')
     .iframe()
-    .find('iframe#authWindow')
-    .iframe()
-    .find('input#password')
+    // .find('iframe#authWindow')
+    // .iframe()
+    .find('input[name=challengeDataEntry]')
     .type('1234')
 
   cy.get('iframe#Cardinal-CCA-IFrame')
     .iframe()
-    .find('iframe#authWindow')
-    .iframe()
-    .find('input[value=Submit]')
+    // .find('iframe#authWindow')
+    // .iframe()
+    .find('input[value=SUBMIT]')
     .click()
 
   cy.wait(5000) // better way?
