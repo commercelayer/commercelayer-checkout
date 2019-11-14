@@ -37,6 +37,10 @@ export default new Vuex.Store({
     },
     selected_payment_option_component: null,
     order: {},
+    customer_subscription: {
+      id: null,
+      checked: false
+    },
     customer: {
       addresses: [],
       payment_sources: []
@@ -76,6 +80,12 @@ export default new Vuex.Store({
     updateCustomerAddresses (state, value) {
       state.customer.addresses = value
     },
+    updateCustomerSubscriptionId (state, value) {
+      state.customer_subscription.id = value
+    },
+    disableCustomerSubscription (state) {
+      state.customer_subscription.disabled = true
+    },
     updateField
   },
   actions: {
@@ -108,6 +118,22 @@ export default new Vuex.Store({
         .then(order => {
           commit('updateOrder', order)
           return order
+        })
+        .finally(() => {
+          NProgress.done()
+        })
+    },
+    handleCustomerSubscription ({ commit, state }) {
+      NProgress.start()
+      return APIService.handleCustomerSubscription(
+        state.order.customer_email,
+        state.customer_subscription
+      )
+        .then(customerSubscription => {
+          commit('updateCustomerSubscriptionId', customerSubscription.id)
+        })
+        .catch(_ => {
+          commit('disableCustomerSubscription')
         })
         .finally(() => {
           NProgress.done()
