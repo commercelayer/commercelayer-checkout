@@ -16,9 +16,10 @@ Create a **sales channel** application on [Commerce Layer](https://commercelayer
 
 ### 2. Deploy
 
-Deploy the application to Netlify or any other web server or CDN:
+You can deploy the application to any web server or CDN. Deploy to Netlify or Zeit with one click:
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/commercelayer/commercelayer-checkout-vue)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/commercelayer/commercelayer-checkout)
+[![Deploy with ZEIT Now](https://zeit.co/button)](https://zeit.co/new/project?template=https://github.com/commercelayer/commercelayer-checkout)
 
 ### 3. Customize
 
