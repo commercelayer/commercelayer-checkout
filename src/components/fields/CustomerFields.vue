@@ -34,9 +34,7 @@ export default {
       return _.isEmpty(this.customer_email)
     },
     showCustomerSubscription () {
-      return (
-        this.editable && process.env.VUE_APP_CUSTOMER_SUBSCRIPTION_REFERENCE
-      )
+      return this.editable && process.env.VUE_APP_SUBSCRIPTION_REF
     },
     errorMessages () {
       const errors = []
@@ -80,5 +78,4 @@ export default {
 }
 </script>
 
-<style>
-</style>
+<style></style>
