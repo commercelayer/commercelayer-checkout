@@ -64,7 +64,7 @@ const createCustomerSubscription = (customerEmail, customerSubscription) => {
         type: 'customer_subscriptions',
         attributes: {
           customer_email: customerEmail,
-          reference: process.env.VUE_APP_CUSTOMER_SUBSCRIPTION_REFERENCE
+          reference: process.env.VUE_APP_SUBSCRIPTION_REF
         }
       }
     })
@@ -84,7 +84,7 @@ const updateCustomerSubscription = (customerEmail, customerSubscription) => {
         id: customerSubscription.id,
         attributes: {
           customer_email: customerEmail,
-          reference: process.env.VUE_APP_CUSTOMER_SUBSCRIPTION_REFERENCE
+          reference: process.env.VUE_APP_SUBSCRIPTION_REF
         }
       }
     })
@@ -233,18 +233,18 @@ const updateAddress = attributes => {
 const saveBillingAddress = order => {
   return order._save_billing_address_to_customer_address_book
     ? updateOrder(order, {
-        _save_billing_address_to_customer_address_book:
+      _save_billing_address_to_customer_address_book:
           order._save_billing_address_to_customer_address_book
-      })
+    })
     : order
 }
 
 const saveShippingAddress = order => {
   return order._save_shipping_address_to_customer_address_book
     ? updateOrder(order, {
-        _save_shipping_address_to_customer_address_book:
+      _save_shipping_address_to_customer_address_book:
           order._save_shipping_address_to_customer_address_book
-      })
+    })
     : order
 }
 
@@ -258,13 +258,13 @@ const updateOrCreateBillingAddress = order => {
   } else {
     return order.billing_address.id
       ? updateAddress(order.billing_address).then(address => {
-          saveBillingAddress(order)
-          return address
-        })
+        saveBillingAddress(order)
+        return address
+      })
       : createAddress(order.billing_address).then(address => {
-          saveBillingAddress(order)
-          return address
-        })
+        saveBillingAddress(order)
+        return address
+      })
   }
 }
 
@@ -278,13 +278,13 @@ const updateOrCreateShippingAddress = order => {
   } else {
     return order.shipping_address.id
       ? updateAddress(order.shipping_address).then(address => {
-          saveShippingAddress(order)
-          return address
-        })
+        saveShippingAddress(order)
+        return address
+      })
       : createAddress(order.shipping_address).then(address => {
-          saveShippingAddress(order)
-          return address
-        })
+        saveShippingAddress(order)
+        return address
+      })
   }
 }
 
