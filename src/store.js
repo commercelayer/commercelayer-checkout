@@ -13,7 +13,9 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     auth: {
-      has_customer: false
+      has_customer: false,
+      access_token: null,
+      refresh_token: null
     },
     current_step: 1,
     notifications: {
@@ -76,6 +78,15 @@ export default new Vuex.Store({
     },
     updateAuthHasCustomer (state, value) {
       state.auth.has_customer = value
+    },
+    updateAuthAccessToken (state, value) {
+      state.auth.access_token = value
+    },
+    clearAuthAccessToken (state) {
+      state.auth.access_token = null
+    },
+    updateAuthRefreshToken (state, value) {
+      state.auth.refresh_token = value
     },
     updateCustomerAddresses (state, value) {
       state.customer.addresses = value

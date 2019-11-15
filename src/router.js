@@ -26,22 +26,27 @@ const router = new Router({
       props: true,
       beforeEnter (routeTo, routeFrom, next) {
         if (routeTo.query.access_token) {
-          localStorage.setItem('accessToken', routeTo.query.access_token)
+          store.commit('updateAuthAccessToken', routeTo.query.access_token)
         }
         if (routeTo.query.refresh_token) {
-          localStorage.setItem('refreshToken', routeTo.query.refresh_token)
+          store.commit('updateAuthRefreshToken', routeTo.query.refresh_token)
         }
 
-        store.dispatch('setOrder', routeTo.params.order_id).then(order => {
-          i18n.locale = _.lowerCase(order.language_code)
-          if (store.state.auth.has_customer) {
-            store.dispatch('setCustomer').then(() => {
+        store
+          .dispatch('setOrder', routeTo.params.order_id)
+          .then(order => {
+            i18n.locale = _.lowerCase(order.language_code)
+            if (store.state.auth.has_customer) {
+              store.dispatch('setCustomer').then(() => {
+                next()
+              })
+            } else {
               next()
-            })
-          } else {
-            next()
-          }
-        })
+            }
+          })
+          .catch(error => {
+            console.log(error)
+          })
       },
       children: [
         {
