@@ -11,7 +11,7 @@ const authClient = axios.create({
 })
 
 const getAccessToken = () => {
-  let accessToken = localStorage.getItem('accessToken')
+  let accessToken = store.state.auth.access_token
 
   if (accessToken) {
     decodeAccessToken(accessToken)
@@ -24,7 +24,7 @@ const getAccessToken = () => {
       client_id: process.env.VUE_APP_API_CLIENT_ID
     })
     .then(response => {
-      localStorage.setItem('accessToken', response.data.access_token)
+      store.commit('updateAuthAccessToken', response.data.access_token)
       decodeAccessToken(response.data.access_token)
       return response.data.access_token
     })
@@ -41,8 +41,8 @@ const refreshAccessToken = refreshToken => {
       refresh_token: refreshToken
     })
     .then(response => {
-      localStorage.setItem('accessToken', response.data.access_token)
-      localStorage.setItem('refreshToken', response.data.refresh_token)
+      store.commit('updateAuthAccessToken', response.data.access_token)
+      store.commit('refreshToken', response.data.refresh_token)
       decodeAccessToken(response.data.access_token)
       return response.data.access_token
     })
@@ -52,8 +52,8 @@ const refreshAccessToken = refreshToken => {
 }
 
 const updateAccessToken = () => {
-  localStorage.removeItem('accessToken')
-  let refreshToken = localStorage.getItem('refreshToken')
+  store.commit('clearAuthAccessToken')
+  let refreshToken = store.state.auth.refresh_token
   if (refreshToken) {
     return refreshAccessToken(refreshToken)
   } else {
@@ -64,6 +64,7 @@ const updateAccessToken = () => {
 const decodeAccessToken = accessToken => {
   let decoded = jwt.decode(accessToken)
   if (decoded) {
+    // Verify with shared secret (when available)
     store.commit(
       'updateAuthHasCustomer',
       !!decoded.owner && decoded.owner.type === 'Customer'

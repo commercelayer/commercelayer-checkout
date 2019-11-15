@@ -13,7 +13,8 @@
   "errors": {
     "invalid_coupon": "This coupon code is not valid",
     "not_authorized": "Your card was declined",
-    "out_of_stock": "Some items have gone out of stock"
+    "out_of_stock": "Some items have gone out of stock",
+    "too_short": "This coupon code is too short"
   },
   "generic": {
     "billing_address": "Billing address",

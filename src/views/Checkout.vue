@@ -50,6 +50,16 @@ export default {
   }
 }
 
+.theme--light {
+  &.v-stepper {
+    .v-stepper__step--editable {
+      &:hover {
+        background: none;
+      }
+    }
+  }
+}
+
 .sm-and-up {
   .v-stepper {
     padding: 2rem;
