@@ -3,6 +3,11 @@ describe('[00.3] summary / Coupon code', () => {
     cy.create_order({
       market_id: Cypress.env('EU_MARKET_ID')
     }).then(order => {
+      cy.update_price({
+        price_id: Cypress.env('EU_PRICE_ID'),
+        amount_cents: 5000
+      })
+
       cy.update_stock_item({
         stock_item_id: Cypress.env('EU_STOCK_ITEM_ID'),
         quantity: 1
@@ -21,7 +26,7 @@ describe('[00.3] summary / Coupon code', () => {
   })
 
   it('displays the coupon code discount', () => {
-    cy.get('#order-summary-discount-total').contains(Cypress.env('COUPON_CODE'))
+    cy.get('#order-summary-discount-total').contains('-€25,00')
   })
 
   it('hides the gift card or coupon code input field', () => {

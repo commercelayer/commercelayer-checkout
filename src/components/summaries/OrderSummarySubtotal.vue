@@ -30,8 +30,7 @@ export default {
     },
     showHint: {
       type: Boolean,
-      required: false,
-      default: false
+      required: false
     },
     formattedAmount: {
       type: String,
