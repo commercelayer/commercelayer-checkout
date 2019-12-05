@@ -3,7 +3,7 @@
     <v-container>
       <v-layout row>
         <v-flex xs3>
-          <v-img :src="line_item.image_url" aspect-ratio="1" width="75" />
+          <v-img :src="line_item.image_url || ''" aspect-ratio="1" width="75" />
         </v-flex>
         <v-flex xs6>
           <div class="name">{{ line_item.name }}</div>

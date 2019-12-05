@@ -17,7 +17,7 @@ describe('[02.1] delivery / one shipment', () => {
         quantity: 10
       })
 
-      cy.create_line_item({
+      cy.create_sku_line_item({
         order_id: order.id,
         sku_code: Cypress.env('SKU_CODE'),
         quantity: 1

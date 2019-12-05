@@ -27,6 +27,11 @@
           :line_item="line_item"
           :key="line_item.id"
         />
+        <OrderSummaryLineItem
+          v-for="line_item in giftCardLineItems"
+          :line_item="line_item"
+          :key="line_item.id"
+        />
       </div>
       <div class="coupon" v-if="showCoupon">
         <OrderSummaryCoupon />
@@ -76,6 +81,7 @@ import OrderSummaryLineItem from '@/components/summaries/OrderSummaryLineItem'
 import OrderSummaryCoupon from '@/components/summaries/OrderSummaryCoupon'
 import OrderSummarySubtotal from '@/components/summaries/OrderSummarySubtotal'
 import { mapState } from 'vuex'
+import { log } from 'util'
 
 export default {
   props: {
@@ -112,6 +118,14 @@ export default {
     },
     skuLineItems () {
       return _.filter(this.order.line_items, { item_type: 'skus' })
+    },
+    giftCardLineItems () {
+      console.log(this.order.line_items)
+      return _.filter(this.order.line_items, lineItem => {
+        return (
+          lineItem.item_type === 'gift_cards' && lineItem.total_amount_float > 0
+        )
+      })
     },
     ...mapState(['order', 'notifications'])
   },

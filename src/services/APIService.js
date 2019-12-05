@@ -180,7 +180,6 @@ const updateShipmentShippingMethod = (shipment, shippingMethod) => {
 }
 
 const updateOrder = (order, attributes) => {
-  console.log(attributes)
   return apiClient
     .patch('/orders/' + order.id + '?include=' + orderIncludes.join(','), {
       data: {
@@ -233,18 +232,18 @@ const updateAddress = attributes => {
 const saveBillingAddress = order => {
   return order._save_billing_address_to_customer_address_book
     ? updateOrder(order, {
-      _save_billing_address_to_customer_address_book:
+        _save_billing_address_to_customer_address_book:
           order._save_billing_address_to_customer_address_book
-    })
+      })
     : order
 }
 
 const saveShippingAddress = order => {
   return order._save_shipping_address_to_customer_address_book
     ? updateOrder(order, {
-      _save_shipping_address_to_customer_address_book:
+        _save_shipping_address_to_customer_address_book:
           order._save_shipping_address_to_customer_address_book
-    })
+      })
     : order
 }
 
@@ -258,13 +257,13 @@ const updateOrCreateBillingAddress = order => {
   } else {
     return order.billing_address.id
       ? updateAddress(order.billing_address).then(address => {
-        saveBillingAddress(order)
-        return address
-      })
+          saveBillingAddress(order)
+          return address
+        })
       : createAddress(order.billing_address).then(address => {
-        saveBillingAddress(order)
-        return address
-      })
+          saveBillingAddress(order)
+          return address
+        })
   }
 }
 
@@ -278,13 +277,13 @@ const updateOrCreateShippingAddress = order => {
   } else {
     return order.shipping_address.id
       ? updateAddress(order.shipping_address).then(address => {
-        saveShippingAddress(order)
-        return address
-      })
+          saveShippingAddress(order)
+          return address
+        })
       : createAddress(order.shipping_address).then(address => {
-        saveShippingAddress(order)
-        return address
-      })
+          saveShippingAddress(order)
+          return address
+        })
   }
 }
 
@@ -310,9 +309,6 @@ const updateBillingAddressFields = (order, billingAddress) => {
     .then(response => {
       return normalizedOrder(order, response)
     })
-    .catch(error => {
-      return Promise.reject(error.response)
-    })
 }
 
 const updateShippingAddressFields = (order, shippingAddress) => {
@@ -334,16 +330,13 @@ const updateShippingAddressFields = (order, shippingAddress) => {
     .then(response => {
       return normalizedOrder(order, response)
     })
-    .catch(error => {
-      return Promise.reject(error.response)
-    })
 }
 
 const updateOrderAddresses = order => {
   return updateOrCreateBillingAddress(order)
     .then(billingAddress => {
-      return updateBillingAddressFields(order, billingAddress).then(
-        updatedOrder => {
+      return updateBillingAddressFields(order, billingAddress)
+        .then(updatedOrder => {
           if (order.ship_to_different_address) {
             return updateOrCreateShippingAddress(order).then(
               shippingAddress => {
@@ -357,8 +350,10 @@ const updateOrderAddresses = order => {
           } else {
             return _.defaults(updatedOrder, orderDefaults(updatedOrder))
           }
-        }
-      )
+        })
+        .catch(error => {
+          return Promise.reject(error)
+        })
     })
     .catch(error => {
       return Promise.reject(error.response)

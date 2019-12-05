@@ -35,6 +35,7 @@ export default new Vuex.Store({
     },
     errors: {
       apply_coupon: null,
+      set_addresses: null,
       place_order: null
     },
     selected_payment_option_component: null,
@@ -61,6 +62,9 @@ export default new Vuex.Store({
     updateOrderPaymentSource (state, paymentSource) {
       state.order.payment_source = paymentSource
     },
+    updateButtonLoadingCustomer (state, value) {
+      state.buttons.loading_customer = value
+    },
     updateButtonLoadingDelivery (state, value) {
       state.buttons.loading_delivery = value
     },
@@ -72,6 +76,9 @@ export default new Vuex.Store({
     },
     updateCouponAppliedNotification (state, value) {
       state.notifications.coupon_applied = value
+    },
+    updateSetAddressesError (state, value) {
+      state.errors.set_addresses = value
     },
     updatePlaceOrderError (state, value) {
       state.errors.place_order = value
@@ -172,10 +179,17 @@ export default new Vuex.Store({
         })
     },
     setOrderAddresses ({ commit, state }) {
-      return APIService.updateOrderAddresses(state.order).then(order => {
-        commit('updateOrder', order)
-        return order
-      })
+      return APIService.updateOrderAddresses(state.order)
+        .then(order => {
+          commit('updateOrder', order)
+          return order
+        })
+        .catch(response => {
+          commit('updateSetAddressesError', response.data.errors[0].meta.error)
+        })
+        .finally(() => {
+          commit('updateButtonLoadingCustomer', false)
+        })
     },
     setShipmentShippingMethod ({ commit, dispatch }, payload) {
       commit('updateButtonLoadingDelivery', true)
@@ -219,7 +233,7 @@ export default new Vuex.Store({
     },
     placeOrder ({ commit, state }) {
       commit('updatePlaceOrderError', null)
-      commit('updateButtonLoadingDelivery', true)
+      commit('updateButtonLoadingPayment', true)
 
       return APIService.placeOrder(state.order)
         .then(order => {
@@ -234,14 +248,13 @@ export default new Vuex.Store({
           })
         })
         .catch(response => {
-          console.log(response)
           commit(
             'updatePlaceOrderError',
             i18n.t('errors.' + response.data.errors[0].meta.error)
           )
         })
         .finally(() => {
-          commit('updateButtonLoadingDelivery', false)
+          commit('updateButtonLoadingPayment', false)
         })
     }
   }
