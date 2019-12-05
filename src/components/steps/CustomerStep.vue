@@ -25,6 +25,12 @@
         :disabled="disabled"
         :loading="loading_customer"
       >{{ $t('steps.customer.button') }}</v-btn>
+
+      <div
+        class="order-error"
+        id="set-addresses-error"
+        v-show="errors.set_addresses"
+      >{{ errors.set_addresses }}</div>
     </v-stepper-content>
 
     <div class="step-summary" v-if="complete">
@@ -60,11 +66,6 @@ import { mapState } from 'vuex'
 import { mapFields } from 'vuex-map-fields'
 
 export default {
-  data () {
-    return {
-      pippo: true
-    }
-  },
   components: {
     CustomerFields,
     BillingAddressFields,
@@ -82,7 +83,7 @@ export default {
           this.validations.invalid_shipping_address)
       )
     },
-    ...mapState(['order']),
+    ...mapState(['order', 'errors']),
     ...mapFields([
       'buttons.loading_customer',
       'customer.payment_sources',
@@ -94,8 +95,7 @@ export default {
     submit () {
       this.loading_customer = true
       this.$store.dispatch('setOrderAddresses').then(() => {
-        this.loading_customer = false
-        this.nextStep()
+        if (!this.errors.set_addresses) this.nextStep()
       })
     }
   },
@@ -105,9 +105,14 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .header {
   font-weight: bolder;
   margin-bottom: 0.5rem;
+}
+
+.order-error {
+  color: $ERROR_COLOR;
+  margin-top: 1rem;
 }
 </style>

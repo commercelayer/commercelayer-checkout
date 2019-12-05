@@ -15,7 +15,7 @@ describe('[01.2.1] customer / shipping same as billing (billing info required)',
         quantity: 1
       })
 
-      cy.create_line_item({
+      cy.create_sku_line_item({
         order_id: order.id,
         sku_code: Cypress.env('SKU_CODE'),
         quantity: 1
