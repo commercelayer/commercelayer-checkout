@@ -17,7 +17,7 @@ export const orderAttributes = [
   'currency_code',
   'skus_count',
   'customer_email',
-  'coupon_code',
+  'gift_card_or_coupon_code',
   'editable',
   'requires_billing_info',
   'shipping_country_code_lock',

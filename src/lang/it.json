@@ -11,7 +11,7 @@
     "zip_code": "cap"
   },
   "errors": {
-    "invalid_coupon": "Questo codice coupon non è valido",
+    "invalid_gift_card_or_coupon": "Questo codice non è valido",
     "not_authorized": "La tua carta non è stata autorizzata",
     "out_of_stock": "Alcuni articoli non sono più disponibili",
     "too_short": "Questo codice coupon è troppo corto"
@@ -42,7 +42,7 @@
     "thankyou_message": "Il tuo ordine è confermato e verrà preparato per la spedizione"
   },
   "order_summary": {
-    "coupon_code": "Hai un codice coupon?",
+    "gift_card_or_coupon_code": "Hai una gift card o un coupon?",
     "discount": "sconto",
     "hide": "nascondi riepilogo ordine",
     "number": "numero ordine",

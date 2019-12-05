@@ -11,7 +11,7 @@
     "zip_code": "zip code"
   },
   "errors": {
-    "invalid_coupon": "This coupon code is not valid",
+    "invalid_gift_card_or_coupon": "This code is not valid",
     "not_authorized": "Your card was declined",
     "out_of_stock": "Some items have gone out of stock",
     "too_short": "This coupon code is too short"
@@ -42,7 +42,7 @@
     "thankyou_message": "Your order is confirmed and we'e getting it ready for shipment"
   },
   "order_summary": {
-    "coupon_code": "Have a coupon code?",
+    "gift_card_or_coupon_code": "Have a gift card or coupon?",
     "discount": "discount",
     "hide": "hide order summary",
     "number": "order number",
