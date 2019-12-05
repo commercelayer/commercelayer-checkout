@@ -49,6 +49,14 @@ export const getCurrentStep = order => {
   return step
 }
 
+export const getRequiresDelivery = order => {
+  return !_.isEmpty(skuLineItems(order))
+}
+
+export const getRequiresPayment = order => {
+  return order.total_amount_with_taxes_float > 0
+}
+
 export const getCouponApplied = order => {
   return !_.isEmpty(order.coupon_code)
 }

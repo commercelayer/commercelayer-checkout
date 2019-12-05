@@ -1,8 +1,8 @@
 <template>
   <v-stepper v-model="current_step" vertical>
     <CustomerStep :step="1" />
-    <DeliveryStep :step="2" />
-    <PaymentStep :step="3" />
+    <DeliveryStep :step="2" v-if="requires_delivery" />
+    <PaymentStep :step="paymentStep" v-if="requires_payment" />
   </v-stepper>
 </template>
 
@@ -19,7 +19,15 @@ export default {
     PaymentStep
   },
   computed: {
-    ...mapFields(['current_step', 'order'])
+    paymentStep () {
+      return this.requires_delivery ? 3 : 2
+    },
+    ...mapFields([
+      'current_step',
+      'order',
+      'requires_delivery',
+      'requires_payment'
+    ])
   },
   metaInfo () {
     return {

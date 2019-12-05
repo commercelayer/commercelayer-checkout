@@ -76,18 +76,20 @@
   "steps": {
     "customer": {
       "title": "customer",
-      "hint": "billing information and shipping address",
-      "button": "continue to delivery"
+      "hint": "billing information and shipping address"
     },
     "delivery": {
       "title": "delivery",
-      "hint": "shipment summary and delivery methods",
-      "button": "continue to payment"
+      "hint": "shipment summary and delivery methods"
     },
     "payment": {
       "title": "payment",
-      "hint": "payment method and order confirmation",
-      "button": "place order"
+      "hint": "payment method and order confirmation"
     }
+  },
+  "buttons": {
+    "continue_to_delivery": "continue to delivery",
+    "continue_to_payment": "continue to payment",
+    "place_order": "place order"
   }
 }

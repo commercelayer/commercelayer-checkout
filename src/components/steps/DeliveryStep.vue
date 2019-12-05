@@ -26,7 +26,7 @@
         :block="isMobile"
         :disabled="disabled"
         :loading="buttons.loading_delivery"
-      >{{ $t('steps.delivery.button') }}</v-btn>
+      >{{ $t('buttons.continue_to_payment') }}</v-btn>
     </v-stepper-content>
 
     <div class="step-summary" v-if="complete">
@@ -56,7 +56,7 @@ export default {
   },
   mixins: [stepMixin],
   computed: {
-    disabled () {
+    disabled() {
       return this.validations.invalid_shipments
     },
     ...mapState(['validations', 'buttons']),
