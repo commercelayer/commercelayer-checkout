@@ -32,7 +32,7 @@ export const collectBrowserInfo = () => {
 }
 
 export const getCurrentStep = order => {
-  let step = 3
+  let step = getRequiresPayment(order) ? 3 : 2
 
   if (
     _.isEmpty(order.customer_email) ||

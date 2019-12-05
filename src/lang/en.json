@@ -39,7 +39,7 @@
     "ship_to": "Ship to",
     "terms_of_service": "terms of service",
     "thankyou": "Thank you",
-    "thankyou_message": "Your order is confirmed and we'e getting it ready for shipment"
+    "thankyou_message": "Your order is confirmed"
   },
   "order_summary": {
     "gift_card_or_coupon_code": "Have a gift card or coupon?",

@@ -39,7 +39,7 @@
     "ship_to": "Spedisci a",
     "terms_of_service": "condizioni di vendita",
     "thankyou": "Grazie",
-    "thankyou_message": "Il tuo ordine è confermato e verrà preparato per la spedizione"
+    "thankyou_message": "Il tuo ordine è confermato"
   },
   "order_summary": {
     "gift_card_or_coupon_code": "Hai una gift card o un coupon?",
