@@ -76,18 +76,20 @@
   "steps": {
     "customer": {
       "title": "cliente",
-      "hint": "informazioni personali e indirizzo di spedizione",
-      "button": "vai alla consegna"
+      "hint": "informazioni personali e indirizzo di spedizione"
     },
     "delivery": {
       "title": "consegna",
-      "hint": "riepilogo spedizioni e metodi di consegna",
-      "button": "vai al pagamento"
+      "hint": "riepilogo spedizioni e metodi di consegna"
     },
     "payment": {
       "title": "pagamento",
-      "hint": "metodo di pagamento e conferma ordine",
-      "button": "conferma ordine"
+      "hint": "metodo di pagamento e conferma ordine"
     }
+  },
+  "buttons": {
+    "continue_to_delivery": "vai alla consegna",
+    "continue_to_payment": "vai al pagamento",
+    "place_order": "conferma ordine"
   }
 }

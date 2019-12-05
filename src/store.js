@@ -5,7 +5,12 @@ import APIService from '@/services/APIService'
 import NProgress from 'nprogress'
 import router from '@/router'
 import i18n from '@/plugins/i18n'
-import { getCurrentStep, getCouponApplied } from '@/utils/functions'
+import {
+  getCurrentStep,
+  getCouponApplied,
+  getRequiresDelivery,
+  getRequiresPayment
+} from '@/utils/functions'
 import { trackPurchase } from '@/utils/gtm'
 
 Vue.use(Vuex)
@@ -18,6 +23,8 @@ export default new Vuex.Store({
       refresh_token: null
     },
     current_step: 1,
+    requires_delivery: true,
+    requires_payment: true,
     notifications: {
       coupon_applied: false
     },
@@ -58,6 +65,12 @@ export default new Vuex.Store({
     },
     updateCurrentStep (state, value) {
       state.current_step = value
+    },
+    updateRequiresDelivery (state, value) {
+      state.requires_delivery = value
+    },
+    updateRequiresPayment (state, value) {
+      state.requires_payment = value
     },
     updateOrderPaymentSource (state, paymentSource) {
       state.order.payment_source = paymentSource
@@ -111,6 +124,8 @@ export default new Vuex.Store({
       return APIService.getOrder(orderId).then(order => {
         commit('updateOrder', order)
         commit('updateCurrentStep', getCurrentStep(order))
+        commit('updateRequiresDelivery', getRequiresDelivery(order))
+        commit('updateRequiresPayment', getRequiresPayment(order))
         commit('updateCouponAppliedNotification', getCouponApplied(order))
         return order
       })

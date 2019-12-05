@@ -15,7 +15,7 @@
       <v-container>
         <CustomerFields />
         <BillingAddressFields />
-        <ShippingAddressFields />
+        <ShippingAddressFields v-if="requires_delivery" />
       </v-container>
       <v-btn
         id="customer-step-submit"
@@ -24,7 +24,7 @@
         :block="isMobile"
         :disabled="disabled"
         :loading="loading_customer"
-      >{{ $t('steps.customer.button') }}</v-btn>
+      >{{ submitLabel }}</v-btn>
 
       <div
         class="order-error"
@@ -83,7 +83,12 @@ export default {
           this.validations.invalid_shipping_address)
       )
     },
-    ...mapState(['order', 'errors']),
+    submitLabel () {
+      return this.requires_delivery
+        ? this.$t('buttons.continue_to_delivery')
+        : this.$t('buttons.continue_to_payment')
+    },
+    ...mapState(['order', 'errors', 'requires_delivery']),
     ...mapFields([
       'buttons.loading_customer',
       'customer.payment_sources',

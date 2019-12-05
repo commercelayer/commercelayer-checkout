@@ -29,6 +29,14 @@ describe('[01.2] customer / shipping same as billing', () => {
     })
   })
 
+  it('displays the continue to delivery button', () => {
+    cy.get('#customer-step-submit').contains('continue to delivery')
+  })
+
+  it('displays the ship to different address checkbox', () => {
+    cy.get('#ship-to-different-address-checkbox').should('exist')
+  })
+
   it('lets the customer add their billing address', () => {
     cy.get('#billing-address-first-name').type(euAddress.first_name)
     cy.get('#customer-step-submit').should('be.disabled')
