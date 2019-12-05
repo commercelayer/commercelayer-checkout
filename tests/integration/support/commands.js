@@ -3,7 +3,7 @@ import _ from 'lodash'
 
 Cypress.Commands.add('iframe', { prevSubject: 'element' }, $iframe => {
   return new Cypress.Promise(resolve => {
-    $iframe.ready(function () {
+    $iframe.ready(function() {
       resolve($iframe.contents().find('body'))
     })
   })
@@ -121,6 +121,46 @@ Cypress.Commands.add('create_gift_card', options => {
         data: {
           type: 'gift_cards',
           attributes: options.attributes
+        }
+      },
+      headers: apiRequestHeaders(accessToken)
+    }).its('body.data')
+  })
+})
+
+Cypress.Commands.add('purchase_gift_card', options => {
+  cy.get_access_token().then(accessToken => {
+    cy.request({
+      url:
+        Cypress.env('API_BASE_URL') + '/api/gift_cards/' + options.gift_card_id,
+      method: 'PATCH',
+      body: {
+        data: {
+          type: 'gift_cards',
+          id: options.gift_card_id,
+          attributes: {
+            _purchase: true
+          }
+        }
+      },
+      headers: apiRequestHeaders(accessToken)
+    }).its('body.data')
+  })
+})
+
+Cypress.Commands.add('activate_gift_card', options => {
+  cy.get_access_token().then(accessToken => {
+    cy.request({
+      url:
+        Cypress.env('API_BASE_URL') + '/api/gift_cards/' + options.gift_card_id,
+      method: 'PATCH',
+      body: {
+        data: {
+          type: 'gift_cards',
+          id: options.gift_card_id,
+          attributes: {
+            _activate: true
+          }
         }
       },
       headers: apiRequestHeaders(accessToken)

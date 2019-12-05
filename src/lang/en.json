@@ -51,6 +51,7 @@
     "show": "show order summary",
     "subtotal": "subtotal",
     "taxes": "taxes",
+    "gift_card": "gift card",
     "title": "order summary",
     "total": "order total"
   },

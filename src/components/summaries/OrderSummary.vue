@@ -48,8 +48,6 @@
           id="order-summary-discount-total"
           :formattedAmount="order.formatted_discount_amount"
           :amountFloat="order.discount_amount_float"
-          :showHint="notifications.gift_card_or_coupon_applied"
-          :hint="order.gift_card_or_coupon_code"
         />
         <OrderSummarySubtotal
           label="shipping"
@@ -68,6 +66,12 @@
           id="order-summary-taxes"
           :formattedAmount="order.formatted_total_tax_amount"
           :amountFloat="order.total_tax_amount_float"
+        />
+        <OrderSummarySubtotal
+          label="gift_card"
+          id="order-summary-gift-card"
+          :formattedAmount="order.formatted_gift_card_amount"
+          :amountFloat="order.gift_card_amount_float"
         />
         <OrderSummarySubtotal
           label="total"
@@ -96,7 +100,7 @@ export default {
       default: true
     }
   },
-  data() {
+  data () {
     return {
       viewCart: false
     }
@@ -107,27 +111,27 @@ export default {
     OrderSummarySubtotal
   },
   computed: {
-    viewCartLink() {
+    viewCartLink () {
       return this.$vuetify.breakpoint.smAndDown
     },
-    editCartLink() {
+    editCartLink () {
       return !_.isEmpty(this.order.cart_url) && this.order.editable
     },
-    viewCartLabel() {
+    viewCartLabel () {
       return this.viewCart
         ? this.$t('order_summary.hide')
         : this.$t('order_summary.show')
     },
-    showGiftCardOrCoupon() {
+    showGiftCardOrCoupon () {
       return (
         this.order.editable &&
         process.env.VUE_APP_HIDE_GIFT_CARD_OR_COUPON !== 'TRUE'
       )
     },
-    skuLineItems() {
+    skuLineItems () {
       return _.filter(this.order.line_items, { item_type: 'skus' })
     },
-    giftCardLineItems() {
+    giftCardLineItems () {
       console.log(this.order.line_items)
       return _.filter(this.order.line_items, lineItem => {
         return (
@@ -138,11 +142,11 @@ export default {
     ...mapState(['order', 'notifications'])
   },
   methods: {
-    toggleCart() {
+    toggleCart () {
       this.viewCart = !this.viewCart
     }
   },
-  mounted() {
+  mounted () {
     this.viewCart = this.$vuetify.breakpoint.mdAndUp
   }
 }
