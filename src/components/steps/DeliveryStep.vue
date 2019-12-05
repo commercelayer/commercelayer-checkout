@@ -22,11 +22,18 @@
       <v-btn
         id="delivery-step-submit"
         color="primary"
-        @click="nextStep"
+        @click="submit()"
         :block="isMobile"
         :disabled="disabled"
         :loading="buttons.loading_delivery"
-      >{{ $t('buttons.continue_to_payment') }}</v-btn>
+      >{{ submitLabel }}</v-btn>
+
+      <div
+        class="order-error"
+        id="place-order-error"
+        v-show="errors.place_order"
+        v-if="!requires_payment"
+      >{{ errors.place_order }}</div>
     </v-stepper-content>
 
     <div class="step-summary" v-if="complete">
@@ -56,11 +63,25 @@ export default {
   },
   mixins: [stepMixin],
   computed: {
-    disabled() {
+    disabled () {
       return this.validations.invalid_shipments
     },
-    ...mapState(['validations', 'buttons']),
+    submitLabel () {
+      return this.requires_payment
+        ? this.$t('buttons.continue_to_payment')
+        : this.$t('buttons.place_order')
+    },
+    ...mapState(['validations', 'buttons', 'errors', 'requires_payment']),
     ...mapMultiRowFields(['order.shipments'])
+  },
+  methods: {
+    submit () {
+      if (this.requires_payment) {
+        this.nextStep()
+      } else {
+        this.$store.dispatch('placeOrder')
+      }
+    }
   }
 }
 </script>

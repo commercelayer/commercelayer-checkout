@@ -36,7 +36,7 @@ Configure your API credentials and customize the look and feel by setting the fo
 | VUE_APP_LOGO_URL                 | Your logo public URL                                                                       | https://yourbucket.s3-eu-west-1.amazonaws.com/logo.png    |
 | VUE_APP_LOGO_WIDTH               | Your logo width                                                                            | 240                                                       |
 | VUE_APP_FAVICON_URL              | Your favicon public URL                                                                    | https://yourbucket.s3-eu-west-1.amazonaws.com/favicon.ico |
-| VUE_APP_HIDE_GIFT_CARD_OR_COUPON | Hide the coupon code field                                                                 | TRUE                                                      |
+| VUE_APP_HIDE_GIFT_CARD_OR_COUPON | Hide the gift card or coupon code field                                                    | TRUE                                                      |
 | VUE_APP_SUBSCRIPTION_REF         | Enables the customer subscription checkbox (using its value as the subscription reference) | NEWSLETTER                                                |
 | VUE_APP_STRIPE_PUBLIC_KEY        | Your Stripe public key (required by Stripe)                                                | pk_live_XXXXXXXXXX                                        |
 | VUE_APP_ADYEN_ENV                | Your Adyen environment (required by Adyen)                                                 | live                                                      |
