@@ -24,7 +24,7 @@ export const trackPurchase = order => {
           revenue: order.total_amount_with_taxes_float,
           shipping: order.shipping_amount_float,
           tax: order.total_tax_amount_float,
-          coupon: order.coupon_code
+          coupon: order.gift_card_or_coupon_code
         },
         products: gtmProducts(order)
       }

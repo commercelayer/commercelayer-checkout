@@ -57,8 +57,8 @@ export const getRequiresPayment = order => {
   return order.total_amount_with_taxes_float > 0
 }
 
-export const getCouponApplied = order => {
-  return !_.isEmpty(order.coupon_code)
+export const getGiftCardOrCouponApplied = order => {
+  return !_.isEmpty(order.gift_card_or_coupon_code)
 }
 
 export const skuLineItems = order => {

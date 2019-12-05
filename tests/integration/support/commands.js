@@ -3,7 +3,7 @@ import _ from 'lodash'
 
 Cypress.Commands.add('iframe', { prevSubject: 'element' }, $iframe => {
   return new Cypress.Promise(resolve => {
-    $iframe.ready(function() {
+    $iframe.ready(function () {
       resolve($iframe.contents().find('body'))
     })
   })
@@ -428,6 +428,16 @@ Cypress.Commands.add('setup_payment_step', () => {
       return order
     })
   })
+})
+
+Cypress.Commands.add('apply_gift_card_or_coupon_code', options => {
+  cy.get('#gift-card-or-coupon-code')
+    .clear()
+    .type(options.code)
+
+  cy.wrap('.coupon')
+    .get('i[role=button]')
+    .click()
 })
 
 Cypress.Commands.add('check_payment_method', options => {
