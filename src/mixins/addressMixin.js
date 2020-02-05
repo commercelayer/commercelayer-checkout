@@ -18,6 +18,19 @@ export const addressMixin = {
     countries () {
       return countries
     },
+    states () {
+      return this.hasStates ? this.selectedCountry.states : []
+    },
+    selectedCountry () {
+      // eslint-disable-next-line no-undef
+      return _.find(countries, { code: this.country_code })
+    },
+    hasStates () {
+      return !(
+        _.isEmpty(this.selectedCountry) ||
+        _.isEmpty(this.selectedCountry.states)
+      )
+    },
     requiresBillingInfo () {
       return this.billing && this.order.requires_billing_info
     },
@@ -55,6 +68,9 @@ export const addressMixin = {
   methods: {
     handleBlur (fieldName) {
       this.$v[fieldName].$touch()
+      if (fieldName === 'country_code') {
+        this.state_code = null
+      }
     },
     inputLabel (fieldName) {
       return _.capitalize(this.$t(`addresses.${fieldName}`))

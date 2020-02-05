@@ -21,13 +21,16 @@
         min-width="50%"
         id="payment-step-submit"
         :loading="buttons.loading_payment"
-      >{{ $t('buttons.place_order') }}</v-btn>
+        >{{ $t('buttons.place_order') }}</v-btn
+      >
 
       <div
         class="order-error"
         id="place-order-error"
         v-show="errors.place_order"
-      >{{ errors.place_order }}</div>
+      >
+        {{ errors.place_order }}
+      </div>
     </v-stepper-content>
   </div>
 </template>
@@ -54,10 +57,10 @@ export default {
   },
   mixins: [stepMixin],
   computed: {
-    disabled() {
+    disabled () {
       return this.invalid_payment_method
     },
-    availablePaymentOptions() {
+    availablePaymentOptions () {
       let paymentOptions = []
       _.each(this.order.available_payment_methods, paymentMethod => {
         switch (paymentMethod.payment_source_type) {
