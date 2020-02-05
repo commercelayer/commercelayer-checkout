@@ -8,7 +8,11 @@
           :customer_address="customer_address"
         />
       </v-layout>
-      <v-radio class="new-address-option" :value="false" :label="$t('generic.new_address')"></v-radio>
+      <v-radio
+        class="new-address-option"
+        :value="false"
+        :label="$t('generic.new_address')"
+      ></v-radio>
     </v-radio-group>
 
     <v-layout row wrap v-if="showBillingAddress">
@@ -67,6 +71,16 @@
         ></v-autocomplete>
       </v-flex>
       <v-flex xs6 px-2>
+        <v-autocomplete
+          id="billing-address-state-code"
+          :label="inputLabel('state_code')"
+          :items="states"
+          v-model="state_code"
+          :error-messages="errorMessages('state_code')"
+          @input="handleInput()"
+          @blur="handleBlur('state_code')"
+          v-if="hasStates"
+        ></v-autocomplete>
         <v-text-field
           id="billing-address-state-code"
           :label="inputLabel('state_code')"
@@ -74,6 +88,7 @@
           :error-messages="errorMessages('state_code')"
           @input="handleInput()"
           @blur="handleBlur('state_code')"
+          v-if="!hasStates"
         ></v-text-field>
       </v-flex>
       <v-flex xs6 px-2>

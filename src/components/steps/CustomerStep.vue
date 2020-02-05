@@ -1,6 +1,11 @@
 <template>
   <div class="step-wrapper">
-    <v-stepper-step :step="step" :complete="complete" :editable="complete" edit-icon="done">
+    <v-stepper-step
+      :step="step"
+      :complete="complete"
+      :editable="complete"
+      edit-icon="done"
+    >
       <div>
         {{ $t('steps.customer.title') | capitalize }}
         <span v-if="complete">
@@ -24,13 +29,16 @@
         :block="isMobile"
         :disabled="disabled"
         :loading="loading_customer"
-      >{{ submitLabel }}</v-btn>
+        >{{ submitLabel }}</v-btn
+      >
 
       <div
         class="order-error"
         id="set-addresses-error"
         v-show="errors.set_addresses"
-      >{{ errors.set_addresses }}</div>
+      >
+        {{ errors.set_addresses }}
+      </div>
     </v-stepper-content>
 
     <div class="step-summary" v-if="complete">
@@ -45,7 +53,10 @@
           <v-flex xs12 sm6>
             <div class="header">{{ $t('generic.ship_to') | capitalize }}:</div>
             <div class="shipping-address-summary">
-              <AddressSummary :address="order.shipping_address" :billing="false" />
+              <AddressSummary
+                :address="order.shipping_address"
+                :billing="false"
+              />
             </div>
           </v-flex>
         </v-layout>
@@ -88,17 +99,19 @@ export default {
         ? this.$t('buttons.continue_to_delivery')
         : this.$t('buttons.continue_to_payment')
     },
-    ...mapState(['order', 'errors', 'requires_delivery']),
+    ...mapState(['order', 'requires_delivery']),
     ...mapFields([
       'buttons.loading_customer',
       'customer.payment_sources',
       'order._billing_address_clone_id',
-      'order._shipping_address_clone_id'
+      'order._shipping_address_clone_id',
+      'errors'
     ])
   },
   methods: {
     submit () {
       this.loading_customer = true
+      this.errors.set_addresses = null
       this.$store.dispatch('setOrderAddresses').then(() => {
         if (!this.errors.set_addresses) this.nextStep()
       })

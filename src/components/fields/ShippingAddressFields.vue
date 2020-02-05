@@ -12,7 +12,10 @@
     </v-flex>
     <template v-if="ship_to_different_address">
       <v-flex xs12 px-2>
-        <v-radio-group v-model="_shipping_address_clone_id" v-if="showAddressBook">
+        <v-radio-group
+          v-model="_shipping_address_clone_id"
+          v-if="showAddressBook"
+        >
           <v-layout wrap class="body-2">
             <CustomerAddressFields
               v-for="customer_address in addresses"
@@ -20,7 +23,11 @@
               :customer_address="customer_address"
             />
           </v-layout>
-          <v-radio class="new-address-option" :value="false" :label="$t('generic.new_address')"></v-radio>
+          <v-radio
+            class="new-address-option"
+            :value="false"
+            :label="$t('generic.new_address')"
+          ></v-radio>
         </v-radio-group>
       </v-flex>
       <template v-if="showShippingAddress">
@@ -79,6 +86,16 @@
           ></v-autocomplete>
         </v-flex>
         <v-flex xs6 px-2>
+          <v-autocomplete
+            id="shipping-address-state-code"
+            :label="inputLabel('state_code')"
+            :items="states"
+            v-model="state_code"
+            :error-messages="errorMessages('state_code')"
+            @input="handleInput()"
+            @blur="handleBlur('state_code')"
+            v-if="hasStates"
+          ></v-autocomplete>
           <v-text-field
             id="shipping-address-state-code"
             :label="inputLabel('state_code')"
@@ -86,6 +103,7 @@
             :error-messages="errorMessages('state_code')"
             @input="handleInput()"
             @blur="handleBlur('state_code')"
+            v-if="!hasStates"
           ></v-text-field>
         </v-flex>
         <v-flex xs6 px-2>
