@@ -3,7 +3,7 @@ import _ from 'lodash'
 
 Cypress.Commands.add('iframe', { prevSubject: 'element' }, $iframe => {
   return new Cypress.Promise(resolve => {
-    $iframe.ready(function() {
+    $iframe.ready(function () {
       resolve($iframe.contents().find('body'))
     })
   })
@@ -52,6 +52,7 @@ Cypress.Commands.add('create_order', options => {
         data: {
           type: 'orders',
           attributes: {
+            shipping_country_code_lock: options.shipping_country_code_lock,
             language_code: options.language_code,
             terms_url: 'https://example.com/terms',
             privacy_url: 'https://example.com/privacy',

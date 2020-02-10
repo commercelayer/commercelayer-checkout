@@ -12,10 +12,7 @@
     </v-flex>
     <template v-if="ship_to_different_address">
       <v-flex xs12 px-2>
-        <v-radio-group
-          v-model="_shipping_address_clone_id"
-          v-if="showAddressBook"
-        >
+        <v-radio-group v-model="_shipping_address_clone_id" v-if="showAddressBook">
           <v-layout wrap class="body-2">
             <CustomerAddressFields
               v-for="customer_address in addresses"
@@ -23,11 +20,7 @@
               :customer_address="customer_address"
             />
           </v-layout>
-          <v-radio
-            class="new-address-option"
-            :value="false"
-            :label="$t('generic.new_address')"
-          ></v-radio>
+          <v-radio class="new-address-option" :value="false" :label="$t('generic.new_address')"></v-radio>
         </v-radio-group>
       </v-flex>
       <template v-if="showShippingAddress">
@@ -179,6 +172,11 @@ export default {
     },
     handleChange () {
       this.updateAddressInvalid()
+    }
+  },
+  mounted () {
+    if (this.shippingCountryCodeLocked) {
+      this.country_code = this.shipping_country_code_lock
     }
   }
 }
