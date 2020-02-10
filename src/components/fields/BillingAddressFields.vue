@@ -8,11 +8,7 @@
           :customer_address="customer_address"
         />
       </v-layout>
-      <v-radio
-        class="new-address-option"
-        :value="false"
-        :label="$t('generic.new_address')"
-      ></v-radio>
+      <v-radio class="new-address-option" :value="false" :label="$t('generic.new_address')"></v-radio>
     </v-radio-group>
 
     <v-layout row wrap v-if="showBillingAddress">
@@ -169,6 +165,9 @@ export default {
         this.ship_to_different_address = isRequired
       }
     }
+  },
+  mounted () {
+    this.updateShipToDifferentAddressRequired()
   }
 }
 </script>
