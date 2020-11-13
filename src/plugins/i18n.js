@@ -8,7 +8,7 @@ Vue.use(VueI18n)
 
 const i18n = new VueI18n({
   locale: process.env.VUE_APP_LOCALE || 'it',
-  fallbackLocale: 'en',
+  fallbackLocale: 'it',
   messages: { en, it },
 })
 
