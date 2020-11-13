@@ -7,7 +7,7 @@ import it from '@/lang/it.json'
 Vue.use(VueI18n)
 
 const i18n = new VueI18n({
-  locale: process.env.VUE_APP_LOCALE || 'en',
+  locale: process.env.VUE_APP_LOCALE || 'it',
   fallbackLocale: 'en',
   messages: { en, it },
 })
