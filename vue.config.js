@@ -1,7 +1,9 @@
 module.exports = {
   devServer: {
     disableHostCheck: true,
-    public: process.env.VUE_APP_DEV_SERVER
+    public: process.env.VUE_APP_DEV_SERVER,
+    host: 'localhost',
+    proxy: 'http://localhost:8080'
   },
   css: {
     loaderOptions: {
