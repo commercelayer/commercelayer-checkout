@@ -24,7 +24,8 @@ const router = new Router({
       path: '/:order_id',
       component: Layout,
       props: true,
-      beforeEnter (routeTo, routeFrom, next) {
+      beforeEnter(routeTo, routeFrom, next) {
+        console.log(`routeTo`, routeTo)
         store.dispatch('setOrder', routeTo.params.order_id).then(order => {
           i18n.locale = _.lowerCase(order.language_code)
           next()
@@ -38,7 +39,7 @@ const router = new Router({
         },
         {
           path: 'paypal',
-          beforeEnter (routeTo, routeFrom, next) {
+          beforeEnter(routeTo, routeFrom, next) {
             let paymentSourceAttributes = {
               paypal_payer_id: routeTo.query.PayerID
             }
@@ -57,6 +58,41 @@ const router = new Router({
           }
         },
         {
+          path: 'adyen',
+          beforeEnter(routeTo, routeFrom, next) {
+            const paymentSourceAttributes = {
+              payment_request_details: {
+                details: {
+                  MD: routeTo.query.MD,
+                  PaRes: routeTo.query.PaRes
+                }
+              },
+              _details: true
+            }
+            store
+              .dispatch('updateOrderPaymentSource', paymentSourceAttributes)
+              .then(res => {
+                if (res.payment_response.resultCode === 'Authorised') {
+                  store.dispatch('placeOrder')
+                } else {
+                  console.log(
+                    'payment resultCode --- ',
+                    res.payment_response.resultCode
+                  )
+                  next({
+                    name: 'checkout'
+                  })
+                }
+              })
+              .catch(error => {
+                console.log(error)
+                next({
+                  name: 'checkout'
+                })
+              })
+          }
+        },
+        {
           path: 'confirmation',
           name: 'confirmation',
           component: Confirmation
@@ -64,7 +100,7 @@ const router = new Router({
       ]
     }
   ],
-  scrollBehavior (to, from, savedPosition) {
+  scrollBehavior(to, from, savedPosition) {
     return { x: 0, y: 0 }
   }
 })
