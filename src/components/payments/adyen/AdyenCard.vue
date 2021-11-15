@@ -21,13 +21,17 @@ import { collectBrowserInfo } from '@/utils/functions'
 
 export default {
   computed: {
-    scriptSrc () {
-      return `https://checkoutshopper-${process.env.VUE_APP_ADYEN_ENV}.adyen.com/checkoutshopper/sdk/3.3.0/adyen.js`
+    scriptSrc() {
+      return `https://checkoutshopper-${
+        process.env.VUE_APP_ADYEN_ENV
+      }.adyen.com/checkoutshopper/sdk/5.2.0/adyen.js`
     },
-    styleHref () {
-      return `https://checkoutshopper-${process.env.VUE_APP_ADYEN_ENV}.adyen.com/checkoutshopper/sdk/3.3.0/adyen.css`
+    styleHref() {
+      return `https://checkoutshopper-${
+        process.env.VUE_APP_ADYEN_ENV
+      }.adyen.com/checkoutshopper/sdk/5.2.0/adyen.css`
     },
-    styleObj () {
+    styleObj() {
       return {
         base: {
           fontSize: '16px',
@@ -38,11 +42,11 @@ export default {
         }
       }
     },
-    checkoutConfig () {
+    checkoutConfig() {
       return {
         locale: this.$i18n.locale,
         environment: process.env.VUE_APP_ADYEN_ENV,
-        originKey: process.env.VUE_APP_ADYEN_ORIGIN_KEY,
+        clientKey: process.env.VUE_APP_ADYEN_ORIGIN_KEY,
         paymentMethodsResponse: this.order.payment_source.payment_methods,
         onChange: this.handleOnChange,
         onAdditionalDetails: this.handleOnAdditionalDetails
@@ -51,11 +55,11 @@ export default {
   },
   mixins: [paymentMixin],
   methods: {
-    setupPayment () {
+    setupPayment() {
       let script = this.getScript(this.scriptSrc)
-      script.addEventListener('load', () => {
+      script.addEventListener('load', async () => {
         // eslint-disable-next-line
-        let checkout = new AdyenCheckout(this.checkoutConfig)
+        let checkout = await AdyenCheckout(this.checkoutConfig)
 
         checkout
           .create('card', {
@@ -69,7 +73,7 @@ export default {
         }
       })
     },
-    handleOnChange (state, component) {
+    handleOnChange(state, component) {
       if (state.isValid) {
         let browserInfo = collectBrowserInfo()
 
@@ -77,7 +81,8 @@ export default {
           payment_request_data: {
             payment_method: state.data.paymentMethod,
             origin: window.location.origin,
-            return_url: window.location.href,
+            return_url: `${window.location.href}/adyen`,
+            redirect_from_issuer_method: 'GET',
             browser_info: {
               acceptHeader:
                 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
@@ -93,19 +98,19 @@ export default {
         })
       }
     },
-    handleOnAdditionalDetails (state, component) {
+    handleOnAdditionalDetails(state, component) {
       this.$store
         .dispatch('updateOrderPaymentSource', {
           payment_request_details: state.data,
           _details: 1
         })
-        .then(paymentSource => {
+        .then(async paymentSource => {
           // eslint-disable-next-line
-          let checkout = new AdyenCheckout(this.checkoutConfig)
+          let checkout = await AdyenCheckout(this.checkoutConfig)
           this.handlePaymentResponse(paymentSource.payment_response, checkout)
         })
     },
-    handlePayment (checkout) {
+    handlePayment(checkout) {
       this.loading_payment = true
       this.$store
         .dispatch('updateOrderPaymentSource', {
@@ -115,7 +120,7 @@ export default {
           this.handlePaymentResponse(paymentSource.payment_response, checkout)
         })
     },
-    handlePaymentResponse (paymentResponse, checkout) {
+    handlePaymentResponse(paymentResponse, checkout) {
       if (paymentResponse.action !== undefined) {
         // https://docs.adyen.com/checkout/components-web#step-4-additional-front-end
         checkout.createFromAction(paymentResponse.action).mount('#adyen-action')
@@ -136,7 +141,7 @@ export default {
         }
       }
     },
-    checkStyle () {
+    checkStyle() {
       let links = document.getElementsByTagName('link')
       for (let i = 0; i < links.length; i++) {
         if (links[i].href === this.styleHref) return true
@@ -144,7 +149,7 @@ export default {
       return false
     }
   },
-  mounted () {
+  mounted() {
     // Add Adyen.css to document head
     if (!this.checkStyle()) {
       let style = document.createElement('link')
