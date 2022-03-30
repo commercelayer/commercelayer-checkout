@@ -1,0 +1,88 @@
+INSTALL:
+- Fork project
+- npm install
+
+
+Command Line Interface:
+npx vue-cli-service build 
+npm run serve
+
+
+
+
+** REQUEST **
+curl "https://self.commercelayer.io/api/orders/qjobhEYLbm?include=line_items,billing_address,shipping_address,shipments.shipment_line_items.line_item,shipments.available_shipping_methods,shipments.shipping_method,available_payment_methods,payment_method,payment_source" ^
+  -X "PATCH" ^
+  -H "authority: self.commercelayer.io" ^
+  -H "sec-ch-ua: ^\^" Not;A Brand^\^";v=^\^"99^\^", ^\^"Google Chrome^\^";v=^\^"91^\^", ^\^"Chromium^\^";v=^\^"91^\^"" ^
+  -H "accept: application/vnd.api+json" ^
+  -H "authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJvcmdhbml6YXRpb24iOnsiaWQiOiJqWGRXYkZqWU15Iiwic2x1ZyI6InNlbGYifSwiYXBwbGljYXRpb24iOnsiaWQiOiJkTW5XbWl3RU9wIiwia2luZCI6InNhbGVzX2NoYW5uZWwiLCJwdWJsaWMiOnRydWV9LCJ0ZXN0Ijp0cnVlLCJleHAiOjE2MjM3MTAwNjcsInJhbmQiOjAuNzgzMzAzNTcyODk4NTYwNX0.BADP5Pzs8ClM3xJWxdowdDUzem7RDWY8aVroHoi_-qyRvdWQ6x1kbSS7d4KTmktclJLXqyp7-4gJzN9wbbIE5Q" ^
+  -H "sec-ch-ua-mobile: ?0" ^
+  -H "user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36" ^
+  -H "content-type: application/vnd.api+json" ^
+  -H "origin: http://localhost:8080" ^
+  -H "sec-fetch-site: cross-site" ^
+  -H "sec-fetch-mode: cors" ^
+  -H "sec-fetch-dest: empty" ^
+  -H "referer: http://localhost:8080/" ^
+  -H "accept-language: en-US,en;q=0.9" ^
+  --data-raw "^{^\^"data^\^":^{^\^"type^\^":^\^"orders^\^",^\^"id^\^":^\^"qjobhEYLbm^\^",^\^"attributes^\^":^{^\^"_place^\^":1^}^}^}" ^
+  --compressed
+
+  
+  ** RESPONSE **
+  {"errors":[{"title":"(92206) Url must be 13 characters or shorter and can only contain letters, numbers and periods.","detail":"(92206) Url must be 13 characters or shorter and can only contain letters, numbers and periods.","code":"VALIDATION_ERROR","source":{"pointer":"/data"},"status":"422","meta":{"error":"(92206) Url must be 13 characters or shorter and can only contain letters, numbers and periods."}},{"title":"authorization failed","detail":"authorization failed","code":"VALIDATION_ERROR","source":{"pointer":"/data"},"status":"422","meta":{"error":"authorization_failed"}},{"title":"transition is not permitted","detail":"status - transition is not permitted","code":"VALIDATION_ERROR","source":{"pointer":"/data/attributes/status"},"status":"422","meta":{"error":"not_permitted_transition"}}]}
+
+
+urn:ietf:wg:oauth:2.0:oob
+
+
+- Order# is 10 digits (making 13 character URLs unlikely)
+    - Might be a poorly described error message
+    - Order number (defined by path) may be the intended target of the error description.
+        - A working example of the repo included these 10 digit order numbers
+
+{
+    "screenName": "checkout",
+    "path": "//qjobhEYLbm"
+}
+
+What it means:
+- May not need to modify orderAttributes to meet remove error.
+- Something in the existing repo is triggering this error message?
+    - Multiple users
+        - more likely something in config.
+              devServer: {
+                    disableHostCheck: true,
+                    public: process.env.VUE_APP_DEV_SERVER,
+                    host: 'localhost',
+                    proxy: 'http://localhost:8080'
+                },
+
+
+
+6.18 Update
+
+REQUEST:
+curl 'https://self.commercelayer.io/api/orders/qjobhEYLbm?include=authorizations' \
+  -X 'PATCH' \
+  -H 'authority: self.commercelayer.io' \
+  -H 'sec-ch-ua: " Not;A Brand";v="99", "Google Chrome";v="91", "Chromium";v="91"' \
+  -H 'accept: application/vnd.api+json' \
+  -H 'authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJvcmdhbml6YXRpb24iOnsiaWQiOiJqWGRXYkZqWU15Iiwic2x1ZyI6InNlbGYifSwiYXBwbGljYXRpb24iOnsiaWQiOiJkTW5XbWl3RU9wIiwia2luZCI6InNhbGVzX2NoYW5uZWwiLCJwdWJsaWMiOnRydWV9LCJ0ZXN0Ijp0cnVlLCJleHAiOjE2MjQwNjAxNjYsInJhbmQiOjAuMzk1MjY0ODQzNDU3OTI4OX0.2emyYP-HPpMrmVtcjIpPlCkK6gHAhCVd_OT1t_D9B0H4BUbwymF5GujlSq3uo-tLUqqIPoMiIT5OvUceBnLitg' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.106 Safari/537.36' \
+  -H 'content-type: application/vnd.api+json' \
+  -H 'origin: http://localhost:8080' \
+  -H 'sec-fetch-site: cross-site' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'referer: http://localhost:8080/' \
+  -H 'accept-language: en-US,en;q=0.9' \
+  --data-raw '{"data":{"type":"orders","id":"qjobhEYLbm","attributes":{"_place":1}}}' \
+  --compressed
+
+RESPONSE:
+{"errors":[{"title":"(92206) Url must be 13 characters or shorter and can only contain letters, numbers and periods.","detail":"(92206) Url must be 13 characters or shorter and can only contain letters, numbers and periods.","code":"VALIDATION_ERROR","source":{"pointer":"/data"},"status":"422","meta":{"error":"(92206) Url must be 13 characters or shorter and can only contain letters, numbers and periods."}},{"title":"authorization failed","detail":"authorization failed","code":"VALIDATION_ERROR","source":{"pointer":"/data"},"status":"422","meta":{"error":"authorization_failed"}},{"title":"transition is not permitted","detail":"status - transition is not permitted","code":"VALIDATION_ERROR","source":{"pointer":"/data/attributes/status"},"status":"422","meta":{"error":"not_permitted_transition"}}]}
+
+https://core.commercelayer.io/webhook_callbacks/braintree_gateways/gkGoLsGbbk
