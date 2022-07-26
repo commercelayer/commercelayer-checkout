@@ -15,7 +15,7 @@
     "core-js": "^2.6.5",
     "json-api-normalize": "^1.1.5",
     "jsonwebtoken": "^8.5.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "nprogress": "^0.2.0",
     "vue": "^2.6.10",
     "vue-gtm": "^2.2.0",
