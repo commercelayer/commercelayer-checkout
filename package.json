@@ -14,7 +14,7 @@
     "axios": "^0.19.0",
     "core-js": "^2.6.5",
     "json-api-normalize": "^1.1.5",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "lodash": "^4.17.15",
     "nprogress": "^0.2.0",
     "vue": "^2.6.10",
