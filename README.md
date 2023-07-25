@@ -1,3 +1,6 @@
+> **Warning**<br />
+This library is deprecated and no longer maintained. A brand new Commerce Layer [Checkout](https://github.com/commercelayer/mfe-checkout) has been officially released — we strongly recommend you to use that instead.
+
 # Commerce Layer Checkout
 
 This application provides you with a **PCI-compliant**, **PSD2-compliant**, and **production-ready** checkout flow that lets you easily place orders through the [Commerce Layer](https://commercelayer.io/) API. It supports [Stripe](https://stripe.com), [Braintree](https://www.braintreepayments.com), [Adyen](https://www.adyen.com/), and [PayPal](https://www.paypal.com) payment methods out of the box and can be used as is or as a reference to build your own checkout experience.
